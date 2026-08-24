@@ -1,0 +1,678 @@
+Milestone 1 — UX Research, Information Architecture & UI/UX
+
+Goal: Establish the complete user experience before coding.
+
+The document identifies the primary journey as:
+
+Search → Store → Coupon/Deal → CTA → Affiliate Redirect → Merchant.
+
+UX architecture
+
+Define:
+
+Homepage
+Stores
+Store Detail
+Coupons
+Coupon/Deal Detail
+Blogs
+Blog Detail
+Reviews
+Review Detail
+About
+Contact
+Legal pages
+Search results
+Country switching
+UI screens
+
+Design:
+
+Desktop homepage
+Mobile homepage
+Stores listing
+Store detail
+Coupons listing
+Coupon card
+Coupon interaction
+Blog listing
+Blog detail
+Reviews listing
+Review detail
+Search results
+Contact
+About
+Legal pages
+CMS dashboard
+CMS CRUD interfaces
+Important UX components
+
+Create reusable components for:
+
+Header
+Mobile navigation
+Search
+Country selector
+Store cards
+Coupon cards
+Deal cards
+Blog cards
+Review cards
+Filters
+Breadcrumbs
+Pagination
+CTA buttons
+Newsletter
+Footer
+Deliverable
+
+Complete Figma design system + responsive UI designs
+
+Milestone 2 — Technical Architecture & Database Design
+
+This is one of the most important milestones.
+
+The requirements explicitly call for reusable entities rather than hardcoded pages.
+
+Core entities
+
+Recommended initial architecture:
+
+Users
+Countries
+Categories
+Stores
+Coupons
+Deals
+Blogs
+Blog Categories
+Reviews
+FAQs
+SEO Metadata
+Homepage Sections
+Site Settings
+Relationships
+
+For example:
+
+Country
+   ↓
+Store
+   ↓
+Coupons
+Deals
+Reviews
+Blogs
+
+And:
+
+Store
+ ├── Coupons
+ ├── Deals
+ ├── Reviews
+ ├── Blogs
+ └── FAQs
+Important database capabilities
+Multi-country content
+Store/category relationships
+Coupon lifecycle
+Deal lifecycle
+Featured content
+SEO metadata
+Scheduled content
+Expiry management
+Related content
+Affiliate URLs
+Tracking URLs
+Deliverables
+ERD
+Database schema
+API architecture
+Authentication architecture
+Storage architecture
+Search architecture
+Caching strategy
+Deployment architecture
+Milestone 3 — Backend Foundation & Authentication
+
+Goal: Build the application foundation before implementing individual CMS modules.
+
+Backend
+
+Implement:
+
+Project structure
+Database connection
+Migrations
+Models/entities
+Repository/service layer
+API structure
+Error handling
+Validation
+Logging
+Environment configuration
+File/image storage
+Authentication
+
+Implement:
+
+Admin login
+Password hashing
+Sessions/tokens
+Logout
+Protected CMS routes
+Authentication middleware
+Admin security
+
+The specification requires secure authentication, password hashing, session security, input validation, SQL injection protection, XSS protection, CSRF protection where applicable, secure uploads and rate limiting where appropriate.
+
+Deliverable
+
+Working backend foundation + secured admin authentication
+
+Milestone 4 — CMS Core
+
+This is effectively the engine of the entire platform.
+
+The CMS must allow the administrator to manage website content without developer intervention.
+
+CMS dashboard
+
+Build:
+
+Dashboard
+Admin navigation
+Content statistics
+Recent content
+Active coupons
+Expiring coupons
+Featured content
+Quick actions
+CMS management modules
+Stores
+Create
+Edit
+Delete
+Publish/unpublish
+Featured
+Popular
+Country
+Category
+Logo
+Description
+Merchant URL
+Affiliate URL
+Tracking URL
+SEO
+FAQs
+
+The store requirements specifically include these fields.
+
+Coupons
+Create
+Edit
+Delete
+Publish
+Expiry
+Country
+Store
+Discount
+Coupon type
+Verification
+CTA
+Affiliate URL
+SEO
+Deals
+Create
+Edit
+Delete
+Store
+Country
+Image
+Discount
+Affiliate URL
+Start/expiry
+Featured
+Active/inactive
+Blogs
+Create
+Edit
+Delete
+Draft
+Published
+Scheduled
+Category
+Author
+Featured image
+SEO
+Related content
+Reviews
+Create
+Edit
+Delete
+Rating
+Pros
+Cons
+Verdict
+Store relationship
+Related coupons/blogs
+Milestone 5 — Region/Country & Category Engine
+
+This deserves its own milestone because multi-region functionality is a core architectural requirement, not just a filter.
+
+Each store, coupon, deal and relevant content item must be assignable to one or more countries/regions.
+
+Country system
+
+Build:
+
+Country CRUD
+Country code
+Country name
+Country status
+Country-specific stores
+Country-specific coupons
+Country-specific deals
+Country-specific content
+
+Example:
+
+Nike
+
+US → Nike US → US coupons
+UK → Nike UK → UK coupons
+AU → Nike AU → AU coupons
+Category system
+
+Build:
+
+Category CRUD
+Category slug
+Category image/icon
+Store categories
+Coupon categories
+Blog categories
+Category filtering
+Deliverable
+
+Reusable multi-region content engine
+
+Milestone 6 — Frontend Core & Shared Components
+
+Now begin the public-facing website.
+
+Build foundation
+Frontend framework setup
+Routing
+Global layout
+Responsive grid
+Design system
+Typography
+Buttons
+Cards
+Forms
+Modals
+Loading states
+Error states
+Empty states
+Global components
+Header
+Navigation
+Search
+Country selector
+Breadcrumbs
+Footer
+Newsletter
+CTA components
+
+The mobile experience specifically needs to prioritize search, coupons, store navigation, CTA buttons, fast loading and easy scrolling.
+
+Milestone 7 — Core Marketplace Pages
+
+This is where the main platform becomes usable.
+
+7.1 Homepage
+
+Implement:
+
+Header
+Hero/search
+Featured brands
+Top coupons/deals
+Popular stores
+Featured blogs
+Categories
+Why GrabYourDealz
+Newsletter
+Footer
+
+The homepage is intended to be the primary landing/discovery page.
+
+7.2 Stores
+
+Implement:
+
+Store listing
+Search
+Country filter
+Category filter
+A-Z
+Popular
+Featured
+Coupon counts
+Store cards
+7.3 Store Detail
+
+Dynamic page:
+
+Store Header
+      ↓
+Description
+      ↓
+Active Coupons
+      ↓
+Deals
+      ↓
+Reviews
+      ↓
+Related Blogs
+      ↓
+FAQs
+
+The store page must be dynamically generated from CMS content.
+
+7.4 Coupons
+
+Implement:
+
+Coupon listing
+Filters
+Sorting
+Verified status
+Expiry
+Popularity
+Discount
+Country
+Store
+Category
+Coupon type
+Milestone 8 — Content Platform
+
+Now implement the SEO/content side.
+
+Blogs
+Blog listing
+Categories
+Search/filter
+Featured posts
+Pagination
+Author
+Date
+Blog detail
+SEO title
+Meta description
+H1
+Featured image
+Author
+Published/updated date
+Content
+Internal links
+Related coupons
+Related stores
+Related blogs
+Social sharing
+FAQ
+
+These capabilities are explicitly defined in the specification.
+
+Reviews
+Review listing
+Store/brand
+Logo
+Rating
+Title
+Author
+Date
+Review detail
+Rating
+Review
+Pros
+Cons
+Verdict
+Coupons
+Related blogs
+FAQ
+CTA
+Milestone 9 — Search, Affiliate & Conversion Engine
+
+This milestone is particularly important because affiliate conversion is one of the primary business objectives.
+
+The global search should search across:
+
+Stores
+Brands
+Coupons
+Deals
+Blogs
+Reviews
+
+and categorize results accordingly.
+
+Search
+
+Implement:
+
+Global search
+Autocomplete
+Search suggestions
+Categorized results
+Store search
+Coupon search
+Blog search
+Review search
+Filtering
+Affiliate engine
+
+Implement:
+
+User
+ ↓
+Coupon
+ ↓
+CTA
+ ↓
+Tracking URL
+ ↓
+Affiliate Network
+ ↓
+Merchant
+
+The document leaves the actual affiliate network and tracking implementation as a pending business decision, so this part should be designed as an abstraction rather than hard-coded around one network.
+
+CTA engine
+
+Support configurable:
+
+Get Code
+Show Code
+Get Deal
+Shop Now
+View Deal
+Claim Offer
+Visit Store
+
+CTA text should ideally be CMS controlled.
+
+Milestone 10 — SEO Infrastructure
+
+SEO should not be left until the end.
+
+The requirements explicitly state that SEO must be considered from the beginning.
+
+Technical SEO
+
+Implement:
+
+SEO-friendly URLs
+Slugs
+Canonicals
+Sitemap
+Robots.txt
+Breadcrumbs
+Heading hierarchy
+Schema
+Internal linking
+Open Graph
+Index/noindex
+Follow/nofollow
+Mobile SEO
+Dynamic SEO CMS
+
+Every major entity should support:
+
+SEO Title
+Meta Description
+Canonical
+OG Title
+OG Description
+OG Image
+Index/Noindex
+Follow/Nofollow
+Structured data
+
+Potential schemas:
+
+Organization
+WebSite
+BreadcrumbList
+Article
+Review
+Product/Offer where applicable
+FAQ
+Internal linking
+
+Build automated relationships:
+
+Blog
+ ↓
+Store
+ ↓
+Coupon
+ ↓
+Review
+
+and:
+
+Store
+ ├── Coupons
+ ├── Deals
+ ├── Reviews
+ └── Blogs
+
+The specification explicitly calls for this interconnected internal-linking strategy.
+
+Milestone 11 — Performance, Security, Analytics & QA
+
+This is the stabilization phase.
+
+Performance
+
+Implement/test:
+
+Image optimization
+Lazy loading
+Code splitting
+Minification
+Database optimization
+Caching
+CDN compatibility
+Server-side optimization
+Lightweight frontend
+Core Web Vitals
+
+The requirements specifically identify these performance areas.
+
+Analytics
+
+Integrate:
+
+Google Analytics
+Google Search Console
+Google Tag Manager
+Meta Pixel if required
+Affiliate tracking
+Conversion tracking
+CTA click tracking
+Search events
+Coupon interactions
+
+These are listed as required compatibility/integration points.
+
+Security testing
+
+Test:
+
+Authentication
+Admin authorization
+Forms
+Input validation
+XSS
+SQL injection
+CSRF
+File uploads
+Rate limiting
+Session security
+HTTPS
+Backups
+Milestone 12 — Final QA, Deployment & Launch
+Functional QA
+
+Test:
+
+ Navigation
+ Search
+ Stores
+ Store pages
+ Coupons
+ Deals
+ Blogs
+ Reviews
+ CMS
+ Affiliate links
+ Contact form
+ Country filters
+
+The document explicitly defines these functional tests.
+
+Device testing
+
+Test:
+
+ iPhone
+ Android
+ Tablet
+ Laptop
+ Desktop
+ Multiple resolutions
+SEO QA
+ Meta titles
+ Meta descriptions
+ Canonicals
+ Sitemap
+ Robots
+ Schema
+ Indexability
+ URLs
+ Breadcrumbs
+Final deployment
+Production server
+Database migration
+Environment variables
+SSL
+Domain/DNS
+CDN
+Backup
+Monitoring
+Analytics
+Search Console
+Production testing

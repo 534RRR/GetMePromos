@@ -1,0 +1,335 @@
+// Prisma Schema for GrabYourDealz.com
+// Multi-Region Coupon, Deals, Directory, Reviews & Affiliate Content Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------
+// 1. User & Authentication
+// ----------------------------------------------------
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("admin") // "admin", "editor"
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ----------------------------------------------------
+// 2. Geographic Regions & Countries
+// ----------------------------------------------------
+model Country {
+  id             String          @id @default(uuid())
+  code           String          @unique // e.g. "US", "UK", "AU", "CA", "DE", "FR", "IT", "NL"
+  name           String
+  currencySymbol String          @default("$")
+  currencyCode   String          @default("USD")
+  flagIcon       String          @default("🇺🇸")
+  isActive       Boolean         @default(true)
+  sortOrder      Int             @default(0)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  storeCountries  StoreCountry[]
+  couponCountries CouponCountry[]
+  dealCountries   DealCountry[]
+}
+
+// ----------------------------------------------------
+// 3. Categories & Taxonomies
+// ----------------------------------------------------
+model Category {
+  id              String          @id @default(uuid())
+  name            String
+  slug            String          @unique
+  icon            String?         // SVG name or icon identifier
+  imageUrl        String?
+  description     String?
+  parentId        String?
+  isFeatured      Boolean         @default(false)
+  seoTitle        String?
+  metaDescription String?
+  sortOrder       Int             @default(0)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  parent          Category?       @relation("CategoryToSubCategory", fields: [parentId], references: [id], onDelete: SetNull)
+  subCategories   Category[]      @relation("CategoryToSubCategory")
+  storeCategories StoreCategory[]
+}
+
+model BlogCategory {
+  id              String   @id @default(uuid())
+  name            String
+  slug            String   @unique
+  description     String?
+  seoTitle        String?
+  metaDescription String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  blogs           Blog[]
+}
+
+// ----------------------------------------------------
+// 4. Stores / Brands
+// ----------------------------------------------------
+model Store {
+  id               String          @id @default(uuid())
+  name             String
+  slug             String          @unique
+  logoUrl          String
+  bannerUrl        String?
+  shortDescription String?
+  longDescription  String?
+  merchantUrl      String
+  affiliateUrl     String
+  trackingParams   String?         // JSON string for default UTM/SubID params
+  ratingScore      Float           @default(4.8)
+  ratingCount      Int             @default(1)
+  isFeatured       Boolean         @default(false)
+  isPopular        Boolean         @default(false)
+  status           String          @default("active") // "active", "inactive", "draft"
+  
+  // SEO Metadata
+  seoTitle         String?
+  metaDescription  String?
+  canonicalUrl     String?
+  
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  storeCountries   StoreCountry[]
+  storeCategories  StoreCategory[]
+  coupons          Coupon[]
+  deals            Deal[]
+  review           Review?
+  faqs             FAQ[]
+  blogStores       BlogStore[]
+  clickLogs        ClickLog[]
+}
+
+// Store <-> Country Many-to-Many
+model StoreCountry {
+  storeId   String
+  countryId String
+  store     Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@id([storeId, countryId])
+}
+
+// Store <-> Category Many-to-Many
+model StoreCategory {
+  storeId    String
+  categoryId String
+  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([storeId, categoryId])
+}
+
+// ----------------------------------------------------
+// 5. Coupons & Promo Codes
+// ----------------------------------------------------
+model Coupon {
+  id                   String          @id @default(uuid())
+  storeId              String
+  title                String
+  description          String?
+  couponCode           String?         // NULL if it's an un-coded deal/offer
+  discountValue        String          // e.g. "25% OFF", "$50 OFF", "Free Shipping"
+  discountType         String          @default("percentage") // "percentage", "fixed_amount", "free_shipping", "cashback", "other"
+  couponType           String          @default("coupon_code") // "coupon_code", "promo_code", "discount", "sale", "deal", "free_shipping", "cashback", "other"
+  ctaText              String          @default("Get Code") // "Get Code", "Get Deal", "Shop Now", "Claim Offer"
+  affiliateUrlOverride String?
+  
+  startDate            DateTime        @default(now())
+  expiryDate           DateTime?
+  isVerified           Boolean         @default(true)
+  lastVerifiedAt       DateTime        @default(now())
+  isFeatured           Boolean         @default(false)
+  status               String          @default("active") // "active", "expired", "draft", "scheduled", "inactive"
+  successRate          Int             @default(100)
+  usedCount            Int             @default(0)
+  termsConditions      String?
+
+  // SEO Metadata
+  seoTitle             String?
+  metaDescription      String?
+
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+
+  store                Store           @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  couponCountries      CouponCountry[]
+  blogCoupons          BlogCoupon[]
+  clickLogs            ClickLog[]
+}
+
+model CouponCountry {
+  couponId  String
+  countryId String
+  coupon    Coupon  @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@id([couponId, countryId])
+}
+
+// ----------------------------------------------------
+// 6. Product Deals & Sales
+// ----------------------------------------------------
+model Deal {
+  id            String        @id @default(uuid())
+  storeId       String
+  title         String
+  description   String?
+  imageUrl      String?
+  dealUrl       String
+  affiliateUrl  String?
+  discountValue String?
+  startDate     DateTime      @default(now())
+  expiryDate    DateTime?
+  isFeatured    Boolean       @default(false)
+  status        String        @default("active") // "active", "expired", "inactive"
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  store         Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  dealCountries DealCountry[]
+}
+
+model DealCountry {
+  dealId    String
+  countryId String
+  deal      Deal    @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@id([dealId, countryId])
+}
+
+// ----------------------------------------------------
+// 7. Blogs & Shopping Guides
+// ----------------------------------------------------
+model Blog {
+  id              String       @id @default(uuid())
+  categoryId      String
+  title           String
+  slug            String       @unique
+  excerpt         String?
+  content         String       // Markdown / HTML content
+  featuredImage   String?
+  authorName      String       @default("GrabYourDealz Editorial")
+  readingTime     String       @default("5 min read")
+  status          String       @default("published") // "draft", "published", "scheduled"
+  publishedAt     DateTime     @default(now())
+
+  // SEO Metadata
+  seoTitle        String?
+  metaDescription String?
+  ogImage         String?
+
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  category        BlogCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  blogStores      BlogStore[]
+  blogCoupons     BlogCoupon[]
+}
+
+model BlogStore {
+  blogId  String
+  storeId String
+  blog    Blog  @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  store   Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@id([blogId, storeId])
+}
+
+model BlogCoupon {
+  blogId   String
+  couponId String
+  blog     Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  coupon   Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
+
+  @@id([blogId, couponId])
+}
+
+// ----------------------------------------------------
+// 8. In-Depth Store Reviews
+// ----------------------------------------------------
+model Review {
+  id              String   @id @default(uuid())
+  storeId         String   @unique
+  title           String
+  slug            String   @unique
+  rating          Float    @default(4.5)
+  summary         String?
+  prosJson        String?  // JSON array of strings
+  consJson        String?  // JSON array of strings
+  verdict         String?
+  detailedContent String   // Long-form review body
+  authorName      String   @default("Deal Experts Team")
+  status          String   @default("published") // "draft", "published"
+  
+  // SEO Metadata
+  seoTitle        String?
+  metaDescription String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  store           Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+}
+
+// ----------------------------------------------------
+// 9. Structured FAQs (for Schema.org FAQPage)
+// ----------------------------------------------------
+model FAQ {
+  id         String   @id @default(uuid())
+  storeId    String?
+  question   String
+  answer     String
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  store      Store?   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+}
+
+// ----------------------------------------------------
+// 10. Click Logs & Conversion Tracking
+// ----------------------------------------------------
+model ClickLog {
+  id          String   @id @default(uuid())
+  couponId    String?
+  storeId     String
+  countryCode String?
+  subId       String?
+  ipHash      String?
+  userAgent   String?
+  referer     String?
+  clickedAt   DateTime @default(now())
+
+  coupon      Coupon?  @relation(fields: [couponId], references: [id], onDelete: SetNull)
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+}
+
+// ----------------------------------------------------
+// 11. Dynamic Site Settings & Marketing Scripts
+// ----------------------------------------------------
+model SiteSetting {
+  key       String   @id
+  value     String
+  groupName String   @default("general") // "general", "branding", "seo", "analytics", "social", "contact"
+  updatedAt DateTime @updatedAt
+}
