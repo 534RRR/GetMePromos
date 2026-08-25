@@ -38,7 +38,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
         title: coupon.title,
         couponCode: coupon.couponCode,
         discountValue: coupon.discountValue,
-        affiliateUrl: coupon.affiliateUrlOverride || coupon.store.affiliateUrl,
+        affiliateUrl: `/out/coupon/${coupon.id}`,
       });
     }
   };

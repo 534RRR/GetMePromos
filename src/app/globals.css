@@ -314,9 +314,43 @@ img {
 @media (max-width: 1024px) {
   .grid-cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .desktop-nav { display: none !important; }
+  #mobile-menu-btn { display: inline-flex !important; }
 }
 
 @media (max-width: 640px) {
   .grid-cols-4, .grid-cols-3, .grid-cols-2 { grid-template-columns: 1fr; }
   .container { padding-left: 1rem; padding-right: 1rem; }
 }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.hover-bg:hover {
+  background-color: var(--bg-subtle);
+}
+
+.store-dir-item:hover {
+  border-color: var(--primary) !important;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+

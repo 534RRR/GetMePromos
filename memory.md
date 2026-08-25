@@ -2,8 +2,8 @@
 
 > **Last Updated:** August 25, 2026  
 > **Repository:** `https://github.com/534RRR/GrabYourDealz.git` (Branch: `main`)  
-> **Current Progress:** Phase 1 & Phase 2 Completed (100% Verified)  
-> **Next Milestone:** Phase 3 (Frontend Foundation, Affiliate /out/:id Engine & SEO Schemas)  
+> **Current Progress:** Phase 1, Phase 2, Phase 3 & Phase 4 Completed (100% Verified)  
+> **Next Milestone:** Phase 5 (CMS Editorial Expansion: Blog/Review Editors & Site Settings)  
 
 ---
 
@@ -24,9 +24,9 @@
 | File | Purpose |
 | :--- | :--- |
 | [`architecture.md`](file:///e:/Zeeshan/Website/architecture.md) | Relational database models, multi-region architecture, affiliate flow, and SEO engine. |
-| [`wireframe.md`](file:///e:/Zeeshan/Website/wireframe.md) | Visual UI/UX wireframes and component breakdown for all 8 core page layouts. |
+| [`wireframe.md`](file:///e:/Zeeshan/Website/wireframe.md) | Visual UI/UX wireframes and component breakdown for all core page layouts. |
 | [`sequence.md`](file:///e:/Zeeshan/Website/sequence.md) | 6-Phase zero-rework execution sequence and dependency matrix. |
-| [`walkthrough.md`](file:///C:/Users/Aman/.gemini/antigravity-ide/brain/e5ae658b-639a-4838-bae0-4637ace728e7/walkthrough.md) | Verification logs, screenshots, and live browser test results. |
+| [`walkthrough.md`](file:///C:/Users/Aman/.gemini/antigravity-ide/brain/57327822-22c4-4ebf-b103-742c87bd2386/walkthrough.md) | Verification logs, screenshots, and live browser test results for Phases 3 & 4. |
 | [`prisma/schema.prisma`](file:///e:/Zeeshan/Website/prisma/schema.prisma) | Complete database schema with 14 relational tables. |
 | [`prisma/seed.ts`](file:///e:/Zeeshan/Website/prisma/seed.ts) | Multi-region seed engine (8 countries, 8 categories, stores, coupons, blogs, reviews). |
 
@@ -49,34 +49,30 @@
 - Category Taxonomy Management (`/admin/categories`).
 - Store & Brand Management (`/admin/stores`, `/admin/stores/new`, `/admin/stores/[id]`).
 - Coupon & Promo Code Management (`/admin/coupons`, `/admin/coupons/new`, `/admin/coupons/[id]`).
-- End-to-end browser testing: Created Puma store + PUMA20 coupon and verified immediate rendering on public homepage.
-- Pushed all commits to `https://github.com/534RRR/GrabYourDealz.git`.
+
+### ✅ Phase 3: Conversion Engine, Search & SEO Infrastructure
+- **Server-Side Affiliate Redirection Route:** `/out/coupon/:id` and `/out/store/:id` with SHA-256 IP hashing, country header detection, `click_logs` recording, `usedCount` increments, and 307 redirects.
+- **Global Instant Search & Autocomplete:** `/api/search` + [`GlobalSearchModal.tsx`](file:///e:/Zeeshan/Website/src/components/GlobalSearchModal.tsx) triggered via header and `Ctrl+K`.
+- **Dynamic SEO & Schema.org JSON-LD:** Organization, WebSite, Breadcrumbs, Store, Offers, Articles, Reviews, and FAQs in [`src/lib/seo.ts`](file:///e:/Zeeshan/Website/src/lib/seo.ts), plus dynamic `sitemap.ts` and `robots.ts`.
+- **Shared UI Components:** [`Breadcrumbs.tsx`](file:///e:/Zeeshan/Website/src/components/Breadcrumbs.tsx), [`RatingStars.tsx`](file:///e:/Zeeshan/Website/src/components/RatingStars.tsx), [`FaqAccordion.tsx`](file:///e:/Zeeshan/Website/src/components/FaqAccordion.tsx), [`NewsletterBox.tsx`](file:///e:/Zeeshan/Website/src/components/NewsletterBox.tsx), [`BlogCard.tsx`](file:///e:/Zeeshan/Website/src/components/BlogCard.tsx), [`ReviewCard.tsx`](file:///e:/Zeeshan/Website/src/components/ReviewCard.tsx).
+
+### ✅ Phase 4: Public Marketplace & Content Pages
+- **Stores Directory (`/stores`):** Search, Category filters, and A-Z alphabetical directory index.
+- **Dynamic Store Detail (`/stores/[slug]`):** Active promo codes / deals tabs, ratings, review preview, FAQs accordion, and collapsible expired coupons archive.
+- **Coupons Hub (`/coupons`):** Deep-filtering sidebar by Category, Store, and Offer Type (Codes, Deals, Free Shipping).
+- **Categories Hub (`/categories`, `/categories/[slug]`):** Category directory and category-specific stores & coupons.
+- **Shopping Guides & Blogs (`/blogs`, `/blogs/[slug]`):** Article reader with embedded live store/coupon cards and schema.
+- **Store Reviews (`/reviews`, `/reviews/[slug]`):** Review directory and detailed rating breakdowns, pros/cons, and verdict.
+- **Static & Legal Pages:** `/about-us`, `/contact-us` (with working `/api/contact`), `/privacy-policy`, `/terms-and-conditions`.
 
 ---
 
-## 4. Immediate Next Step: Phase 3 Roadmap
+## 4. Immediate Next Step: Phase 5 Roadmap
 
-When resuming the project, proceed immediately with **Phase 3 (Frontend Foundation & Shared Conversion/SEO Engines)**:
-
-1. **Server-Side Affiliate Redirection Route:**
-   - Implement `/out/coupon/:id` and `/out/store/:id`.
-   - Log click analytics in `click_logs` table (timestamp, IP hash, device, country, subID).
-   - Issue 302/307 redirect to the target merchant affiliate URL.
-
-2. **Global Instant Search & Autocomplete:**
-   - Build global search modal with categorized suggestions (Stores, Coupons, Categories, Blogs).
-   - Debounced query handler with fast in-memory filtering.
-
-3. **Dynamic SEO & JSON-LD Schemas:**
-   - Create Schema.org JSON-LD builders for `BreadcrumbList`, `Store`, `Offer`, `Article`, and `FAQPage`.
-   - Create dynamic OpenGraph metadata helpers.
-
-4. **Public Marketplace Pages (Phase 4):**
-   - Stores Directory (`/stores`) & Dynamic Store Detail (`/stores/[slug]`).
-   - Coupons Hub (`/coupons`) with real-time multi-filtering.
-   - Categories Hub (`/categories`) & Category Store Pages (`/categories/[slug]`).
-   - Blogs Hub (`/blogs`, `/blogs/[slug]`) & Reviews (`/reviews`, `/reviews/[slug]`).
-   - Static/Legal Pages (`/about-us`, `/contact-us`, `/privacy-policy`, `/terms-and-conditions`).
+Proceed with **Phase 5 (CMS Editorial Expansion & Global Settings)**:
+1. **Blog & Shopping Guide Editor (`/admin/blogs`):** Create, edit, publish, category assignment, store/coupon tagger.
+2. **Store Reviews Manager (`/admin/reviews`):** Rating scores, structured Pros & Cons builder, and editorial verdict.
+3. **Site Settings & Analytics Manager (`/admin/settings`):** Manage site branding, logo, Google Analytics 4 (GA4), GTM ID, Meta Pixel, and support contact details.
 
 ---
 
@@ -92,18 +88,11 @@ npx prisma db push
 # Re-seed database
 npx tsx prisma/seed.ts
 
-# Open Prisma Studio GUI
-npx prisma studio
-
 # Run production build check
 npm run build
 
 # Git sync at end of session
 git add .
-git commit -m "feat: description of work completed"
+git commit -m "feat: complete Phase 3 and Phase 4 frontend marketplace, search, and affiliate tracking"
 git push origin main
 ```
-
----
-
-*This file preserves the exact project memory, architecture decisions, and roadmap.*
