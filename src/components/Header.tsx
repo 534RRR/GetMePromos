@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Shield, Menu, X, Tag, Heart } from 'lucide-react';
+import { Search, Shield, Menu, X, Tag } from 'lucide-react';
 import GlobalSearchModal from './GlobalSearchModal';
 
 const COUNTRIES = [
@@ -51,25 +51,25 @@ export default function Header() {
   return (
     <>
       <header className="header-nav">
-        <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+        <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
           
           {/* Brand Logo */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', flexShrink: 0 }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', flexShrink: 0 }}>
             <div style={{
               background: 'linear-gradient(135deg, #059669 0%, #4f46e5 100%)',
               color: '#fff',
-              width: '38px',
-              height: '38px',
+              width: '36px',
+              height: '36px',
               borderRadius: 'var(--radius-md)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               boxShadow: 'var(--shadow-sm)',
             }}>
-              <Tag size={20} />
+              <Tag size={18} />
             </div>
             <div>
-              <span style={{ fontSize: '1.3rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
+              <span style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
                 GrabYour<span style={{ color: 'var(--primary)' }}>Dealz</span>
               </span>
             </div>
@@ -86,31 +86,31 @@ export default function Header() {
           </nav>
 
           {/* Right Utility Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
             
             {/* Search Trigger Button */}
             <button
               onClick={() => setSearchModalOpen(true)}
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary btn-sm header-search-btn"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.45rem 0.85rem',
+                gap: '0.4rem',
+                padding: '0.45rem 0.65rem',
                 color: 'var(--text-muted)',
               }}
               title="Search coupons & stores (Ctrl+K)"
             >
               <Search size={16} />
-              <span style={{ display: 'inline-block', fontSize: '0.85rem' }}>Search...</span>
-              <kbd style={{
+              <span className="search-text" style={{ fontSize: '0.85rem' }}>Search...</span>
+              <kbd className="search-kbd" style={{
                 background: 'var(--bg-subtle)',
                 border: '1px solid var(--border)',
                 borderRadius: '4px',
-                padding: '0.1rem 0.35rem',
+                padding: '0.1rem 0.3rem',
                 fontSize: '0.7rem',
                 color: 'var(--text-muted)',
-                marginLeft: '0.25rem',
+                marginLeft: '0.15rem',
               }}>
                 ⌘K
               </kbd>
@@ -121,11 +121,11 @@ export default function Header() {
               <button
                 onClick={() => setShowCountryMenu(!showCountryMenu)}
                 className="btn btn-secondary btn-sm"
-                style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.65rem' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.55rem' }}
                 title="Select your country"
               >
                 <span>{currentCountry.flag}</span>
-                <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>{currentCountry.code}</span>
+                <span className="country-code" style={{ fontWeight: 700, fontSize: '0.82rem' }}>{currentCountry.code}</span>
               </button>
 
               {showCountryMenu && (
@@ -173,17 +173,20 @@ export default function Header() {
             </div>
 
             {/* Admin CMS Access */}
-            <Link href="/admin" className="btn btn-primary btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            <Link
+              href="/admin"
+              className="btn btn-primary btn-sm header-admin-btn"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.45rem 0.75rem' }}
+            >
               <Shield size={14} />
-              <span>Admin</span>
+              <span className="admin-text">Admin</span>
             </Link>
 
-            {/* Mobile Hamburger Toggle */}
+            {/* Mobile Hamburger Toggle Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="btn btn-secondary btn-sm"
-              style={{ padding: '0.45rem', display: 'none' }}
-              id="mobile-menu-btn"
+              className="btn btn-secondary btn-sm mobile-toggle-btn"
+              style={{ padding: '0.45rem 0.55rem' }}
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -198,17 +201,19 @@ export default function Header() {
           <div style={{
             background: '#ffffff',
             borderTop: '1px solid var(--border)',
-            padding: '1rem',
+            padding: '1.25rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '0.5rem',
+            gap: '0.6rem',
+            boxShadow: 'var(--shadow-md)',
           }}>
-            <Link href="/coupons" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Coupons</Link>
-            <Link href="/stores" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Stores</Link>
-            <Link href="/categories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Categories</Link>
-            <Link href="/blogs" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Blogs</Link>
-            <Link href="/reviews" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Reviews</Link>
-            <Link href="/about-us" className="nav-link" onClick={() => setMobileMenuOpen(false)}>About</Link>
+            <Link href="/coupons" className="nav-link" onClick={() => setMobileMenuOpen(false)}>🎟️ Promo Codes &amp; Coupons</Link>
+            <Link href="/stores" className="nav-link" onClick={() => setMobileMenuOpen(false)}>🏬 All Stores &amp; Brands</Link>
+            <Link href="/categories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>📁 Browse Categories</Link>
+            <Link href="/blogs" className="nav-link" onClick={() => setMobileMenuOpen(false)}>📖 Shopping Guides &amp; Blogs</Link>
+            <Link href="/reviews" className="nav-link" onClick={() => setMobileMenuOpen(false)}>⭐ Store Reviews &amp; Ratings</Link>
+            <Link href="/about-us" className="nav-link" onClick={() => setMobileMenuOpen(false)}>ℹ️ About GrabYourDealz</Link>
+            <Link href="/contact-us" className="nav-link" onClick={() => setMobileMenuOpen(false)}>✉️ Contact Support</Link>
           </div>
         )}
       </header>

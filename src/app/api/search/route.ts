@@ -1,12 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { checkRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
 
+function sanitizeQuery(str: string): string {
+  return str.replace(/<[^>]*>?/gm, '').trim().substring(0, 100);
+}
+
 export async function GET(request: NextRequest) {
   try {
+    // Rate Limiting: 45 searches per minute per IP
+    const rateLimit = checkRateLimit(request, 45, 60, 'search');
+    if (!rateLimit.success) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded. Please wait a moment.' },
+        { status: 429 }
+      );
+    }
+
     const searchParams = request.nextUrl.searchParams;
-    const query = searchParams.get('q')?.trim() || '';
+    const rawQuery = searchParams.get('q') || '';
+    const query = sanitizeQuery(rawQuery);
 
     if (!query || query.length < 2) {
       return NextResponse.json({
