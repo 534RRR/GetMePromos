@@ -158,8 +158,66 @@ export default async function AdminLayout({
           </Link>
 
           <div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: '#64748b', padding: '1rem 0.85rem 0.35rem' }}>
-            Content & System
+            Editorial & Content
           </div>
+
+          <Link
+            href="/admin/blogs"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '0.65rem 0.85rem',
+              borderRadius: 'var(--radius-md)',
+              color: '#cbd5e1',
+              fontWeight: 500,
+              fontSize: '0.9rem',
+              textDecoration: 'none',
+            }}
+          >
+            <FileText size={18} />
+            <span>Blogs & Guides</span>
+          </Link>
+
+          <Link
+            href="/admin/reviews"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '0.65rem 0.85rem',
+              borderRadius: 'var(--radius-md)',
+              color: '#cbd5e1',
+              fontWeight: 500,
+              fontSize: '0.9rem',
+              textDecoration: 'none',
+            }}
+          >
+            <Star size={18} />
+            <span>Store Reviews</span>
+          </Link>
+
+          <div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: '#64748b', padding: '1rem 0.85rem 0.35rem' }}>
+            System & Settings
+          </div>
+
+          <Link
+            href="/admin/settings"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '0.65rem 0.85rem',
+              borderRadius: 'var(--radius-md)',
+              color: '#cbd5e1',
+              fontWeight: 500,
+              fontSize: '0.9rem',
+              textDecoration: 'none',
+            }}
+          >
+            <Settings size={18} />
+            <span>Site Settings</span>
+          </Link>
 
           <Link
             href="/"
@@ -174,6 +232,7 @@ export default async function AdminLayout({
               fontWeight: 600,
               fontSize: '0.9rem',
               textDecoration: 'none',
+              marginTop: '0.5rem',
             }}
           >
             <ExternalLink size={18} />

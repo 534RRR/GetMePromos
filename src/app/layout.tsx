@@ -3,6 +3,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CodeModal from '@/components/CodeModal';
+import AnalyticsScripts from '@/components/AnalyticsScripts';
 
 export const metadata: Metadata = {
   title: 'GrabYourDealz — Verified Coupons, Promo Codes & Shopping Deals',
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <AnalyticsScripts />
         <Header />
         <main style={{ flex: 1 }}>{children}</main>
         <Footer />

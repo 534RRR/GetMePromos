@@ -16,31 +16,42 @@ import {
 
 export default async function AdminDashboardPage() {
   // Fetch platform metrics from DB
-  const [storeCount, couponCount, dealCount, countryCount, clickCount, recentStores, recentCoupons] =
-    await Promise.all([
-      prisma.store.count(),
-      prisma.coupon.count({ where: { status: 'active' } }),
-      prisma.deal.count({ where: { status: 'active' } }),
-      prisma.country.count({ where: { isActive: true } }),
-      prisma.clickLog.count(),
-      prisma.store.findMany({
-        take: 5,
-        orderBy: { createdAt: 'desc' },
-        include: {
-          _count: { select: { coupons: true, deals: true } },
-        },
-      }),
-      prisma.coupon.findMany({
-        take: 5,
-        orderBy: { createdAt: 'desc' },
-        include: { store: true },
-      }),
-    ]);
+  const [
+    storeCount,
+    couponCount,
+    dealCount,
+    countryCount,
+    clickCount,
+    blogCount,
+    reviewCount,
+    recentStores,
+    recentCoupons,
+  ] = await Promise.all([
+    prisma.store.count(),
+    prisma.coupon.count({ where: { status: 'active' } }),
+    prisma.deal.count({ where: { status: 'active' } }),
+    prisma.country.count({ where: { isActive: true } }),
+    prisma.clickLog.count(),
+    prisma.blog.count(),
+    prisma.review.count(),
+    prisma.store.findMany({
+      take: 5,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        _count: { select: { coupons: true, deals: true } },
+      },
+    }),
+    prisma.coupon.findMany({
+      take: 5,
+      orderBy: { createdAt: 'desc' },
+      include: { store: true },
+    }),
+  ]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       
-      {/* Header & Quick Action */}
+      {/* Header & Quick Actions */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-main)' }}>
@@ -51,63 +62,91 @@ export default async function AdminDashboardPage() {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
           <Link href="/admin/stores/new" className="btn btn-secondary btn-sm" style={{ fontWeight: 700 }}>
-            <Plus size={16} /> New Store
+            <Plus size={15} /> Store
           </Link>
-          <Link href="/admin/coupons/new" className="btn btn-primary btn-sm">
-            <Plus size={16} /> New Coupon
+          <Link href="/admin/coupons/new" className="btn btn-secondary btn-sm" style={{ fontWeight: 700 }}>
+            <Plus size={15} /> Coupon
+          </Link>
+          <Link href="/admin/blogs/new" className="btn btn-secondary btn-sm" style={{ fontWeight: 700 }}>
+            <Plus size={15} /> Guide
+          </Link>
+          <Link href="/admin/reviews/new" className="btn btn-primary btn-sm" style={{ fontWeight: 700 }}>
+            <Plus size={15} /> Review
           </Link>
         </div>
       </div>
 
-      {/* 4 Stat Metric Cards */}
+      {/* 6 Stat Metric Cards */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
         gap: '1.25rem',
       }}>
         {/* Stores Card */}
-        <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <div style={{ width: '52px', height: '52px', borderRadius: 'var(--radius-md)', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Store size={26} />
+        <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Store size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Active Stores</div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)' }}>{storeCount}</div>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Stores</div>
+            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-main)' }}>{storeCount}</div>
           </div>
         </div>
 
         {/* Coupons Card */}
-        <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <div style={{ width: '52px', height: '52px', borderRadius: 'var(--radius-md)', background: 'var(--secondary-light)', color: 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Tag size={26} />
+        <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: 'var(--secondary-light)', color: 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Tag size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Live Coupons</div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)' }}>{couponCount}</div>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Coupons</div>
+            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-main)' }}>{couponCount}</div>
+          </div>
+        </div>
+
+        {/* Guides / Blogs Card */}
+        <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: '#eff6ff', color: '#3b82f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Globe size={24} />
+          </div>
+          <div>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Guides</div>
+            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-main)' }}>{blogCount}</div>
+          </div>
+        </div>
+
+        {/* Reviews Card */}
+        <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <ShieldCheck size={24} />
+          </div>
+          <div>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Reviews</div>
+            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-main)' }}>{reviewCount}</div>
           </div>
         </div>
 
         {/* Countries Card */}
-        <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <div style={{ width: '52px', height: '52px', borderRadius: 'var(--radius-md)', background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Globe size={26} />
+        <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Globe size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Active Regions</div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)' }}>{countryCount}</div>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Regions</div>
+            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-main)' }}>{countryCount}</div>
           </div>
         </div>
 
         {/* Outbound Clicks Card */}
-        <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <div style={{ width: '52px', height: '52px', borderRadius: 'var(--radius-md)', background: '#fffbeb', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <TrendingUp size={26} />
+        <div className="card" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: '#fdf2f8', color: '#db2777', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <TrendingUp size={24} />
           </div>
           <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Affiliate Clicks</div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)' }}>{clickCount}</div>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Clicks</div>
+            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-main)' }}>{clickCount}</div>
           </div>
         </div>
       </div>
