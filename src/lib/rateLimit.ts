@@ -32,11 +32,16 @@ export function checkRateLimit(
   windowSeconds: number = 60,
   prefix: string = 'api'
 ): { success: boolean; remaining: number; reset: number } {
-  // Extract client IP or fallback
-  const ip =
-    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    req.headers.get('x-real-ip') ||
-    '127.0.0.1';
+  // Extract client IP: Prioritize edge-verified headers that cannot be spoofed by clients
+  const cfIp = req.headers.get('cf-connecting-ip')?.trim();
+  const realIp = req.headers.get('x-real-ip')?.trim();
+  const forwarded = req.headers.get('x-forwarded-for');
+  
+  // In a proxy chain, the last entry is appended by the nearest trusted edge proxy
+  const forwardedParts = forwarded ? forwarded.split(',').map((s) => s.trim()).filter(Boolean) : [];
+  const trustedForwardedIp = forwardedParts.length > 0 ? forwardedParts[forwardedParts.length - 1] : null;
+
+  const ip = cfIp || realIp || trustedForwardedIp || '127.0.0.1';
 
   const key = `${prefix}:${ip}`;
   const now = Date.now();

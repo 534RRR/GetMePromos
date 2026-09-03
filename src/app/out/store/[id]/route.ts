@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import prisma from '@/lib/prisma';
+import { checkRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,14 +10,20 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    // Prevent automated click flooding and analytics poisoning (60 redirects/min per IP)
+    const rateLimit = checkRateLimit(request, 60, 60, 'store-out');
+    if (!rateLimit.success) {
+      return NextResponse.redirect(new URL('/stores', request.url), 302);
+    }
+
     const storeId = params.id;
 
-    // 1. Fetch store
+    // 1. Fetch store and enforce that only active stores can be redirected to
     const store = await prisma.store.findUnique({
       where: { id: storeId },
     });
 
-    if (!store) {
+    if (!store || store.status !== 'active') {
       return NextResponse.redirect(new URL('/stores', request.url), 302);
     }
 

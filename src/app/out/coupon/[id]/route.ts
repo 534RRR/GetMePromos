@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import prisma from '@/lib/prisma';
+import { checkRateLimit } from '@/lib/rateLimit';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,9 +10,15 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    // Prevent automated click flooding and analytics poisoning (60 redirects/min per IP)
+    const rateLimit = checkRateLimit(request, 60, 60, 'coupon-out');
+    if (!rateLimit.success) {
+      return NextResponse.redirect(new URL('/', request.url), 302);
+    }
+
     const couponId = params.id;
 
-    // 1. Fetch coupon with associated store
+    // 1. Fetch coupon with associated store and verify both are active
     const coupon = await prisma.coupon.findUnique({
       where: { id: couponId },
       include: {
@@ -19,7 +26,7 @@ export async function GET(
       },
     });
 
-    if (!coupon || !coupon.store) {
+    if (!coupon || !coupon.store || coupon.status !== 'active' || coupon.store.status !== 'active') {
       return NextResponse.redirect(new URL('/', request.url), 302);
     }
 
