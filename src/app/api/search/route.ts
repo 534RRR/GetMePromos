@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { checkRateLimit } from '@/lib/rateLimit';
+import { createErrorResponse } from '@/lib/apiResponse';
 
 export const dynamic = 'force-dynamic';
 
@@ -126,7 +127,6 @@ export async function GET(request: NextRequest) {
       blogs,
     });
   } catch (error) {
-    console.error('Search API error:', error);
-    return NextResponse.json({ error: 'Search failed' }, { status: 500 });
+    return createErrorResponse('Search failed', error, 500);
   }
 }

@@ -17,9 +17,15 @@ export default async function AnalyticsScripts() {
     });
 
     for (const s of settings) {
-      if (s.key === 'ga4MeasurementId') ga4Id = s.value;
-      if (s.key === 'gtmContainerId') gtmId = s.value;
-      if (s.key === 'metaPixelId') metaPixelId = s.value;
+      if (s.key === 'ga4MeasurementId' && /^G-[A-Z0-9]{4,20}$/i.test(s.value.trim())) {
+        ga4Id = s.value.trim();
+      }
+      if (s.key === 'gtmContainerId' && /^GTM-[A-Z0-9]{4,20}$/i.test(s.value.trim())) {
+        gtmId = s.value.trim();
+      }
+      if (s.key === 'metaPixelId' && /^[0-9]{5,25}$/.test(s.value.trim())) {
+        metaPixelId = s.value.trim();
+      }
     }
   } catch (err) {
     // Database may not be initialized yet during build time

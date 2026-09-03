@@ -57,7 +57,6 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
 
   if (!category) notFound();
 
-  // Fetch all active coupons for stores in this category
   const storeIds = category.storeCategories.map((sc) => sc.store.id);
 
   const coupons = await prisma.coupon.findMany({
@@ -83,7 +82,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
   const stores = category.storeCategories.map((sc) => sc.store).filter((s) => s.status === 'active');
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem 4rem 1rem' }}>
+    <div className="container" style={{ padding: '2rem 1.5rem 5rem 1.5rem' }}>
       <Breadcrumbs
         items={[
           { name: 'Categories', url: '/categories' },
@@ -94,30 +93,30 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
       {/* Category Hero */}
       <div
         style={{
-          background: '#ffffff',
-          borderRadius: 'var(--radius-xl)',
+          background: 'var(--bg-card)',
+          borderRadius: 'var(--radius-2xl)',
           border: '1px solid var(--border)',
-          padding: '2.5rem 2rem',
-          boxShadow: 'var(--shadow-sm)',
+          padding: '2.25rem 2rem',
+          boxShadow: 'var(--shadow-card)',
           marginBottom: '3rem',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-          <Folder size={18} /> Category Deals
-        </div>
-        <h1 style={{ fontSize: '2.3rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '0.65rem' }}>
+        <span className="eyebrow-pill" style={{ marginBottom: '0.75rem' }}>
+          <Folder size={12} /> Category Deals
+        </span>
+        <h1 style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
           {category.name} Coupons &amp; Deals
         </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '700px', marginBottom: '1.5rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1rem', maxWidth: '680px', marginBottom: '1.5rem' }}>
           {category.description || `Browse verified promo codes and sales across all ${category.name} stores.`}
         </p>
 
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap' }}>
           <span className="badge badge-code">
-            <Store size={13} /> {stores.length} Partner Stores
+            <Store size={12} /> {stores.length} Partner Stores
           </span>
           <span className="badge badge-verified">
-            <Tag size={13} /> {coupons.length} Active Offers
+            <Tag size={12} /> {coupons.length} Active Offers
           </span>
         </div>
       </div>
@@ -125,16 +124,20 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
       {/* Top Stores in Category */}
       {stores.length > 0 && (
         <section style={{ marginBottom: '3.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-heading)' }}>
               Top {category.name} Stores
             </h2>
             <Link href={`/stores?category=${category.slug}`} className="btn btn-secondary btn-sm" style={{ fontWeight: 700 }}>
-              View All Stores <ArrowRight size={16} />
+              View All Stores <ArrowRight size={14} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-6 gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gap: '1.35rem',
+          }}>
             {stores.slice(0, 6).map((store) => (
               <StoreCard key={store.id} store={store as any} />
             ))}
@@ -144,28 +147,35 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
 
       {/* Active Coupons in Category */}
       <section>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)' }}>
-              Verified {category.name} Coupons
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-heading)' }}>
+              Verified {category.name} Offers
             </h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
               Hand-tested promo codes and instant discounts for online checkout.
             </p>
           </div>
           <Link href={`/coupons?category=${category.slug}`} className="btn btn-secondary btn-sm" style={{ fontWeight: 700 }}>
-            View All Offers <ArrowRight size={16} />
+            View All Offers <ArrowRight size={14} />
           </Link>
         </div>
 
         {coupons.length === 0 ? (
-          <div style={{ padding: '3rem 2rem', textAlign: 'center', background: '#ffffff', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border)' }}>
-            <Tag size={40} color="var(--text-muted)" style={{ margin: '0 auto 0.75rem auto' }} />
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.35rem' }}>No Coupons in this category</h3>
+          <div style={{
+            padding: '3.5rem 2rem',
+            textAlign: 'center',
+            background: 'var(--bg-card)',
+            borderRadius: 'var(--radius-2xl)',
+            border: '1px solid var(--border)',
+            boxShadow: 'var(--shadow-card)',
+          }}>
+            <Tag size={40} color="var(--primary)" style={{ margin: '0 auto 1rem auto' }} />
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.4rem', color: 'var(--text-heading)' }}>No Coupons in this category</h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Check back soon for newly added promo codes.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-6" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}>
+          <div className="grid grid-cols-2 gap-5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))' }}>
             {coupons.map((coupon) => (
               <CouponCard key={coupon.id} coupon={coupon as any} />
             ))}

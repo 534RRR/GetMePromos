@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { generateFaqSchema } from '@/lib/seo';
+import { generateFaqSchema, safeJsonLd } from '@/lib/seo';
 
 interface FaqItem {
   question: string;
@@ -17,7 +17,7 @@ interface FaqAccordionProps {
 
 export default function FaqAccordion({
   title = 'Frequently Asked Questions',
-  subtitle = 'Find answers to common questions about saving money with verified coupons.',
+  subtitle = 'Everything you need to know about redeeming verified coupons and saving online.',
   faqs,
 }: FaqAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -31,19 +31,19 @@ export default function FaqAccordion({
   };
 
   return (
-    <div style={{ marginTop: '2rem' }}>
+    <div style={{ marginTop: '2.5rem' }}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(schemaData) }}
       />
 
       {title && (
         <div style={{ marginBottom: '1.5rem' }}>
-          <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.35rem' }}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>
             {title}
           </h3>
           {subtitle && (
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem' }}>
               {subtitle}
             </p>
           )}
@@ -59,10 +59,11 @@ export default function FaqAccordion({
               key={index}
               style={{
                 border: '1px solid var(--border)',
-                borderRadius: 'var(--radius-lg)',
-                backgroundColor: '#ffffff',
+                borderRadius: 'var(--radius-xl)',
+                backgroundColor: 'var(--bg-card)',
+                boxShadow: 'var(--shadow-card)',
                 overflow: 'hidden',
-                transition: 'all 0.2s ease',
+                transition: 'border-color 0.2s ease',
               }}
             >
               <button
@@ -70,17 +71,17 @@ export default function FaqAccordion({
                 onClick={() => toggleFaq(index)}
                 style={{
                   width: '100%',
-                  padding: '1.1rem 1.25rem',
+                  padding: '1.15rem 1.4rem',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  background: isOpen ? 'var(--bg-subtle)' : '#ffffff',
+                  background: isOpen ? 'var(--primary-subtle)' : 'transparent',
                   border: 'none',
                   textAlign: 'left',
                   cursor: 'pointer',
-                  fontSize: '1rem',
-                  fontWeight: 700,
-                  color: 'var(--text-main)',
+                  fontSize: '0.98rem',
+                  fontWeight: 800,
+                  color: 'var(--text-heading)',
                 }}
               >
                 <span>{faq.question}</span>
@@ -88,8 +89,8 @@ export default function FaqAccordion({
                   size={18}
                   style={{
                     transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.2s ease',
-                    color: 'var(--text-muted)',
+                    transition: 'transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+                    color: isOpen ? 'var(--primary)' : 'var(--slate-400)',
                     flexShrink: 0,
                     marginLeft: '1rem',
                   }}
@@ -99,12 +100,12 @@ export default function FaqAccordion({
               {isOpen && (
                 <div
                   style={{
-                    padding: '1.1rem 1.25rem',
-                    color: 'var(--text-muted)',
+                    padding: '1.15rem 1.4rem',
+                    color: 'var(--text-main)',
                     fontSize: '0.92rem',
-                    lineHeight: '1.6',
+                    lineHeight: '1.65',
                     borderTop: '1px solid var(--border)',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-card-subtle)',
                   }}
                 >
                   {faq.answer}

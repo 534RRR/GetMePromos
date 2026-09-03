@@ -42,6 +42,8 @@ export function generateWebSiteSchema() {
   };
 }
 
+export const generateWebsiteSchema = generateWebSiteSchema;
+
 /**
  * Generates Schema.org BreadcrumbList structured data
  */
@@ -202,4 +204,12 @@ export function generateFaqSchema(faqs: Array<{ question: string; answer: string
       },
     })),
   };
+}
+
+/**
+ * Safely serializes data to a JSON string for application/ld+json script tags,
+ * escaping '<' to prevent HTML script tag termination / XSS breakout attacks.
+ */
+export function safeJsonLd(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, '\\u003c');
 }

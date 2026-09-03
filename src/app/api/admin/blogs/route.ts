@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getAdminSession } from '@/lib/auth';
+import { createErrorResponse } from '@/lib/apiResponse';
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 
@@ -36,7 +42,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ blogs });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to fetch blogs' }, { status: 500 });
+    return createErrorResponse('Failed to fetch blogs', error, 500);
   }
 }
 
@@ -109,7 +115,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, blog });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to create blog post' }, { status: 500 });
+    return createErrorResponse('Failed to create blog post', error, 500);
   }
 }
 
@@ -188,7 +194,7 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({ success: true, blog });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to update blog post' }, { status: 500 });
+    return createErrorResponse('Failed to update blog post', error, 500);
   }
 }
 
@@ -209,6 +215,6 @@ export async function DELETE(req: NextRequest) {
     await prisma.blog.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to delete blog post' }, { status: 500 });
+    return createErrorResponse('Failed to delete blog post', error, 500);
   }
 }

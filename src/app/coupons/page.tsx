@@ -4,16 +4,12 @@ import type { Metadata } from 'next';
 import prisma from '@/lib/prisma';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CouponCard from '@/components/CouponCard';
-import { Search, Tag, Filter, ShieldCheck, ArrowRight, X } from 'lucide-react';
+import { Search, Tag, X } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'All Verified Coupons, Promo Codes & Discounts | GrabYourDealz',
   description:
     'Search and filter thousands of tested, working discount coupons, promo codes, and flash sales across top shopping categories and stores.',
-  openGraph: {
-    title: 'All Verified Coupons & Promo Codes — GrabYourDealz',
-    description: '100% working discount promo codes and cash saving deals updated 24/7.',
-  },
 };
 
 interface CouponsPageProps {
@@ -21,8 +17,8 @@ interface CouponsPageProps {
     search?: string;
     category?: string;
     store?: string;
-    type?: string; // "all", "code", "deal", "free_shipping"
-    sort?: string; // "popular", "newest", "expiring"
+    type?: string;
+    sort?: string;
   };
 }
 
@@ -33,7 +29,6 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
   const selectedType = searchParams.type || 'all';
   const selectedSort = searchParams.sort || 'popular';
 
-  // 1. Fetch Categories & Stores for sidebar filter lists
   const [categories, stores] = await Promise.all([
     prisma.category.findMany({
       orderBy: { sortOrder: 'asc' },
@@ -49,7 +44,6 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
     }),
   ]);
 
-  // 2. Build where filter for coupons
   const whereCondition: any = {
     status: 'active',
   };
@@ -90,7 +84,6 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
     whereCondition.discountType = 'free_shipping';
   }
 
-  // 3. Build sorting order
   let orderBy: any = [{ isFeatured: 'desc' }, { createdAt: 'desc' }];
   if (selectedSort === 'newest') {
     orderBy = { createdAt: 'desc' };
@@ -100,7 +93,6 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
     orderBy = [{ isFeatured: 'desc' }, { usedCount: 'desc' }];
   }
 
-  // 4. Fetch matching coupons
   const coupons = await prisma.coupon.findMany({
     where: whereCondition,
     orderBy,
@@ -120,30 +112,30 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
   const totalCouponsCount = coupons.length;
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem 4rem 1rem' }}>
+    <div className="container" style={{ padding: '2rem 1.5rem 5rem 1.5rem' }}>
       <Breadcrumbs items={[{ name: 'Coupons', url: '/coupons' }]} />
 
       {/* Page Header */}
       <div style={{ marginBottom: '2.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-          <Tag size={18} /> Coupon Directory
-        </div>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '0.5rem' }}>
+        <span className="eyebrow-pill" style={{ marginBottom: '0.85rem' }}>
+          <Tag size={13} /> Deals Hub
+        </span>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
           Verified Promo Codes &amp; Coupons
         </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '700px' }}>
-          Browse {totalCouponsCount} active discount codes, exclusive retailer vouchers, and flash savings tested today.
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '640px' }}>
+          Browse {totalCouponsCount} tested discount codes, voucher coupons, and flash sales verified working today.
         </p>
       </div>
 
       {/* Top Filter Bar */}
       <div
         style={{
-          background: '#ffffff',
+          background: 'var(--bg-card)',
           border: '1px solid var(--border)',
-          borderRadius: 'var(--radius-xl)',
-          padding: '1.25rem',
-          boxShadow: 'var(--shadow-sm)',
+          borderRadius: 'var(--radius-2xl)',
+          padding: '1.25rem 1.5rem',
+          boxShadow: 'var(--shadow-card)',
           marginBottom: '2.5rem',
           display: 'flex',
           flexWrap: 'wrap',
@@ -153,11 +145,11 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
         }}
       >
         {/* Search Box */}
-        <form action="/coupons" method="GET" style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: '260px', position: 'relative' }}>
+        <form action="/coupons" method="GET" style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: '280px', position: 'relative' }}>
           {selectedCategory && <input type="hidden" name="category" value={selectedCategory} />}
           {selectedStore && <input type="hidden" name="store" value={selectedStore} />}
           {selectedType !== 'all' && <input type="hidden" name="type" value={selectedType} />}
-          <Search size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '1rem' }} />
+          <Search size={18} color="var(--slate-400)" style={{ position: 'absolute', left: '1.1rem' }} />
           <input
             type="text"
             name="search"
@@ -165,17 +157,19 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
             placeholder="Search by store or code (e.g. Nike, SAVE20)..."
             style={{
               width: '100%',
-              padding: '0.75rem 1rem 0.75rem 2.75rem',
-              borderRadius: 'var(--radius-md)',
+              padding: '0.8rem 1rem 0.8rem 2.8rem',
+              borderRadius: 'var(--radius-full)',
               border: '1px solid var(--border)',
+              background: 'var(--bg-input)',
+              color: 'var(--text-main)',
               outline: 'none',
-              fontSize: '0.92rem',
+              fontSize: '0.94rem',
             }}
           />
         </form>
 
         {/* Offer Type Tabs */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
           <Link
             href={`/coupons?type=all${selectedCategory ? `&category=${selectedCategory}` : ''}${selectedStore ? `&store=${selectedStore}` : ''}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}`}
             className={`btn btn-sm ${selectedType === 'all' ? 'btn-primary' : 'btn-secondary'}`}
@@ -205,27 +199,27 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
 
       {/* Active Filter Tags */}
       {(searchQuery || selectedCategory || selectedStore || selectedType !== 'all') && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
-          <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)' }}>Active Filters:</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+          <span style={{ fontSize: '0.86rem', fontWeight: 700, color: 'var(--text-muted)' }}>Active Filters:</span>
           {searchQuery && (
-            <span className="badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-              Query: &ldquo;{searchQuery}&rdquo;
+            <span className="badge badge-deal" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+              &ldquo;{searchQuery}&rdquo;
               <Link href={`/coupons?category=${selectedCategory}&store=${selectedStore}&type=${selectedType}`}><X size={12} /></Link>
             </span>
           )}
           {selectedCategory && (
-            <span className="badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+            <span className="badge badge-deal" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
               Category: {selectedCategory}
               <Link href={`/coupons?search=${searchQuery}&store=${selectedStore}&type=${selectedType}`}><X size={12} /></Link>
             </span>
           )}
           {selectedStore && (
-            <span className="badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+            <span className="badge badge-deal" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
               Store: {selectedStore}
               <Link href={`/coupons?search=${searchQuery}&category=${selectedCategory}&type=${selectedType}`}><X size={12} /></Link>
             </span>
           )}
-          <Link href="/coupons" style={{ fontSize: '0.82rem', color: 'var(--primary)', fontWeight: 700, marginLeft: '0.5rem' }}>
+          <Link href="/coupons" style={{ fontSize: '0.84rem', color: 'var(--primary)', fontWeight: 800, marginLeft: '0.5rem' }}>
             Clear All
           </Link>
         </div>
@@ -235,34 +229,23 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
       <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '2.5rem', alignItems: 'start' }}>
         
         {/* SIDEBAR FILTERS */}
-        <aside style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
           
           {/* Categories Filter */}
           <div style={{
-            background: '#ffffff',
+            background: 'var(--bg-card)',
             border: '1px solid var(--border)',
             borderRadius: 'var(--radius-xl)',
-            padding: '1.5rem',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '1.4rem',
+            boxShadow: 'var(--shadow-xs)',
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-main)' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 900, marginBottom: '1rem', color: 'var(--text-heading)', letterSpacing: '-0.01em' }}>
               Categories
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               <Link
                 href={`/coupons?store=${selectedStore}&type=${selectedType}&search=${searchQuery}`}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0.45rem 0.65rem',
-                  borderRadius: 'var(--radius-sm)',
-                  textDecoration: 'none',
-                  fontSize: '0.88rem',
-                  fontWeight: !selectedCategory ? 700 : 500,
-                  background: !selectedCategory ? 'var(--primary-light)' : 'transparent',
-                  color: !selectedCategory ? 'var(--primary-hover)' : 'var(--text-main)',
-                }}
+                className={`sidebar-filter-item ${!selectedCategory ? 'active' : ''}`}
               >
                 <span>All Categories</span>
               </Link>
@@ -270,18 +253,7 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
                 <Link
                   key={cat.id}
                   href={`/coupons?category=${cat.slug}&store=${selectedStore}&type=${selectedType}&search=${searchQuery}`}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '0.45rem 0.65rem',
-                    borderRadius: 'var(--radius-sm)',
-                    textDecoration: 'none',
-                    fontSize: '0.88rem',
-                    fontWeight: selectedCategory === cat.slug ? 700 : 500,
-                    background: selectedCategory === cat.slug ? 'var(--primary-light)' : 'transparent',
-                    color: selectedCategory === cat.slug ? 'var(--primary-hover)' : 'var(--text-main)',
-                  }}
+                  className={`sidebar-filter-item ${selectedCategory === cat.slug ? 'active' : ''}`}
                 >
                   <span>{cat.name}</span>
                 </Link>
@@ -289,32 +261,21 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
             </div>
           </div>
 
-          {/* Popular Stores Filter */}
+          {/* Top Stores Filter */}
           <div style={{
-            background: '#ffffff',
+            background: 'var(--bg-card)',
             border: '1px solid var(--border)',
             borderRadius: 'var(--radius-xl)',
-            padding: '1.5rem',
-            boxShadow: 'var(--shadow-sm)',
+            padding: '1.4rem',
+            boxShadow: 'var(--shadow-xs)',
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-main)' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 900, marginBottom: '1rem', color: 'var(--text-heading)', letterSpacing: '-0.01em' }}>
               Top Stores
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               <Link
                 href={`/coupons?category=${selectedCategory}&type=${selectedType}&search=${searchQuery}`}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0.45rem 0.65rem',
-                  borderRadius: 'var(--radius-sm)',
-                  textDecoration: 'none',
-                  fontSize: '0.88rem',
-                  fontWeight: !selectedStore ? 700 : 500,
-                  background: !selectedStore ? 'var(--primary-light)' : 'transparent',
-                  color: !selectedStore ? 'var(--primary-hover)' : 'var(--text-main)',
-                }}
+                className={`sidebar-filter-item ${!selectedStore ? 'active' : ''}`}
               >
                 <span>All Stores</span>
               </Link>
@@ -322,21 +283,12 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
                 <Link
                   key={st.id}
                   href={`/coupons?store=${st.slug}&category=${selectedCategory}&type=${selectedType}&search=${searchQuery}`}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.45rem 0.65rem',
-                    borderRadius: 'var(--radius-sm)',
-                    textDecoration: 'none',
-                    fontSize: '0.88rem',
-                    fontWeight: selectedStore === st.slug ? 700 : 500,
-                    background: selectedStore === st.slug ? 'var(--primary-light)' : 'transparent',
-                    color: selectedStore === st.slug ? 'var(--primary-hover)' : 'var(--text-main)',
-                  }}
+                  className={`sidebar-filter-item ${selectedStore === st.slug ? 'active' : ''}`}
                 >
-                  <img src={st.logoUrl} alt={st.name} style={{ width: '20px', height: '20px', borderRadius: '4px', objectFit: 'cover' }} />
-                  <span>{st.name}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <img src={st.logoUrl} alt={st.name} style={{ width: '20px', height: '20px', borderRadius: '4px', objectFit: 'contain', background: '#ffffff', padding: '2px', border: '1px solid var(--border)' }} />
+                    <span>{st.name}</span>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -350,13 +302,14 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
             <div style={{
               padding: '4rem 2rem',
               textAlign: 'center',
-              background: '#ffffff',
-              borderRadius: 'var(--radius-xl)',
+              background: 'var(--bg-card)',
+              borderRadius: 'var(--radius-2xl)',
               border: '1px solid var(--border)',
+              boxShadow: 'var(--shadow-card)',
             }}>
-              <Tag size={48} color="var(--text-muted)" style={{ margin: '0 auto 1rem auto' }} />
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '0.5rem' }}>No Coupons Found</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+              <Tag size={44} color="var(--primary)" style={{ margin: '0 auto 1.25rem auto' }} />
+              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-heading)' }}>No Coupons Found</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem', marginBottom: '1.5rem', maxWidth: '440px', margin: '0 auto 1.5rem auto' }}>
                 We couldn&apos;t find any verified offers matching your current filter selection.
               </p>
               <Link href="/coupons" className="btn btn-primary">
@@ -364,7 +317,7 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-6" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}>
+            <div className="grid grid-cols-2 gap-5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))' }}>
               {coupons.map((coupon) => (
                 <CouponCard key={coupon.id} coupon={coupon as any} />
               ))}

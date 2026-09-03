@@ -11,10 +11,6 @@ export const metadata: Metadata = {
   title: 'Shopping Guides, Saving Hacks & Money Tips | GrabYourDealz',
   description:
     'Expert shopping guides, seasonal sale roundups, promo code stacking strategies, and money-saving hacks to help you stretch your budget.',
-  openGraph: {
-    title: 'GrabYourDealz Shopping Guides & Saving Tips',
-    description: 'Expert advice on coupon stacking, holiday sales, and smart online shopping.',
-  },
 };
 
 interface BlogsPageProps {
@@ -26,12 +22,10 @@ interface BlogsPageProps {
 export default async function BlogsPage({ searchParams }: BlogsPageProps) {
   const selectedCategory = searchParams.category || '';
 
-  // 1. Fetch Blog Categories
   const blogCategories = await prisma.blogCategory.findMany({
     orderBy: { name: 'asc' },
   });
 
-  // 2. Fetch published blogs
   const whereCondition: any = {
     status: 'published',
   };
@@ -54,29 +48,29 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
   const remainingBlogs = blogs.slice(1);
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem 4rem 1rem' }}>
-      <Breadcrumbs items={[{ name: 'Blogs & Guides', url: '/blogs' }]} />
+    <div className="container" style={{ padding: '2rem 1.5rem 5rem 1.5rem' }}>
+      <Breadcrumbs items={[{ name: 'Guides & Articles', url: '/blogs' }]} />
 
       {/* Page Header */}
       <div style={{ marginBottom: '2.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-          <BookOpen size={18} /> Shopping Advice
-        </div>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '0.5rem' }}>
-          Shopping Guides &amp; Coupon Tips
+        <span className="eyebrow-pill" style={{ marginBottom: '0.85rem' }}>
+          <BookOpen size={13} /> Shopping Editorial
+        </span>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
+          Saving Guides, Reviews &amp; Hacks
         </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '680px' }}>
-          Discover proven shopping strategies, seasonal clearance guides, and insider hacks to get the maximum discount on every order.
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '640px' }}>
+          Expert shopping tips, retailer buying guides, and tested strategies to save money at checkout.
         </p>
       </div>
 
-      {/* Category Filter Pills */}
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+      {/* Categories Filter Strip */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
         <Link
           href="/blogs"
           className={`btn btn-sm ${!selectedCategory ? 'btn-primary' : 'btn-secondary'}`}
         >
-          All Guides
+          All Articles
         </Link>
         {blogCategories.map((cat) => (
           <Link
@@ -89,7 +83,7 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
         ))}
       </div>
 
-      {/* Featured Blog Hero Banner */}
+      {/* Featured Blog Spotlight */}
       {featuredBlog && !selectedCategory && (
         <section style={{ marginBottom: '3.5rem' }}>
           <Link
@@ -98,17 +92,18 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
               gap: '2rem',
-              background: '#ffffff',
-              borderRadius: 'var(--radius-xl)',
+              borderRadius: 'var(--radius-2xl)',
               border: '1px solid var(--border)',
               overflow: 'hidden',
               textDecoration: 'none',
-              boxShadow: 'var(--shadow-md)',
+              boxShadow: 'var(--shadow-card)',
               alignItems: 'center',
+              padding: 0,
             }}
+            className="card"
           >
             {featuredBlog.featuredImage && (
-              <div style={{ height: '320px', width: '100%', overflow: 'hidden' }}>
+              <div style={{ height: '320px', width: '100%', overflow: 'hidden', background: 'var(--bg-subtle)' }}>
                 <img
                   src={featuredBlog.featuredImage}
                   alt={featuredBlog.title}
@@ -116,27 +111,27 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
                 />
               </div>
             )}
-            <div style={{ padding: '2.5rem 2rem' }}>
+            <div style={{ padding: '2.25rem 2rem' }}>
               <span className="badge badge-amber" style={{ marginBottom: '0.85rem' }}>
-                <Sparkles size={12} /> Featured Guide
+                <Sparkles size={11} /> Featured Guide
               </span>
-              <h2 style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: '1.3', marginBottom: '0.75rem' }}>
+              <h2 style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: '1.3', marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
                 {featuredBlog.title}
               </h2>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.98rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>
                 {featuredBlog.excerpt}
               </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', fontSize: '0.84rem', color: 'var(--text-muted)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <User size={14} />
-                  <span>{featuredBlog.authorName}</span>
+                  <User size={14} color="var(--primary)" />
+                  <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{featuredBlog.authorName}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <Clock size={14} />
+                  <Clock size={14} color="var(--primary)" />
                   <span>{featuredBlog.readingTime}</span>
                 </div>
-                <span style={{ color: 'var(--primary)', fontWeight: 700, marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                  Read Guide <ArrowRight size={16} />
+                <span style={{ color: 'var(--primary)', fontWeight: 800, marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                  Read Guide <ArrowRight size={15} />
                 </span>
               </div>
             </div>
@@ -145,19 +140,19 @@ export default async function BlogsPage({ searchParams }: BlogsPageProps) {
       )}
 
       {/* Recent Guides Grid */}
-      <section style={{ marginBottom: '4rem' }}>
-        <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '1.5rem' }}>
+      <section style={{ marginBottom: '4.5rem' }}>
+        <h2 style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '1.75rem', letterSpacing: '-0.02em' }}>
           {selectedCategory ? 'Category Articles' : 'Recent Shopping Guides'}
         </h2>
 
         {blogs.length === 0 ? (
-          <div style={{ padding: '4rem 2rem', textAlign: 'center', background: '#ffffff', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border)' }}>
-            <BookOpen size={48} color="var(--text-muted)" style={{ margin: '0 auto 1rem auto' }} />
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '0.5rem' }}>No Guides Found</h3>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>New guides and shopping hacks are published every week.</p>
+          <div style={{ padding: '4rem 2rem', textAlign: 'center', background: 'var(--bg-card)', borderRadius: 'var(--radius-2xl)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-card)' }}>
+            <BookOpen size={44} color="var(--primary)" style={{ margin: '0 auto 1.25rem auto' }} />
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--text-heading)' }}>No Guides Found</h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem' }}>New shopping hacks and store guides are published every week.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-6" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}>
+          <div className="grid grid-cols-3 gap-6" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))' }}>
             {(selectedCategory ? blogs : remainingBlogs).map((blog) => (
               <BlogCard key={blog.id} blog={blog as any} />
             ))}

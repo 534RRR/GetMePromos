@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getAdminSession } from '@/lib/auth';
+import { createErrorResponse } from '@/lib/apiResponse';
 
 export async function GET() {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const countries = await prisma.country.findMany({
     orderBy: { sortOrder: 'asc' },
   });
@@ -36,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, country });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to create country' }, { status: 500 });
+    return createErrorResponse('Failed to create country', error, 500);
   }
 }
 
@@ -64,7 +70,7 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({ success: true, country });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to update country' }, { status: 500 });
+    return createErrorResponse('Failed to update country', error, 500);
   }
 }
 
@@ -85,6 +91,6 @@ export async function DELETE(req: NextRequest) {
     await prisma.country.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to delete country' }, { status: 500 });
+    return createErrorResponse('Failed to delete country', error, 500);
   }
 }

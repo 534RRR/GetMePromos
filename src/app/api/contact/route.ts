@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit } from '@/lib/rateLimit';
+import { createErrorResponse } from '@/lib/apiResponse';
 
 function sanitize(str: string): string {
   return str.replace(/<[^>]*>?/gm, '').trim();
@@ -16,8 +17,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
-    const { name, email, subject, message } = body;
+    let body: any;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON payload provided.' }, { status: 400 });
+    }
+    const { name, email, subject, message } = body || {};
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -38,14 +44,13 @@ export async function POST(request: NextRequest) {
     const cleanMessage = sanitize(message);
 
     // In production, send via SendGrid / Resend / AWS SES.
-    console.log(`[Contact Form Received] From: ${cleanName} (${cleanEmail}), Subject: ${cleanSubject}, Message: ${cleanMessage}`);
+    console.log(`[Contact Form Received] Subject: ${cleanSubject}, Status: Processed (Sender: [REDACTED])`);
 
     return NextResponse.json({
       success: true,
       message: 'Thank you! Your message has been received. Our team will get back to you shortly.',
     });
   } catch (error) {
-    console.error('Contact API error:', error);
-    return NextResponse.json({ error: 'Failed to process message.' }, { status: 500 });
+    return createErrorResponse('Failed to process message.', error, 500);
   }
 }

@@ -1,4 +1,8 @@
 import { PrismaClient } from '@prisma/client';
+import { validateEnvironment } from './env';
+
+// Fail fast if environment variables do not meet production security criteria
+validateEnvironment();
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

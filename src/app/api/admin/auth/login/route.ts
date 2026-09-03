@@ -2,10 +2,28 @@ import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
 import { createSessionToken, setSessionCookie } from '@/lib/auth';
+import { checkRateLimit } from '@/lib/rateLimit';
+import { createErrorResponse } from '@/lib/apiResponse';
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json();
+    // Rate Limiting: 5 attempts per minute per IP
+    const rateLimit = checkRateLimit(req, 5, 60, 'login');
+    if (!rateLimit.success) {
+      return NextResponse.json(
+        { error: `Too many login attempts. Please wait ${rateLimit.reset} seconds before trying again.` },
+        { status: 429 }
+      );
+    }
+
+    let body: any;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON payload' }, { status: 400 });
+    }
+
+    const { email, password } = body || {};
 
     if (!email || !password) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
@@ -43,7 +61,6 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error('Login error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return createErrorResponse('Authentication service temporarily unavailable.', error, 500);
   }
 }

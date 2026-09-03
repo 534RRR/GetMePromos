@@ -251,16 +251,16 @@ export default function AdminNewReviewPage() {
             <h3 style={{ fontSize: '1.1rem', fontWeight: 800 }}>Pros &amp; Cons Builder</h3>
 
             {/* Pros List */}
-            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 'var(--radius-lg)', padding: '1.25rem' }}>
+            <div style={{ background: 'var(--primary-light)', border: '1px solid var(--primary-border)', borderRadius: 'var(--radius-lg)', padding: '1.25rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                <span style={{ fontWeight: 800, color: '#166534', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <span style={{ fontWeight: 800, color: 'var(--primary)', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Check size={18} /> The Good (Pros)
                 </span>
                 <button
                   type="button"
                   onClick={handleAddPro}
                   className="btn btn-secondary btn-sm"
-                  style={{ background: '#ffffff', color: '#166534', border: '1px solid #bbf7d0', fontSize: '0.78rem' }}
+                  style={{ background: 'var(--bg-card)', color: 'var(--primary)', border: '1px solid var(--primary-border)', fontSize: '0.78rem' }}
                 >
                   <Plus size={13} /> Add Pro
                 </button>
@@ -278,9 +278,10 @@ export default function AdminNewReviewPage() {
                         flex: 1,
                         padding: '0.5rem 0.75rem',
                         borderRadius: 'var(--radius-sm)',
-                        border: '1px solid #86efac',
+                        border: '1px solid var(--primary-border)',
                         fontSize: '0.88rem',
-                        background: '#ffffff',
+                        background: 'var(--bg-card)',
+                        color: 'var(--text-heading)',
                       }}
                     />
                     <button
@@ -297,16 +298,16 @@ export default function AdminNewReviewPage() {
             </div>
 
             {/* Cons List */}
-            <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--radius-lg)', padding: '1.25rem' }}>
+            <div style={{ background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.25)', borderRadius: 'var(--radius-lg)', padding: '1.25rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                <span style={{ fontWeight: 800, color: '#991b1b', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <span style={{ fontWeight: 800, color: '#ef4444', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <X size={18} /> The Bad (Cons)
                 </span>
                 <button
                   type="button"
                   onClick={handleAddCon}
                   className="btn btn-secondary btn-sm"
-                  style={{ background: '#ffffff', color: '#991b1b', border: '1px solid #fecaca', fontSize: '0.78rem' }}
+                  style={{ background: 'var(--bg-card)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.25)', fontSize: '0.78rem' }}
                 >
                   <Plus size={13} /> Add Con
                 </button>
@@ -324,9 +325,10 @@ export default function AdminNewReviewPage() {
                         flex: 1,
                         padding: '0.5rem 0.75rem',
                         borderRadius: 'var(--radius-sm)',
-                        border: '1px solid #fca5a5',
+                        border: '1px solid rgba(239, 68, 68, 0.25)',
                         fontSize: '0.88rem',
-                        background: '#ffffff',
+                        background: 'var(--bg-card)',
+                        color: 'var(--text-heading)',
                       }}
                     />
                     <button
@@ -347,7 +349,7 @@ export default function AdminNewReviewPage() {
           {/* Detailed Content */}
           <div className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
-              <label style={{ fontSize: '0.95rem', fontWeight: 800 }}>
+              <label style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-heading)' }}>
                 Detailed In-Depth Review Body (Markdown) *
               </label>
 
@@ -363,7 +365,7 @@ export default function AdminNewReviewPage() {
             </div>
 
             {previewMode ? (
-              <div style={{ background: '#ffffff', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1.5rem', minHeight: '280px', fontSize: '1rem', lineHeight: '1.7' }}>
+              <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1.5rem', minHeight: '280px', fontSize: '1rem', lineHeight: '1.7', color: 'var(--text-main)' }}>
                 {detailedContent.split('\n\n').map((p, idx) => {
                   if (p.startsWith('### ')) return <h3 key={idx} style={{ fontSize: '1.2rem', fontWeight: 800, margin: '1rem 0 0.5rem' }}>{p.replace('### ', '')}</h3>;
                   if (p.startsWith('## ')) return <h2 key={idx} style={{ fontSize: '1.4rem', fontWeight: 800, margin: '1.25rem 0 0.5rem' }}>{p.replace('## ', '')}</h2>;

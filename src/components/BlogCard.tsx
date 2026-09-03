@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Clock, ArrowRight, User } from 'lucide-react';
+import { Clock, ArrowRight } from 'lucide-react';
 
 interface BlogCardProps {
   blog: {
@@ -20,12 +20,6 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ blog }: BlogCardProps) {
-  const formattedDate = new Date(blog.publishedAt).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
-
   return (
     <Link
       href={`/blogs/${blog.slug}`}
@@ -39,9 +33,9 @@ export default function BlogCard({ blog }: BlogCardProps) {
         height: '100%',
       }}
     >
-      {/* Blog Image */}
+      {/* Featured Image */}
       {blog.featuredImage ? (
-        <div style={{ height: '200px', width: '100%', overflow: 'hidden', position: 'relative' }}>
+        <div style={{ height: '190px', width: '100%', overflow: 'hidden', position: 'relative', background: 'var(--slate-100)' }}>
           <img
             src={blog.featuredImage}
             alt={blog.title}
@@ -49,23 +43,24 @@ export default function BlogCard({ blog }: BlogCardProps) {
           />
         </div>
       ) : (
-        <div style={{ height: '160px', width: '100%', background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)' }} />
+        <div style={{ height: '160px', width: '100%', background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)' }} />
       )}
 
-      {/* Content */}
-      <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+      {/* Card Content */}
+      <div style={{ padding: '1.6rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
         {blog.category && (
-          <span className="badge badge-amber" style={{ alignSelf: 'flex-start', marginBottom: '0.75rem' }}>
+          <span className="badge badge-amber" style={{ alignSelf: 'flex-start', marginBottom: '0.85rem' }}>
             {blog.category.name}
           </span>
         )}
 
         <h3 style={{
-          fontSize: '1.2rem',
-          fontWeight: 700,
-          color: 'var(--text-main)',
-          lineHeight: '1.4',
+          fontSize: '1.18rem',
+          fontWeight: 800,
+          color: 'var(--text-heading)',
+          lineHeight: '1.35',
           marginBottom: '0.6rem',
+          letterSpacing: '-0.02em',
         }}>
           {blog.title}
         </h3>
@@ -74,8 +69,8 @@ export default function BlogCard({ blog }: BlogCardProps) {
           <p style={{
             fontSize: '0.88rem',
             color: 'var(--text-muted)',
-            lineHeight: '1.5',
-            marginBottom: '1.25rem',
+            lineHeight: '1.55',
+            marginBottom: '1.35rem',
             flex: 1,
           }}>
             {blog.excerpt}
@@ -87,18 +82,18 @@ export default function BlogCard({ blog }: BlogCardProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          fontSize: '0.8rem',
+          fontSize: '0.82rem',
           color: 'var(--text-muted)',
           borderTop: '1px solid var(--border)',
-          paddingTop: '0.85rem',
+          paddingTop: '0.95rem',
           marginTop: 'auto',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <Clock size={14} />
+            <Clock size={14} color="var(--primary)" />
             <span>{blog.readingTime}</span>
           </div>
 
-          <span style={{ color: 'var(--primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+          <span style={{ color: 'var(--primary)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
             Read Guide <ArrowRight size={14} />
           </span>
         </div>

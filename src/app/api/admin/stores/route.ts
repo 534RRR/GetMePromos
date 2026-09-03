@@ -1,8 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getAdminSession } from '@/lib/auth';
+import { createErrorResponse } from '@/lib/apiResponse';
+
+function isValidHttpUrl(str?: string | null): boolean {
+  if (!str) return true;
+  try {
+    const u = new URL(str);
+    return u.protocol === 'http:' || u.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
 
 export async function GET(req: NextRequest) {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
 
@@ -61,6 +77,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required store fields' }, { status: 400 });
     }
 
+    if (!isValidHttpUrl(logoUrl) || !isValidHttpUrl(merchantUrl) || !isValidHttpUrl(affiliateUrl) || !isValidHttpUrl(bannerUrl)) {
+      return NextResponse.json({ error: 'Store URLs (logo, merchant, affiliate, banner) must be valid HTTP/HTTPS URLs' }, { status: 400 });
+    }
+
     const store = await prisma.store.create({
       data: {
         name: name.trim(),
@@ -115,7 +135,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, store });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to create store' }, { status: 500 });
+    return createErrorResponse('Failed to create store', error, 500);
   }
 }
 
@@ -145,6 +165,10 @@ export async function PUT(req: NextRequest) {
       countryIds,
       categoryIds,
     } = await req.json();
+
+    if (!isValidHttpUrl(logoUrl) || !isValidHttpUrl(merchantUrl) || !isValidHttpUrl(affiliateUrl) || !isValidHttpUrl(bannerUrl)) {
+      return NextResponse.json({ error: 'Store URLs (logo, merchant, affiliate, banner) must be valid HTTP/HTTPS URLs' }, { status: 400 });
+    }
 
     const store = await prisma.store.update({
       where: { id },
@@ -188,7 +212,7 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({ success: true, store });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to update store' }, { status: 500 });
+    return createErrorResponse('Failed to update store', error, 500);
   }
 }
 
@@ -209,6 +233,6 @@ export async function DELETE(req: NextRequest) {
     await prisma.store.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to delete store' }, { status: 500 });
+    return createErrorResponse('Failed to delete store', error, 500);
   }
 }

@@ -4,16 +4,12 @@ import type { Metadata } from 'next';
 import prisma from '@/lib/prisma';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import StoreCard from '@/components/StoreCard';
-import { Search, Store, Tag, Sparkles, Filter, ArrowRight } from 'lucide-react';
+import { Search, Store, Tag, Sparkles, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'All Stores & Brands — Verified Coupon Codes & Discounts | GrabYourDealz',
   description:
     'Browse all partner stores and top online retail brands. Find verified discount promo codes, coupons, and flash deals across 500+ top retailers.',
-  openGraph: {
-    title: 'All Stores & Brands Directory — GrabYourDealz',
-    description: 'Find verified discount promo codes and daily deals for top retailers.',
-  },
 };
 
 const ALPHABET = ['ALL', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), '#'];
@@ -31,13 +27,11 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
   const selectedCategory = searchParams.category || '';
   const searchQuery = searchParams.search || '';
 
-  // 1. Fetch Categories for filter
   const categories = await prisma.category.findMany({
     orderBy: { sortOrder: 'asc' },
     select: { id: true, name: true, slug: true },
   });
 
-  // 2. Fetch featured popular stores
   const featuredStores = await prisma.store.findMany({
     where: { status: 'active', isFeatured: true },
     take: 6,
@@ -48,7 +42,6 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
     },
   });
 
-  // 3. Build where conditions for stores directory
   const whereCondition: any = {
     status: 'active',
   };
@@ -72,17 +65,12 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
 
   if (selectedLetter !== 'ALL') {
     if (selectedLetter === '#') {
-      whereCondition.name = {
-        startsWith: '0', // Or general non-alphabet handled in sorting
-      };
+      whereCondition.name = { startsWith: '0' };
     } else {
-      whereCondition.name = {
-        startsWith: selectedLetter,
-      };
+      whereCondition.name = { startsWith: selectedLetter };
     }
   }
 
-  // 4. Fetch all matching stores
   const allStores = await prisma.store.findMany({
     where: whereCondition,
     orderBy: { name: 'asc' },
@@ -96,7 +84,6 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
     },
   });
 
-  // Group stores by first letter for the A-Z index view
   const groupedStores: { [key: string]: typeof allStores } = {};
   allStores.forEach((store) => {
     const firstChar = store.name.charAt(0).toUpperCase();
@@ -110,29 +97,29 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
   const sortedGroupKeys = Object.keys(groupedStores).sort();
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem 4rem 1rem' }}>
+    <div className="container" style={{ padding: '2rem 1.5rem 5rem 1.5rem' }}>
       <Breadcrumbs items={[{ name: 'Stores', url: '/stores' }]} />
 
       {/* Page Header */}
       <div style={{ marginBottom: '2.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-          <Store size={18} /> Store Directory
-        </div>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '0.5rem' }}>
-          All Stores &amp; Online Brands
+        <span className="eyebrow-pill" style={{ marginBottom: '0.85rem' }}>
+          <Store size={13} /> Retailers Directory
+        </span>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
+          All Partner Stores &amp; Brands
         </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '680px' }}>
-          Browse verified coupon codes, promotions, and cash-saving deals from thousands of top online retailers worldwide.
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '640px' }}>
+          Discover verified promo codes, seasonal sales, and cashback deals from top retailers worldwide.
         </p>
       </div>
 
       {/* Search & Category Filter Bar */}
       <div style={{
-        background: '#ffffff',
+        background: 'var(--bg-card)',
         border: '1px solid var(--border)',
-        borderRadius: 'var(--radius-xl)',
-        padding: '1.25rem',
-        boxShadow: 'var(--shadow-sm)',
+        borderRadius: 'var(--radius-2xl)',
+        padding: '1.25rem 1.5rem',
+        boxShadow: 'var(--shadow-card)',
         marginBottom: '2.5rem',
         display: 'flex',
         flexWrap: 'wrap',
@@ -141,28 +128,30 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
         justifyContent: 'space-between',
       }}>
         {/* Search Input */}
-        <form action="/stores" method="GET" style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: '260px', position: 'relative' }}>
+        <form action="/stores" method="GET" style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: '280px', position: 'relative' }}>
           {selectedCategory && <input type="hidden" name="category" value={selectedCategory} />}
           {selectedLetter !== 'ALL' && <input type="hidden" name="letter" value={selectedLetter} />}
-          <Search size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '1rem' }} />
+          <Search size={18} color="var(--slate-400)" style={{ position: 'absolute', left: '1.1rem' }} />
           <input
             type="text"
             name="search"
             defaultValue={searchQuery}
-            placeholder="Search stores by brand name (e.g. Nike, Sephora)..."
+            placeholder="Search stores by brand name..."
             style={{
               width: '100%',
-              padding: '0.75rem 1rem 0.75rem 2.75rem',
-              borderRadius: 'var(--radius-md)',
+              padding: '0.8rem 1rem 0.8rem 2.8rem',
+              borderRadius: 'var(--radius-full)',
               border: '1px solid var(--border)',
+              background: 'var(--bg-input)',
+              color: 'var(--text-main)',
               outline: 'none',
-              fontSize: '0.92rem',
+              fontSize: '0.94rem',
             }}
           />
         </form>
 
         {/* Category Filter Pills */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
           <Link
             href={`/stores${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''}`}
             className={`btn btn-sm ${!selectedCategory ? 'btn-primary' : 'btn-secondary'}`}
@@ -184,12 +173,16 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
       {/* Featured Stores Strip */}
       {!searchQuery && !selectedCategory && selectedLetter === 'ALL' && featuredStores.length > 0 && (
         <section style={{ marginBottom: '3.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Sparkles size={20} color="var(--primary)" /> Featured Top Stores
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-heading)' }}>
+              <Sparkles size={18} color="var(--primary)" /> Top Featured Brands
             </h2>
           </div>
-          <div className="grid grid-cols-6 gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gap: '1.35rem',
+          }}>
             {featuredStores.map((store) => (
               <StoreCard key={store.id} store={store as any} />
             ))}
@@ -199,9 +192,9 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
 
       {/* Alphabetical A-Z Filter Bar */}
       <div style={{
-        background: '#ffffff',
+        background: 'var(--bg-card)',
         border: '1px solid var(--border)',
-        borderRadius: 'var(--radius-lg)',
+        borderRadius: 'var(--radius-xl)',
         padding: '0.75rem 1rem',
         marginBottom: '2.5rem',
         display: 'flex',
@@ -209,6 +202,7 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
         justifyContent: 'center',
         gap: '0.35rem',
         flexWrap: 'wrap',
+        boxShadow: 'var(--shadow-xs)',
       }}>
         {ALPHABET.map((letter) => {
           const isActive = selectedLetter === letter;
@@ -219,17 +213,17 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
               key={letter}
               href={href}
               style={{
-                width: letter === 'ALL' ? '48px' : '32px',
+                minWidth: letter === 'ALL' ? '48px' : '32px',
                 height: '32px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: 'var(--radius-sm)',
-                fontWeight: 700,
-                fontSize: '0.85rem',
+                fontWeight: 800,
+                fontSize: '0.84rem',
                 textDecoration: 'none',
                 background: isActive ? 'var(--primary)' : 'transparent',
-                color: isActive ? '#ffffff' : 'var(--text-main)',
+                color: isActive ? '#ffffff' : 'var(--text-muted)',
                 transition: 'all 0.15s ease',
               }}
             >
@@ -244,15 +238,16 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
         <div style={{
           padding: '4rem 2rem',
           textAlign: 'center',
-          background: '#ffffff',
-          borderRadius: 'var(--radius-xl)',
+          background: 'var(--bg-card)',
+          borderRadius: 'var(--radius-2xl)',
           border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-card)',
         }}>
-          <Store size={48} color="var(--text-muted)" style={{ margin: '0 auto 1rem auto' }} />
-          <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.5rem' }}>
+          <Store size={44} color="var(--primary)" style={{ margin: '0 auto 1.25rem auto' }} />
+          <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-heading)', marginBottom: '0.5rem' }}>
             No Stores Found
           </h3>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem', marginBottom: '1.5rem', maxWidth: '440px', margin: '0 auto 1.5rem auto' }}>
             We couldn&apos;t find any stores matching your current filter criteria.
           </p>
           <Link href="/stores" className="btn btn-primary">
@@ -260,38 +255,41 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
           </Link>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           {sortedGroupKeys.map((letter) => (
             <div
               key={letter}
               id={`letter-${letter}`}
               style={{
-                background: '#ffffff',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
-                borderRadius: 'var(--radius-xl)',
+                borderRadius: 'var(--radius-2xl)',
                 padding: '1.75rem',
-                boxShadow: 'var(--shadow-sm)',
+                boxShadow: 'var(--shadow-card)',
               }}
             >
-              {/* Letter Heading Badge */}
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '40px',
-                height: '40px',
-                borderRadius: 'var(--radius-md)',
+                width: '38px',
+                height: '38px',
+                borderRadius: 'var(--radius-sm)',
                 background: 'var(--primary-light)',
                 color: 'var(--primary)',
-                fontWeight: 800,
-                fontSize: '1.25rem',
+                fontWeight: 900,
+                fontSize: '1.2rem',
                 marginBottom: '1.25rem',
+                border: '1px solid var(--primary-border)',
               }}>
                 {letter}
               </div>
 
-              {/* Stores Grid */}
-              <div className="grid grid-cols-4 gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+                gap: '1rem',
+              }}>
                 {groupedStores[letter].map((store) => {
                   const offerCount = store._count.coupons + store._count.deals;
 
@@ -303,31 +301,38 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.85rem',
-                        padding: '0.75rem 1rem',
+                        padding: '0.75rem 0.95rem',
                         borderRadius: 'var(--radius-md)',
                         border: '1px solid var(--border)',
                         textDecoration: 'none',
-                        transition: 'all 0.15s ease',
-                        background: '#ffffff',
+                        transition: 'all 0.18s ease',
+                        background: 'var(--bg-card)',
                       }}
-                      className="store-dir-item"
+                      className="store-dir-item hover-bg"
                     >
-                      <img
-                        src={store.logoUrl}
-                        alt={store.name}
-                        style={{
-                          width: '40px',
-                          height: '40px',
-                          borderRadius: 'var(--radius-md)',
-                          objectFit: 'cover',
-                          border: '1px solid var(--border)',
-                        }}
-                      />
+                      <div style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: 'var(--radius-sm)',
+                        border: '1px solid var(--border)',
+                        padding: '4px',
+                        background: '#ffffff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                      }}>
+                        <img
+                          src={store.logoUrl}
+                          alt={store.name}
+                          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                        />
+                      </div>
                       <div style={{ flex: 1, overflow: 'hidden' }}>
                         <div style={{
-                          fontWeight: 700,
+                          fontWeight: 800,
                           fontSize: '0.92rem',
-                          color: 'var(--text-main)',
+                          color: 'var(--text-heading)',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
@@ -335,11 +340,11 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
                           {store.name}
                         </div>
                         <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                          <Tag size={12} color="var(--primary)" />
+                          <Tag size={11} color="var(--primary)" />
                           <span>{offerCount} {offerCount === 1 ? 'Offer' : 'Offers'}</span>
                         </div>
                       </div>
-                      <ArrowRight size={14} color="var(--text-muted)" />
+                      <ArrowRight size={14} color="var(--slate-400)" />
                     </Link>
                   );
                 })}

@@ -1,8 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getAdminSession } from '@/lib/auth';
+import { createErrorResponse } from '@/lib/apiResponse';
+
+function isValidHttpUrl(str?: string | null): boolean {
+  if (!str) return true;
+  try {
+    const u = new URL(str);
+    return u.protocol === 'http:' || u.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
 
 export async function GET(req: NextRequest) {
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
 
@@ -58,6 +74,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Store, title, and discount value are required' }, { status: 400 });
     }
 
+    if (!isValidHttpUrl(affiliateUrlOverride)) {
+      return NextResponse.json({ error: 'Affiliate URL override must be a valid HTTP/HTTPS URL' }, { status: 400 });
+    }
+
     const coupon = await prisma.coupon.create({
       data: {
         storeId,
@@ -88,7 +108,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, coupon });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to create coupon' }, { status: 500 });
+    return createErrorResponse('Failed to create coupon', error, 500);
   }
 }
 
@@ -118,6 +138,10 @@ export async function PUT(req: NextRequest) {
       termsConditions,
       countryIds,
     } = await req.json();
+
+    if (!isValidHttpUrl(affiliateUrlOverride)) {
+      return NextResponse.json({ error: 'Affiliate URL override must be a valid HTTP/HTTPS URL' }, { status: 400 });
+    }
 
     const coupon = await prisma.coupon.update({
       where: { id },
@@ -151,7 +175,7 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({ success: true, coupon });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to update coupon' }, { status: 500 });
+    return createErrorResponse('Failed to update coupon', error, 500);
   }
 }
 
@@ -172,6 +196,6 @@ export async function DELETE(req: NextRequest) {
     await prisma.coupon.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to delete coupon' }, { status: 500 });
+    return createErrorResponse('Failed to delete coupon', error, 500);
   }
 }

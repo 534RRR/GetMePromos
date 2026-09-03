@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ChevronRight, Home } from 'lucide-react';
-import { generateBreadcrumbSchema } from '@/lib/seo';
+import { generateBreadcrumbSchema, safeJsonLd } from '@/lib/seo';
 
 interface BreadcrumbItem {
   name: string;
@@ -20,7 +20,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(schemaData) }}
       />
 
       <nav
@@ -29,9 +29,9 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
           display: 'flex',
           alignItems: 'center',
           gap: '0.4rem',
-          fontSize: '0.85rem',
-          color: 'var(--text-muted)',
-          marginBottom: '1.5rem',
+          fontSize: '0.84rem',
+          color: 'var(--slate-500)',
+          marginBottom: '1.75rem',
           flexWrap: 'wrap',
         }}
       >
@@ -46,26 +46,26 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.25rem',
-                    color: 'var(--text-muted)',
+                    gap: '0.35rem',
+                    color: 'var(--slate-600)',
                     textDecoration: 'none',
-                    fontWeight: 500,
+                    fontWeight: 600,
                   }}
                 >
-                  <Home size={14} />
+                  <Home size={14} color="var(--primary)" />
                   <span>Home</span>
                 </Link>
               ) : isLast ? (
-                <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>
+                <span style={{ color: 'var(--primary-hover)', fontWeight: 700 }}>
                   {item.name}
                 </span>
               ) : (
                 <Link
                   href={item.url}
                   style={{
-                    color: 'var(--text-muted)',
+                    color: 'var(--slate-600)',
                     textDecoration: 'none',
-                    fontWeight: 500,
+                    fontWeight: 600,
                   }}
                 >
                   {item.name}
@@ -73,7 +73,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
               )}
 
               {!isLast && (
-                <ChevronRight size={14} color="var(--text-muted)" style={{ opacity: 0.6 }} />
+                <ChevronRight size={13} color="var(--slate-400)" style={{ flexShrink: 0 }} />
               )}
             </React.Fragment>
           );

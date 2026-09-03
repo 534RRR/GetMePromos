@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, X, Store, Tag, Folder, BookOpen, ArrowRight, Loader2 } from 'lucide-react';
+import { Search, X, Folder, BookOpen, Loader2 } from 'lucide-react';
 
 interface SearchResult {
   stores: Array<{
@@ -78,7 +77,7 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
       } finally {
         setLoading(false);
       }
-    }, 200);
+    }, 180);
 
     return () => clearTimeout(timeout);
   }, [query]);
@@ -103,8 +102,8 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
         position: 'fixed',
         inset: 0,
         zIndex: 1100,
-        backgroundColor: 'rgba(15, 23, 42, 0.75)',
-        backdropFilter: 'blur(6px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(8px)',
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center',
@@ -114,13 +113,14 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
     >
       <div
         style={{
-          background: '#ffffff',
-          borderRadius: 'var(--radius-xl)',
+          background: 'var(--bg-card)',
+          borderRadius: 'var(--radius-2xl)',
           maxWidth: '640px',
           width: '100%',
-          boxShadow: 'var(--shadow-lg)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
           overflow: 'hidden',
           animation: 'fadeIn 0.2s ease-out',
+          border: '1px solid var(--border)',
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -129,16 +129,16 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
           style={{
             display: 'flex',
             alignItems: 'center',
-            padding: '1rem 1.25rem',
+            padding: '1.2rem 1.4rem',
             borderBottom: '1px solid var(--border)',
-            gap: '0.75rem',
+            gap: '0.85rem',
           }}
         >
           <Search size={22} color="var(--primary)" />
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search stores, coupons, categories, blogs..."
+            placeholder="Search stores, coupons, categories, guides..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
@@ -152,211 +152,215 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
               border: 'none',
               outline: 'none',
               fontSize: '1.05rem',
-              color: 'var(--text-main)',
+              color: 'var(--text-heading)',
+              background: 'transparent',
+              fontWeight: 600,
             }}
           />
-          {loading && <Loader2 size={18} className="animate-spin" color="var(--text-muted)" />}
-          {query && !loading && (
+          {loading && <Loader2 size={18} className="animate-spin" color="var(--primary)" />}
+          {query && (
             <button
               onClick={() => setQuery('')}
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}
+              style={{ color: 'var(--text-muted)', padding: '0.25rem', cursor: 'pointer' }}
+              aria-label="Clear search"
             >
               <X size={18} />
             </button>
           )}
-          <kbd
-            style={{
-              background: 'var(--bg-subtle)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-sm)',
-              padding: '0.2rem 0.45rem',
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              color: 'var(--text-muted)',
-            }}
-          >
-            ESC
-          </kbd>
         </div>
 
         {/* Results Container */}
-        <div style={{ maxHeight: '420px', overflowY: 'auto', padding: '1rem' }}>
-          {!query && (
-            <div style={{ padding: '2rem 1rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-              <p style={{ fontSize: '0.92rem', marginBottom: '0.5rem' }}>Type to search brands, promo codes, or guides</p>
-              <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <span className="badge" style={{ cursor: 'pointer' }} onClick={() => setQuery('Nike')}>Nike</span>
-                <span className="badge" style={{ cursor: 'pointer' }} onClick={() => setQuery('Amazon')}>Amazon</span>
-                <span className="badge" style={{ cursor: 'pointer' }} onClick={() => setQuery('Fashion')}>Fashion</span>
-                <span className="badge" style={{ cursor: 'pointer' }} onClick={() => setQuery('Electronics')}>Electronics</span>
-              </div>
-            </div>
-          )}
-
-          {query && !loading && !hasAnyResults && (
+        <div style={{ maxHeight: '440px', overflowY: 'auto', padding: '0.85rem' }}>
+          {query.length >= 2 && !loading && !hasAnyResults && (
             <div style={{ padding: '2.5rem 1rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-              <p style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.25rem' }}>
-                No results found for &ldquo;{query}&rdquo;
-              </p>
-              <p style={{ fontSize: '0.85rem' }}>Try searching by brand name, discount value, or category.</p>
+              <p style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text-heading)' }}>No results found for &ldquo;{query}&rdquo;</p>
+              <p style={{ fontSize: '0.84rem', marginTop: '0.35rem' }}>Try searching for a brand like Nike, Amazon, or a category like Fashion.</p>
             </div>
           )}
 
-          {results && hasAnyResults && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              {/* Stores */}
+          {results && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+              {/* Stores Results */}
               {results.stores.length > 0 && (
                 <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Store size={14} /> Stores ({results.stores.length})
+                  <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--primary)', padding: '0.35rem 0.65rem' }}>
+                    Stores ({results.stores.length})
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                    {results.stores.map((store) => (
-                      <div
-                        key={store.id}
-                        onClick={() => handleSelect(`/stores/${store.slug}`)}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.5rem 0.75rem',
-                          borderRadius: 'var(--radius-md)',
-                          cursor: 'pointer',
-                          background: 'transparent',
-                          transition: 'background 0.15s ease',
-                        }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-subtle)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                          <img
-                            src={store.logoUrl}
-                            alt={store.name}
-                            style={{ width: '28px', height: '28px', borderRadius: '4px', objectFit: 'cover' }}
-                          />
-                          <span style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--text-main)' }}>
-                            {store.name}
-                          </span>
-                        </div>
-                        <span style={{ fontSize: '0.78rem', color: 'var(--primary)', fontWeight: 600 }}>
-                          {store._count.coupons + store._count.deals} Offers ➔
-                        </span>
+                  {results.stores.map((store) => (
+                    <button
+                      key={store.id}
+                      onClick={() => handleSelect(`/stores/${store.slug}`)}
+                      className="hover-bg"
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '0.6rem 0.75rem',
+                        borderRadius: 'var(--radius-md)',
+                        textAlign: 'left',
+                        transition: 'background 0.15s ease',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <img
+                          src={store.logoUrl}
+                          alt={store.name}
+                          style={{ width: '32px', height: '32px', borderRadius: '6px', objectFit: 'contain', background: '#ffffff', padding: '3px', border: '1px solid var(--border)' }}
+                        />
+                        <span style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--text-heading)' }}>{store.name}</span>
                       </div>
-                    ))}
-                  </div>
+                      <span className="badge badge-code" style={{ fontSize: '0.72rem' }}>
+                        {store._count ? store._count.coupons + store._count.deals : 0} Deals
+                      </span>
+                    </button>
+                  ))}
                 </div>
               )}
 
-              {/* Coupons */}
+              {/* Coupons Results */}
               {results.coupons.length > 0 && (
                 <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Tag size={14} /> Coupons & Deals ({results.coupons.length})
+                  <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--primary)', padding: '0.35rem 0.65rem' }}>
+                    Coupons &amp; Deals ({results.coupons.length})
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                    {results.coupons.map((coupon) => (
-                      <div
-                        key={coupon.id}
-                        onClick={() => handleSelect(`/stores/${coupon.store.slug}`)}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.5rem 0.75rem',
-                          borderRadius: 'var(--radius-md)',
-                          cursor: 'pointer',
-                          transition: 'background 0.15s ease',
-                        }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-subtle)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', overflow: 'hidden' }}>
-                          <span className="badge badge-code" style={{ flexShrink: 0 }}>
-                            {coupon.discountValue}
-                          </span>
-                          <span style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-main)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            {coupon.title} ({coupon.store.name})
-                          </span>
-                        </div>
-                        <ArrowRight size={14} color="var(--text-muted)" />
+                  {results.coupons.map((coupon) => (
+                    <button
+                      key={coupon.id}
+                      onClick={() => handleSelect(`/stores/${coupon.store.slug}`)}
+                      className="hover-bg"
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '0.6rem 0.75rem',
+                        borderRadius: 'var(--radius-md)',
+                        textAlign: 'left',
+                        gap: '0.75rem',
+                        transition: 'background 0.15s ease',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', overflow: 'hidden' }}>
+                        <span style={{ fontWeight: 900, color: 'var(--primary)', fontSize: '0.88rem', flexShrink: 0 }}>
+                          {coupon.discountValue}
+                        </span>
+                        <span style={{ fontSize: '0.88rem', color: 'var(--text-main)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', fontWeight: 600 }}>
+                          {coupon.title}
+                        </span>
                       </div>
-                    ))}
-                  </div>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', flexShrink: 0 }}>
+                        {coupon.store.name}
+                      </span>
+                    </button>
+                  ))}
                 </div>
               )}
 
-              {/* Categories */}
+              {/* Categories Results */}
               {results.categories.length > 0 && (
                 <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Folder size={14} /> Categories ({results.categories.length})
+                  <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--primary)', padding: '0.35rem 0.65rem' }}>
+                    Categories ({results.categories.length})
                   </div>
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                    {results.categories.map((cat) => (
-                      <button
-                        key={cat.id}
-                        onClick={() => handleSelect(`/categories/${cat.slug}`)}
-                        className="btn btn-secondary btn-sm"
-                        style={{ padding: '0.35rem 0.75rem', fontSize: '0.82rem' }}
-                      >
-                        {cat.name} ➔
-                      </button>
-                    ))}
-                  </div>
+                  {results.categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => handleSelect(`/categories/${cat.slug}`)}
+                      className="hover-bg"
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.75rem',
+                        padding: '0.6rem 0.75rem',
+                        borderRadius: 'var(--radius-md)',
+                        textAlign: 'left',
+                        transition: 'background 0.15s ease',
+                      }}
+                    >
+                      <Folder size={18} color="var(--primary)" />
+                      <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-heading)' }}>{cat.name}</span>
+                    </button>
+                  ))}
                 </div>
               )}
 
-              {/* Blogs */}
+              {/* Blogs Results */}
               {results.blogs.length > 0 && (
                 <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <BookOpen size={14} /> Shopping Guides ({results.blogs.length})
+                  <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--primary)', padding: '0.35rem 0.65rem' }}>
+                    Shopping Guides ({results.blogs.length})
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                    {results.blogs.map((blog) => (
-                      <div
-                        key={blog.id}
-                        onClick={() => handleSelect(`/blogs/${blog.slug}`)}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.5rem 0.75rem',
-                          borderRadius: 'var(--radius-md)',
-                          cursor: 'pointer',
-                          transition: 'background 0.15s ease',
-                        }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-subtle)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                      >
-                        <span style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                          {blog.title}
-                        </span>
-                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{blog.readingTime}</span>
+                  {results.blogs.map((blog) => (
+                    <button
+                      key={blog.id}
+                      onClick={() => handleSelect(`/blogs/${blog.slug}`)}
+                      className="hover-bg"
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '0.6rem 0.75rem',
+                        borderRadius: 'var(--radius-md)',
+                        textAlign: 'left',
+                        transition: 'background 0.15s ease',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <BookOpen size={18} color="var(--primary)" />
+                        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-heading)' }}>{blog.title}</span>
                       </div>
-                    ))}
-                  </div>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{blog.readingTime}</span>
+                    </button>
+                  ))}
                 </div>
               )}
+            </div>
+          )}
+
+          {!query && (
+            <div style={{ padding: '1.25rem 0.5rem', color: 'var(--text-muted)', fontSize: '0.84rem' }}>
+              <p style={{ fontWeight: 800, color: 'var(--text-heading)', marginBottom: '0.65rem', fontSize: '0.88rem' }}>Popular Searches:</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+                {['Nike', 'Amazon', 'ASOS', 'Fashion', 'Electronics', 'Free Shipping'].map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => setQuery(tag)}
+                    style={{
+                      background: 'var(--bg-subtle)',
+                      border: '1px solid var(--border)',
+                      padding: '0.35rem 0.75rem',
+                      borderRadius: 'var(--radius-full)',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      color: 'var(--text-main)',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
 
-        {/* Footer info */}
-        <div
-          style={{
-            background: 'var(--bg-subtle)',
-            padding: '0.65rem 1.25rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            fontSize: '0.78rem',
-            color: 'var(--text-muted)',
-            borderTop: '1px solid var(--border)',
-          }}
-        >
-          <span>Press <strong>Enter</strong> to see all results</span>
-          <span><strong>GrabYourDealz</strong> Global Instant Search</span>
+        {/* Footer Shortcut Bar */}
+        <div style={{
+          padding: '0.75rem 1.25rem',
+          background: 'var(--bg-subtle)',
+          borderTop: '1px solid var(--border)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontSize: '0.78rem',
+          color: 'var(--text-muted)',
+        }}>
+          <span>Press <kbd style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '0.1rem 0.35rem', borderRadius: '4px', color: 'var(--text-main)' }}>ESC</kbd> to exit</span>
+          <span>Press <kbd style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '0.1rem 0.35rem', borderRadius: '4px', color: 'var(--text-main)' }}>↵</kbd> to search all</span>
         </div>
       </div>
     </div>

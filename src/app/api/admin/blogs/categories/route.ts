@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getAdminSession } from '@/lib/auth';
+import { createErrorResponse } from '@/lib/apiResponse';
 
 export async function GET() {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const categories = await prisma.blogCategory.findMany({
       orderBy: { name: 'asc' },
       include: {
@@ -12,7 +18,7 @@ export async function GET() {
     });
     return NextResponse.json({ categories });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to fetch categories' }, { status: 500 });
+    return createErrorResponse('Failed to fetch categories', error, 500);
   }
 }
 
@@ -43,6 +49,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, category });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to create category' }, { status: 500 });
+    return createErrorResponse('Failed to create category', error, 500);
   }
 }

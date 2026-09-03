@@ -277,13 +277,14 @@ export default function AdminNewBlogPage() {
 
             {previewMode ? (
               <div style={{
-                background: '#ffffff',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
                 borderRadius: 'var(--radius-md)',
                 padding: '1.5rem',
                 minHeight: '320px',
                 fontSize: '1rem',
                 lineHeight: '1.7',
+                color: 'var(--text-main)',
               }}>
                 {content.split('\n\n').map((p, idx) => {
                   if (p.startsWith('### ')) return <h3 key={idx} style={{ fontSize: '1.25rem', fontWeight: 800, margin: '1rem 0 0.5rem' }}>{p.replace('### ', '')}</h3>;

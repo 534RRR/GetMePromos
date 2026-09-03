@@ -12,7 +12,7 @@ export default function RatingStars({
   score,
   count,
   showScore = true,
-  size = 16,
+  size = 15,
 }: RatingStarsProps) {
   const roundedScore = Math.round(score * 10) / 10;
   const fullStars = Math.floor(roundedScore);
@@ -20,27 +20,27 @@ export default function RatingStars({
   const emptyStars = Math.max(0, 5 - fullStars - (hasHalfStar ? 1 : 0));
 
   return (
-    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.15rem', color: '#eab308' }}>
+    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.15rem', color: '#d97706' }}>
         {Array.from({ length: fullStars }).map((_, i) => (
-          <Star key={`full-${i}`} size={size} fill="#eab308" stroke="#eab308" />
+          <Star key={`full-${i}`} size={size} fill="#d97706" stroke="#d97706" />
         ))}
         {hasHalfStar && (
-          <StarHalf size={size} fill="#eab308" stroke="#eab308" />
+          <StarHalf size={size} fill="#d97706" stroke="#d97706" />
         )}
         {Array.from({ length: emptyStars }).map((_, i) => (
-          <Star key={`empty-${i}`} size={size} stroke="#cbd5e1" color="#cbd5e1" />
+          <Star key={`empty-${i}`} size={size} stroke="var(--slate-300)" color="var(--slate-300)" />
         ))}
       </div>
 
       {showScore && (
-        <span style={{ fontWeight: 700, fontSize: `${size * 0.9}px`, color: 'var(--text-main)' }}>
+        <span style={{ fontWeight: 800, fontSize: `${size * 0.9}px`, color: 'var(--slate-900)' }}>
           {roundedScore.toFixed(1)}
         </span>
       )}
 
       {count !== undefined && (
-        <span style={{ fontSize: `${size * 0.8}px`, color: 'var(--text-muted)' }}>
+        <span style={{ fontSize: `${size * 0.8}px`, color: 'var(--slate-500)' }}>
           ({count.toLocaleString()} {count === 1 ? 'review' : 'reviews'})
         </span>
       )}

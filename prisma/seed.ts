@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -26,18 +27,32 @@ async function main() {
   await prisma.user.deleteMany();
   await prisma.siteSetting.deleteMany();
 
-  // 2. Seed Admin User
-  const passwordHash = await bcrypt.hash('admin123456', 10);
+  // 2. Seed Super Admin User from Environment
+  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@grabyourdealz.com').toLowerCase().trim();
+  let adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminPassword) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('[SECURITY FATAL] ADMIN_PASSWORD environment variable is required to seed the database in production.');
+    }
+    // Generate an ephemeral strong random password for development
+    adminPassword = `Dev_${crypto.randomBytes(8).toString('hex')}!`;
+    console.warn('⚠️ [SECURITY WARNING] ADMIN_PASSWORD was not specified in environment variables.');
+    console.warn(`🔑 Generated temporary Super Admin password for ${adminEmail}: ${adminPassword}`);
+    console.warn('⚠️ Set ADMIN_PASSWORD in your .env file or change this password immediately.');
+  }
+
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
   const admin = await prisma.user.create({
     data: {
-      email: 'admin@grabyourdealz.com',
+      email: adminEmail,
       passwordHash,
       name: 'Super Admin',
-      role: 'admin',
+      role: 'super_admin',
       isActive: true,
     },
   });
-  console.log('✅ Admin user created:', admin.email);
+  console.log('✅ Super Admin user seeded successfully.');
 
   // 3. Seed Countries
   const countriesData = [
@@ -108,7 +123,7 @@ async function main() {
     {
       name: 'Amazon',
       slug: 'amazon',
-      logoUrl: 'https://images.unsplash.com/photo-1523474253246-72cb9ae38b35?w=200&auto=format&fit=crop&q=80',
+      logoUrl: 'https://images.unsplash.com/photo-1704204656144-3dd12c110dd8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW1hem9uJTIwbG9nb3xlbnwwfHwwfHx8MA%3D%3D',
       bannerUrl: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200&auto=format&fit=crop&q=80',
       shortDescription: 'The biggest online retailer with millions of daily discounts and Lightning Deals.',
       longDescription: 'Shop millions of products across electronics, fashion, groceries, and home goods with Amazon promo codes, Prime savings, and daily Lightning Deals.',

@@ -220,14 +220,15 @@ export default function AdminCategoriesPage() {
           padding: '1.5rem',
         }}>
           <div style={{
-            background: '#ffffff',
-            borderRadius: 'var(--radius-xl)',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius-2xl)',
             maxWidth: '500px',
             width: '100%',
             padding: '2rem',
-            boxShadow: 'var(--shadow-lg)',
+            boxShadow: 'var(--shadow-card)',
           }}>
-            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '1.25rem' }}>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '1.25rem' }}>
               {editId ? 'Edit Category' : 'Create Category'}
             </h3>
 

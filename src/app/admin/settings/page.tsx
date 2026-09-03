@@ -127,7 +127,7 @@ export default function AdminSettingsPage() {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-main)' }}>
+          <h1 style={{ fontSize: '1.85rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.02em' }}>
             Global Site Settings &amp; Analytics
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
@@ -148,15 +148,15 @@ export default function AdminSettingsPage() {
       {/* Success Notification */}
       {saveSuccess && (
         <div style={{
-          background: '#f0fdf4',
-          border: '1px solid #86efac',
+          background: 'var(--primary-light)',
+          border: '1px solid var(--primary-border)',
           borderRadius: 'var(--radius-md)',
           padding: '1rem 1.25rem',
           display: 'flex',
           alignItems: 'center',
           gap: '0.75rem',
-          color: '#166534',
-          fontWeight: 600,
+          color: 'var(--primary)',
+          fontWeight: 700,
           fontSize: '0.92rem',
         }}>
           <CheckCircle size={20} />
@@ -181,6 +181,7 @@ export default function AdminSettingsPage() {
             display: 'flex',
             alignItems: 'center',
             gap: '0.4rem',
+            transition: 'all 0.15s ease',
           }}
         >
           <Globe size={16} /> General &amp; Branding
@@ -201,6 +202,7 @@ export default function AdminSettingsPage() {
             display: 'flex',
             alignItems: 'center',
             gap: '0.4rem',
+            transition: 'all 0.15s ease',
           }}
         >
           <BarChart size={16} /> Marketing &amp; Analytics
@@ -221,6 +223,7 @@ export default function AdminSettingsPage() {
             display: 'flex',
             alignItems: 'center',
             gap: '0.4rem',
+            transition: 'all 0.15s ease',
           }}
         >
           <ShieldCheck size={16} /> Affiliate &amp; Compliance
@@ -241,6 +244,7 @@ export default function AdminSettingsPage() {
             display: 'flex',
             alignItems: 'center',
             gap: '0.4rem',
+            transition: 'all 0.15s ease',
           }}
         >
           <Share2 size={16} /> Social Media Links
@@ -253,7 +257,7 @@ export default function AdminSettingsPage() {
         {/* TAB 1: General & Branding */}
         {activeTab === 'general' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 900, color: 'var(--text-heading)', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
               General Website Settings
             </h3>
 

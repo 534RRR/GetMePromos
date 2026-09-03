@@ -5,7 +5,6 @@ import prisma from '@/lib/prisma';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import {
   Folder,
-  Tag,
   Store,
   Shirt,
   Laptop,
@@ -23,23 +22,19 @@ export const metadata: Metadata = {
   title: 'Browse Coupons & Deals by Category | GrabYourDealz',
   description:
     'Find money-saving promo codes, sales, and verified discounts categorized by Fashion, Electronics, Beauty, Home, Travel, and more.',
-  openGraph: {
-    title: 'Browse Shopping Categories — GrabYourDealz',
-    description: 'Explore verified promo codes across all shopping categories.',
-  },
 };
 
 function getCategoryIcon(iconName?: string | null) {
   switch (iconName) {
-    case 'Shirt': return <Shirt size={28} />;
-    case 'Laptop': return <Laptop size={28} />;
-    case 'Sparkles': return <Sparkles size={28} />;
-    case 'Home': return <Home size={28} />;
-    case 'Plane': return <Plane size={28} />;
-    case 'Activity': return <Activity size={28} />;
-    case 'Utensils': return <Utensils size={28} />;
-    case 'Code': return <Code size={28} />;
-    default: return <Percent size={28} />;
+    case 'Shirt': return <Shirt size={24} />;
+    case 'Laptop': return <Laptop size={24} />;
+    case 'Sparkles': return <Sparkles size={24} />;
+    case 'Home': return <Home size={24} />;
+    case 'Plane': return <Plane size={24} />;
+    case 'Activity': return <Activity size={24} />;
+    case 'Utensils': return <Utensils size={24} />;
+    case 'Code': return <Code size={24} />;
+    default: return <Percent size={24} />;
   }
 }
 
@@ -54,19 +49,19 @@ export default async function CategoriesPage() {
   });
 
   return (
-    <div className="container" style={{ padding: '2rem 1rem 4rem 1rem' }}>
+    <div className="container" style={{ padding: '2rem 1.5rem 5rem 1.5rem' }}>
       <Breadcrumbs items={[{ name: 'Categories', url: '/categories' }]} />
 
       {/* Page Header */}
       <div style={{ marginBottom: '2.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)', fontWeight: 700, fontSize: '0.88rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-          <Folder size={18} /> Shopping Categories
-        </div>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '0.5rem' }}>
+        <span className="eyebrow-pill" style={{ marginBottom: '0.85rem' }}>
+          <Folder size={13} /> Categories Hub
+        </span>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
           All Shopping Categories
         </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '680px' }}>
-          Find active discount codes, cash saving coupons, and seasonal sales curated by your favorite shopping department.
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '640px' }}>
+          Explore discounts, promo codes, and daily sales organized by product department.
         </p>
       </div>
 
@@ -83,14 +78,13 @@ export default async function CategoriesPage() {
               justifyContent: 'space-between',
               padding: '1.75rem',
               textDecoration: 'none',
-              transition: 'all 0.2s ease',
             }}
           >
             <div>
               <div
                 style={{
-                  width: '56px',
-                  height: '56px',
+                  width: '52px',
+                  height: '52px',
                   borderRadius: 'var(--radius-lg)',
                   background: 'var(--primary-light)',
                   color: 'var(--primary)',
@@ -98,16 +92,17 @@ export default async function CategoriesPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '1.25rem',
+                  border: '1px solid var(--primary-border)',
                 }}
               >
                 {getCategoryIcon(cat.icon)}
               </div>
 
-              <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.45rem' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.4rem', letterSpacing: '-0.01em' }}>
                 {cat.name}
               </h2>
 
-              <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: '1.5', marginBottom: '1.5rem' }}>
+              <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: '1.55', marginBottom: '1.5rem' }}>
                 {cat.description || `Browse top verified discounts and merchant deals in ${cat.name}.`}
               </p>
             </div>
@@ -117,14 +112,14 @@ export default async function CategoriesPage() {
               alignItems: 'center',
               justifyContent: 'space-between',
               borderTop: '1px solid var(--border)',
-              paddingTop: '1rem',
-              fontSize: '0.82rem',
+              paddingTop: '0.95rem',
+              fontSize: '0.84rem',
             }}>
-              <span style={{ color: 'var(--text-muted)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                <Store size={14} /> {cat._count.storeCategories} Stores
+              <span style={{ color: 'var(--text-muted)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Store size={14} color="var(--primary)" /> {cat._count.storeCategories} Stores
               </span>
 
-              <span style={{ color: 'var(--primary)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              <span style={{ color: 'var(--primary)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                 Browse Deals <ArrowRight size={14} />
               </span>
             </div>

@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Shield, Menu, X, Tag } from 'lucide-react';
+import { Search, Menu, X, ChevronDown, Check, CircleDot } from 'lucide-react';
 import GlobalSearchModal from './GlobalSearchModal';
+import ThemeToggle from './ThemeToggle';
 
 const COUNTRIES = [
+  { code: 'NL', name: 'Netherlands', flag: '🇳🇱' },
   { code: 'US', name: 'United States', flag: '🇺🇸' },
   { code: 'UK', name: 'United Kingdom', flag: '🇬🇧' },
   { code: 'AU', name: 'Australia', flag: '🇦🇺' },
@@ -13,11 +15,10 @@ const COUNTRIES = [
   { code: 'DE', name: 'Germany', flag: '🇩🇪' },
   { code: 'FR', name: 'France', flag: '🇫🇷' },
   { code: 'IT', name: 'Italy', flag: '🇮🇹' },
-  { code: 'NL', name: 'Netherlands', flag: '🇳🇱' },
 ];
 
 export default function Header() {
-  const [selectedCountry, setSelectedCountry] = useState('US');
+  const [selectedCountry, setSelectedCountry] = useState('NL');
   const [showCountryMenu, setShowCountryMenu] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -41,8 +42,8 @@ export default function Header() {
 
   const handleSelectCountry = (code: string) => {
     setSelectedCountry(code);
-    localStorage.setItem('gyd_country', code);
-    document.cookie = `gyd_country=${code}; path=/; max-age=31536000`;
+    const secureFlag = typeof window !== 'undefined' && window.location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = `gyd_country=${code}; path=/; max-age=31536000; SameSite=Lax${secureFlag}`;
     setShowCountryMenu(false);
   };
 
@@ -51,145 +52,179 @@ export default function Header() {
   return (
     <>
       <header className="header-nav">
-        <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
+        <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1.25rem' }}>
           
-          {/* Brand Logo */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', flexShrink: 0 }}>
+          {/* Brand Logo with Deal Tag Icon */}
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', flexShrink: 0 }}>
             <div style={{
-              background: 'linear-gradient(135deg, #059669 0%, #4f46e5 100%)',
-              color: '#fff',
               width: '36px',
               height: '36px',
-              borderRadius: 'var(--radius-md)',
+              background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)',
+              borderRadius: '9px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--shadow-sm)',
+              boxShadow: '0 2px 10px var(--primary-glow)',
+              transform: 'rotate(-4deg)',
+              flexShrink: 0,
             }}>
-              <Tag size={18} />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8 8a2 2 0 0 0 2.828 0l7.172-7.172a2 2 0 0 0 0-2.828l-8-8z" fill="#ffffff" />
+                <circle cx="7.5" cy="7.5" r="1.75" fill="var(--primary)" />
+              </svg>
             </div>
-            <div>
-              <span style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
+            
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
                 GrabYour<span style={{ color: 'var(--primary)' }}>Dealz</span>
               </span>
             </div>
           </Link>
 
-          {/* Center Desktop Navigation */}
+          {/* Center Navigation */}
           <nav style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }} className="desktop-nav">
             <Link href="/coupons" className="nav-link">Coupons</Link>
             <Link href="/stores" className="nav-link">Stores</Link>
             <Link href="/categories" className="nav-link">Categories</Link>
-            <Link href="/blogs" className="nav-link">Blogs</Link>
+            <Link href="/blogs" className="nav-link">Guides</Link>
             <Link href="/reviews" className="nav-link">Reviews</Link>
             <Link href="/about-us" className="nav-link">About</Link>
           </nav>
 
           {/* Right Utility Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
             
-            {/* Search Trigger Button */}
+            {/* Search Input Trigger (Without Ctrl K badge) */}
             <button
               onClick={() => setSearchModalOpen(true)}
-              className="btn btn-secondary btn-sm header-search-btn"
+              className="btn-secondary header-search-btn"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.45rem 0.65rem',
-                color: 'var(--text-muted)',
-              }}
-              title="Search coupons & stores (Ctrl+K)"
-            >
-              <Search size={16} />
-              <span className="search-text" style={{ fontSize: '0.85rem' }}>Search...</span>
-              <kbd className="search-kbd" style={{
-                background: 'var(--bg-subtle)',
+                gap: '0.65rem',
+                padding: '0.55rem 1.1rem',
+                borderRadius: 'var(--radius-full)',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
-                borderRadius: '4px',
-                padding: '0.1rem 0.3rem',
-                fontSize: '0.7rem',
-                color: 'var(--text-muted)',
-                marginLeft: '0.15rem',
-              }}>
-                ⌘K
-              </kbd>
+                color: 'var(--slate-600)',
+                cursor: 'pointer',
+                fontSize: '0.88rem',
+                boxShadow: 'var(--shadow-xs)',
+                transition: 'all 0.2s ease',
+              }}
+              title="Search deals & stores"
+            >
+              <Search size={16} color="var(--slate-400)" />
+              <span className="search-text" style={{ fontSize: '0.88rem', fontWeight: 500, color: 'var(--slate-600)' }}>Search deals...</span>
             </button>
 
             {/* Country Selector Dropdown */}
             <div style={{ position: 'relative' }}>
               <button
                 onClick={() => setShowCountryMenu(!showCountryMenu)}
-                className="btn btn-secondary btn-sm"
-                style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', padding: '0.45rem 0.55rem' }}
-                title="Select your country"
+                className="btn-secondary"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.55rem 0.9rem',
+                  borderRadius: 'var(--radius-full)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-heading)',
+                  fontSize: '0.86rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  boxShadow: 'var(--shadow-xs)',
+                }}
+                title="Select country"
+                aria-expanded={showCountryMenu}
               >
-                <span>{currentCountry.flag}</span>
-                <span className="country-code" style={{ fontWeight: 700, fontSize: '0.82rem' }}>{currentCountry.code}</span>
+                <span>{currentCountry.code}</span>
+                <ChevronDown size={14} color="var(--slate-400)" />
               </button>
 
               {showCountryMenu && (
                 <div style={{
                   position: 'absolute',
-                  top: '115%',
+                  top: 'calc(100% + 8px)',
                   right: 0,
-                  width: '180px',
-                  background: '#ffffff',
+                  width: '190px',
+                  background: 'var(--bg-card)',
                   border: '1px solid var(--border)',
                   borderRadius: 'var(--radius-md)',
                   boxShadow: 'var(--shadow-lg)',
-                  padding: '0.5rem',
+                  padding: '0.4rem',
                   zIndex: 100,
                 }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', padding: '0.25rem 0.5rem', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--slate-400)', padding: '0.35rem 0.5rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                     Select Region
                   </div>
-                  {COUNTRIES.map((c) => (
-                    <button
-                      key={c.code}
-                      onClick={() => handleSelectCountry(c.code)}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        width: '100%',
-                        padding: '0.5rem',
-                        background: selectedCountry === c.code ? 'var(--primary-light)' : 'transparent',
-                        border: 'none',
-                        borderRadius: 'var(--radius-sm)',
-                        cursor: 'pointer',
-                        textAlign: 'left',
-                        fontWeight: selectedCountry === c.code ? 700 : 500,
-                        fontSize: '0.88rem',
-                        color: selectedCountry === c.code ? 'var(--primary-hover)' : 'var(--text-main)',
-                      }}
-                    >
-                      <span>{c.flag}</span>
-                      <span>{c.name}</span>
-                    </button>
-                  ))}
+                  {COUNTRIES.map((c) => {
+                    const isSelected = selectedCountry === c.code;
+                    return (
+                      <button
+                        key={c.code}
+                        onClick={() => handleSelectCountry(c.code)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          width: '100%',
+                          padding: '0.45rem 0.6rem',
+                          background: isSelected ? 'var(--primary-light)' : 'transparent',
+                          border: 'none',
+                          borderRadius: 'var(--radius-sm)',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                          fontWeight: isSelected ? 700 : 500,
+                          fontSize: '0.85rem',
+                          color: isSelected ? 'var(--primary-hover)' : 'var(--text-main)',
+                          transition: 'background 0.15s ease',
+                        }}
+                      >
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span>{c.flag}</span>
+                          <span>{c.name}</span>
+                        </span>
+                        {isSelected && <Check size={14} color="var(--primary)" />}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>
 
-            {/* Admin CMS Access */}
+            {/* Theme Toggle Button (Light / Dark Switcher) */}
+            <ThemeToggle />
+
+            {/* Admin Shortcut Button */}
             <Link
               href="/admin"
-              className="btn btn-primary btn-sm header-admin-btn"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', padding: '0.45rem 0.75rem' }}
+              className="btn btn-secondary header-admin-btn"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.55rem 1rem',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '0.86rem',
+                fontWeight: 700,
+                color: 'var(--text-heading)',
+              }}
             >
-              <Shield size={14} />
+              <CircleDot size={13} color="var(--primary)" />
               <span className="admin-text">Admin</span>
             </Link>
 
-            {/* Mobile Hamburger Toggle Button */}
+            {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="btn btn-secondary btn-sm mobile-toggle-btn"
-              style={{ padding: '0.45rem 0.55rem' }}
-              aria-label="Toggle Navigation Menu"
+              style={{ padding: '0.5rem 0.65rem', borderRadius: 'var(--radius-full)' }}
+              aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
 
           </div>
@@ -199,26 +234,26 @@ export default function Header() {
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div style={{
-            background: '#ffffff',
+            background: 'var(--bg-card)',
             borderTop: '1px solid var(--border)',
-            padding: '1.25rem',
+            padding: '1.25rem 1.5rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '0.6rem',
-            boxShadow: 'var(--shadow-md)',
+            gap: '0.65rem',
+            boxShadow: 'var(--shadow-lg)',
           }}>
             <Link href="/coupons" className="nav-link" onClick={() => setMobileMenuOpen(false)}>🎟️ Promo Codes &amp; Coupons</Link>
             <Link href="/stores" className="nav-link" onClick={() => setMobileMenuOpen(false)}>🏬 All Stores &amp; Brands</Link>
             <Link href="/categories" className="nav-link" onClick={() => setMobileMenuOpen(false)}>📁 Browse Categories</Link>
-            <Link href="/blogs" className="nav-link" onClick={() => setMobileMenuOpen(false)}>📖 Shopping Guides &amp; Blogs</Link>
+            <Link href="/blogs" className="nav-link" onClick={() => setMobileMenuOpen(false)}>📖 Shopping Guides</Link>
             <Link href="/reviews" className="nav-link" onClick={() => setMobileMenuOpen(false)}>⭐ Store Reviews &amp; Ratings</Link>
-            <Link href="/about-us" className="nav-link" onClick={() => setMobileMenuOpen(false)}>ℹ️ About GrabYourDealz</Link>
-            <Link href="/contact-us" className="nav-link" onClick={() => setMobileMenuOpen(false)}>✉️ Contact Support</Link>
+            <Link href="/about-us" className="nav-link" onClick={() => setMobileMenuOpen(false)}>ℹ️ About Us</Link>
+            <Link href="/contact-us" className="nav-link" onClick={() => setMobileMenuOpen(false)}>✉️ Contact &amp; Support</Link>
           </div>
         )}
       </header>
 
-      {/* Global Search Modal */}
+      {/* Global Instant Search Modal */}
       <GlobalSearchModal
         isOpen={searchModalOpen}
         onClose={() => setSearchModalOpen(false)}

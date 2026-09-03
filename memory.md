@@ -17,10 +17,9 @@
   - **Styling:** CSS Design Tokens & Native Modular Styles (`src/app/globals.css`)
   - **Icons:** Lucide React Icons
   - **Authentication:** Bcrypt Password Hashing + JWT Session Cookies (`src/lib/auth.ts`)
-* **Default Admin CMS Login Credentials:**
+* **Admin CMS Login Access:**
   - **URL:** `http://localhost:3000/admin/login`
-  - **Email:** `admin@grabyourdealz.com`
-  - **Password:** `admin123456`
+  - **Credentials:** Configured via `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env` (seeded via `npm run db:seed`)
 
 ---
 
@@ -106,9 +105,12 @@ npm run start
 ```
 
 ### Environment Variables (.env)
+Refer to `.env.example` for all required variables and configuration instructions.
 ```env
-DATABASE_URL="file:./dev.db"
-JWT_SECRET="gyd-production-super-secret-jwt-token-2026"
+DATABASE_URL="file:./dev.db" # or postgresql://...
+JWT_SECRET="<generate-via-openssl-rand-base64-48>"
+IP_SALT="<generate-via-openssl-rand-hex-32>"
+ADMIN_EMAIL="admin@grabyourdealz.com"
+ADMIN_PASSWORD="<choose-a-strong-password>"
 NEXT_PUBLIC_SITE_URL="https://grabyourdealz.com"
-IP_SALT="gyd-ip-hashing-salt-2026"
 ```

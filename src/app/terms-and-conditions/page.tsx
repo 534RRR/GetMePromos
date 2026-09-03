@@ -10,38 +10,38 @@ export const metadata: Metadata = {
 
 export default function TermsAndConditionsPage() {
   return (
-    <div className="container" style={{ padding: '2rem 1rem 4rem 1rem', maxWidth: '900px' }}>
+    <div className="container" style={{ padding: '2rem 1.5rem 5rem 1.5rem', maxWidth: '880px' }}>
       <Breadcrumbs items={[{ name: 'Terms and Conditions', url: '/terms-and-conditions' }]} />
 
       <div style={{ marginBottom: '2.5rem' }}>
-        <span className="badge badge-code" style={{ marginBottom: '0.75rem' }}>
+        <span className="eyebrow-pill" style={{ marginBottom: '0.85rem' }}>
           Terms of Service
         </span>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', marginBottom: '0.5rem' }}>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.4rem' }}>
           Terms and Conditions
         </h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-          Last Updated: August 25, 2026
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.94rem' }}>
+          Last Updated: August 2026
         </p>
       </div>
 
       <div
         style={{
-          background: '#ffffff',
-          borderRadius: 'var(--radius-xl)',
+          background: 'var(--bg-card)',
+          borderRadius: 'var(--radius-2xl)',
           border: '1px solid var(--border)',
-          padding: '2.5rem',
-          boxShadow: 'var(--shadow-sm)',
+          padding: '2.5rem 2.25rem',
+          boxShadow: 'var(--shadow-card)',
           fontSize: '1rem',
           lineHeight: '1.75',
           color: 'var(--text-main)',
           display: 'flex',
           flexDirection: 'column',
-          gap: '2rem',
+          gap: '2.25rem',
         }}
       >
         <section>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.75rem' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.75rem' }}>
             1. Acceptance of Terms
           </h2>
           <p>
@@ -50,21 +50,21 @@ export default function TermsAndConditionsPage() {
         </section>
 
         <section>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.75rem' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.75rem' }}>
             2. Nature of Deals &amp; Coupon Codes
           </h2>
-          <p>
+          <p style={{ marginBottom: '0.85rem' }}>
             GrabYourDealz publishes promotional coupons, discount codes, and sales aggregated from merchants and brand partners. While we take rigorous measures to test and verify every offer before publication:
           </p>
-          <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
             <li>Merchant coupon validity, discount percentage, pricing, and expiration dates are subject to change at the sole discretion of the retailer without prior notice.</li>
             <li>We do not guarantee that all third-party discounts will be honored by the merchant at all times.</li>
-            <li>All transactions occur directly on the respective merchant&apos;s website. GrabYourDealz does not process payments or handle fulfillment.</li>
+            <li>All transactions occur directly on the respective merchant&apos;s website. GrabYourDealz does not process payments or handle order fulfillment.</li>
           </ul>
         </section>
 
         <section>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.75rem' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.75rem' }}>
             3. Intellectual Property Rights
           </h2>
           <p>
@@ -73,7 +73,7 @@ export default function TermsAndConditionsPage() {
         </section>
 
         <section>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.75rem' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.75rem' }}>
             4. Limitation of Liability
           </h2>
           <p>
@@ -82,13 +82,13 @@ export default function TermsAndConditionsPage() {
         </section>
 
         <section>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '0.75rem' }}>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.75rem' }}>
             5. Contact Information
           </h2>
           <p>
             For legal inquiries or notices regarding these terms, please email:
             <br />
-            <strong>Email:</strong> <a href="mailto:legal@grabyourdealz.com" style={{ color: 'var(--primary)', fontWeight: 600 }}>legal@grabyourdealz.com</a>
+            <strong style={{ color: 'var(--text-heading)' }}>Email:</strong> <a href="mailto:legal@grabyourdealz.com" style={{ color: 'var(--primary)', fontWeight: 700 }}>legal@grabyourdealz.com</a>
           </p>
         </section>
       </div>

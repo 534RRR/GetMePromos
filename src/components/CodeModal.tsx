@@ -64,22 +64,23 @@ export default function CodeModal() {
       position: 'fixed',
       inset: 0,
       zIndex: 1000,
-      backgroundColor: 'rgba(15, 23, 42, 0.7)',
-      backdropFilter: 'blur(6px)',
+      backgroundColor: 'rgba(0, 0, 0, 0.65)',
+      backdropFilter: 'blur(8px)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       padding: '1.5rem',
     }}>
       <div style={{
-        background: '#ffffff',
-        borderRadius: 'var(--radius-xl)',
+        background: 'var(--bg-card)',
+        borderRadius: 'var(--radius-2xl)',
         maxWidth: '520px',
         width: '100%',
-        padding: '2rem',
-        boxShadow: 'var(--shadow-lg)',
+        padding: '2.5rem 2.25rem',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
         position: 'relative',
-        animation: 'fadeIn 0.25s ease-out',
+        animation: 'fadeIn 0.2s ease-out',
+        border: '1px solid var(--border)',
       }}>
         {/* Close Button */}
         <button
@@ -89,15 +90,16 @@ export default function CodeModal() {
             top: '1.25rem',
             right: '1.25rem',
             background: 'var(--bg-subtle)',
-            border: 'none',
+            border: '1px solid var(--border)',
             borderRadius: 'var(--radius-full)',
-            width: '36px',
-            height: '36px',
+            width: '34px',
+            height: '34px',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             color: 'var(--text-muted)',
+            transition: 'all 0.15s ease',
           }}
           aria-label="Close modal"
         >
@@ -105,24 +107,34 @@ export default function CodeModal() {
         </button>
 
         {/* Store & Header */}
-        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          <img
-            src={modal.storeLogo}
-            alt={modal.storeName}
-            style={{
-              width: '64px',
-              height: '64px',
-              objectFit: 'cover',
-              borderRadius: 'var(--radius-md)',
-              margin: '0 auto 0.75rem auto',
-              border: '1px solid var(--border)',
-            }}
-          />
-          <span className="badge badge-verified" style={{ marginBottom: '0.5rem' }}>
-            <ShieldCheck size={14} /> Verified Offer
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+          <div style={{
+            width: '68px',
+            height: '68px',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--border)',
+            margin: '0 auto 1rem auto',
+            padding: '8px',
+            background: '#ffffff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: 'var(--shadow-xs)',
+          }}>
+            <img
+              src={modal.storeLogo}
+              alt={modal.storeName}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            />
+          </div>
+
+          <span className="badge badge-verified" style={{ marginBottom: '0.65rem' }}>
+            <ShieldCheck size={13} /> Verified Offer
           </span>
-          <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginTop: '0.35rem' }}>{modal.discountValue}</h3>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginTop: '0.25rem' }}>
+          <h3 style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--primary)', marginTop: '0.4rem', letterSpacing: '-0.03em' }}>
+            {modal.discountValue}
+          </h3>
+          <p style={{ color: 'var(--text-heading)', fontSize: '0.94rem', marginTop: '0.4rem', lineHeight: '1.45', fontWeight: 600 }}>
             {modal.title}
           </p>
         </div>
@@ -130,21 +142,21 @@ export default function CodeModal() {
         {/* Promo Code Box */}
         {modal.couponCode ? (
           <div style={{
-            background: '#f8fafc',
-            border: '2px dashed var(--primary)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '1.25rem',
+            background: 'var(--primary-subtle)',
+            border: '1.5px dashed var(--primary)',
+            borderRadius: 'var(--radius-xl)',
+            padding: '1.5rem',
             textAlign: 'center',
-            marginBottom: '1.25rem',
+            marginBottom: '1.75rem',
           }}>
-            <p style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Copy this promo code & paste at checkout:
+            <p style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              Copy this promo code &amp; apply at checkout:
             </p>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginTop: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.85rem', marginTop: '0.85rem' }}>
               <span style={{
                 fontFamily: 'Space Grotesk, monospace',
-                fontSize: '1.65rem',
-                fontWeight: 800,
+                fontSize: '1.75rem',
+                fontWeight: 900,
                 letterSpacing: '0.12em',
                 color: 'var(--primary)',
               }}>
@@ -153,7 +165,7 @@ export default function CodeModal() {
               <button
                 onClick={handleCopy}
                 className="btn btn-primary"
-                style={{ padding: '0.6rem 1.1rem' }}
+                style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem' }}
               >
                 {copied ? <><Check size={16} /> Copied!</> : <><Copy size={16} /> Copy Code</>}
               </button>
@@ -162,14 +174,16 @@ export default function CodeModal() {
         ) : (
           <div style={{
             background: 'var(--primary-light)',
-            color: 'var(--primary-hover)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '1rem',
+            color: 'var(--primary)',
+            borderRadius: 'var(--radius-xl)',
+            padding: '1.1rem',
             textAlign: 'center',
-            marginBottom: '1.25rem',
-            fontWeight: 600,
+            marginBottom: '1.75rem',
+            fontWeight: 700,
+            fontSize: '0.94rem',
+            border: '1px solid var(--primary-border)',
           }}>
-            🎉 No code required! Your discount has been activated in the store tab.
+            🎉 No promo code needed! Your discount has been activated in the store tab.
           </div>
         )}
 
@@ -178,33 +192,31 @@ export default function CodeModal() {
           href={modal.affiliateUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-primary"
-          style={{ width: '100%', padding: '0.9rem', fontSize: '1rem' }}
+          className="btn btn-primary btn-lg"
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}
         >
-          Continue to {modal.storeName} <ExternalLink size={16} />
+          <span>Continue to {modal.storeName}</span>
+          <ExternalLink size={16} />
         </a>
 
         {/* Feedback Section */}
         <div style={{
-          marginTop: '1.5rem',
-          paddingTop: '1rem',
+          paddingTop: '1.1rem',
           borderTop: '1px solid var(--border)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          fontSize: '0.85rem',
+          fontSize: '0.84rem',
           color: 'var(--text-muted)',
         }}>
-          <span>Did this coupon work for you?</span>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button
-              onClick={() => setFeedback('worked')}
-              className={`btn btn-sm ${feedback === 'worked' ? 'btn-primary' : 'btn-secondary'}`}
-              style={{ fontSize: '0.78rem', padding: '0.3rem 0.6rem' }}
-            >
-              <ThumbsUp size={12} /> Yes ({modal.couponCode ? '100%' : '98%'})
-            </button>
-          </div>
+          <span>Did this code work?</span>
+          <button
+            onClick={() => setFeedback('worked')}
+            className={`btn btn-sm ${feedback === 'worked' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ fontSize: '0.8rem', padding: '0.4rem 0.75rem' }}
+          >
+            <ThumbsUp size={13} /> Yes ({modal.couponCode ? '100%' : '98%'})
+          </button>
         </div>
       </div>
     </div>

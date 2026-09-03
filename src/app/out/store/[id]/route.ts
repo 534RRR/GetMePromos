@@ -23,14 +23,19 @@ export async function GET(
     // 2. Extract analytics metadata
     const forwardedFor = request.headers.get('x-forwarded-for');
     const rawIp = forwardedFor ? forwardedFor.split(',')[0].trim() : '127.0.0.1';
-    const ipHash = crypto.createHash('sha256').update(rawIp + (process.env.IP_SALT || 'gd-salt-2026')).digest('hex').substring(0, 32);
+    const ipHash = crypto
+      .createHash('sha256')
+      .update(rawIp + (process.env.IP_SALT || ''))
+      .digest('hex')
+      .substring(0, 32);
 
     const userAgent = request.headers.get('user-agent') || 'unknown';
     const referer = request.headers.get('referer') || '';
     const countryHeader = request.headers.get('cf-ipcountry') || request.headers.get('x-country-code') || 'US';
 
     const searchParams = request.nextUrl.searchParams;
-    const subId = searchParams.get('subid') || searchParams.get('subId') || null;
+    const rawSubId = searchParams.get('subid') || searchParams.get('subId') || '';
+    const subId = rawSubId ? rawSubId.replace(/[^a-zA-Z0-9_\-]/g, '').substring(0, 64) : null;
 
     // 3. Log click in clickLog table
     await prisma.clickLog.create({
@@ -44,23 +49,26 @@ export async function GET(
       },
     });
 
-    // 4. Resolve destination URL
-    let targetUrl = store.affiliateUrl || store.merchantUrl;
-    if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
-      targetUrl = `https://${targetUrl}`;
+    // 4. Resolve and validate destination URL (prevent open redirect / javascript: scheme)
+    let rawTarget = (store.affiliateUrl || store.merchantUrl || '').trim();
+    if (!rawTarget.startsWith('http://') && !rawTarget.startsWith('https://')) {
+      rawTarget = `https://${rawTarget}`;
     }
 
+    let parsedTarget: URL;
     try {
-      const parsedTarget = new URL(targetUrl);
+      parsedTarget = new URL(rawTarget);
+      if (parsedTarget.protocol !== 'http:' && parsedTarget.protocol !== 'https:') {
+        return NextResponse.redirect(new URL('/stores', request.url), 302);
+      }
       if (subId) {
         parsedTarget.searchParams.set('subid', subId);
       }
-      targetUrl = parsedTarget.toString();
     } catch {
-      // Keep targetUrl as is
+      return NextResponse.redirect(new URL('/stores', request.url), 302);
     }
 
-    return NextResponse.redirect(targetUrl, 307);
+    return NextResponse.redirect(parsedTarget.toString(), 307);
   } catch (error) {
     console.error('Error in /out/store/[id]:', error);
     return NextResponse.redirect(new URL('/stores', request.url), 302);
