@@ -208,32 +208,29 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
         }}
       >
         <div style={{ overflow: 'hidden' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.15rem' }}>
-            <span style={{ color: '#ffffff', fontSize: '0.84rem', fontWeight: 800, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-              {session.name}
-            </span>
+          <div style={{ marginBottom: '0.25rem' }}>
             <span
               style={{
                 background: session.role === 'super_admin' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(5, 150, 105, 0.2)',
                 color: session.role === 'super_admin' ? '#f59e0b' : '#34d399',
                 border: `1px solid ${session.role === 'super_admin' ? '#f59e0b' : '#059669'}`,
-                fontSize: '0.62rem',
+                fontSize: '0.65rem',
                 fontWeight: 800,
-                padding: '0.05rem 0.35rem',
+                padding: '0.1rem 0.4rem',
                 borderRadius: '4px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.04em',
                 flexShrink: 0,
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.2rem',
+                gap: '0.25rem',
               }}
             >
-              {session.role === 'super_admin' && <Crown size={9} />}
+              {session.role === 'super_admin' && <Crown size={10} />}
               {session.role === 'super_admin' ? 'Super Admin' : 'Admin'}
             </span>
           </div>
-          <div style={{ color: 'var(--slate-500)', fontSize: '0.72rem', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+          <div style={{ color: 'var(--slate-400)', fontSize: '0.75rem', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
             {session.email}
           </div>
         </div>
