@@ -20,11 +20,14 @@ import {
 } from 'lucide-react';
 
 interface StorePageProps {
-  params: { slug: string };
-  searchParams: { type?: string };
+  params: Promise<{ slug: string }> | { slug: string };
+  searchParams: Promise<{ type?: string }> | { type?: string };
 }
 
-export async function generateMetadata({ params }: StorePageProps): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }> | { slug: string };
+}): Promise<Metadata> {
+  const params = await Promise.resolve(props.params);
   const store = await prisma.store.findUnique({
     where: { slug: params.slug },
     include: {
@@ -65,7 +68,9 @@ export async function generateMetadata({ params }: StorePageProps): Promise<Meta
   };
 }
 
-export default async function StoreDetailPage({ params, searchParams }: StorePageProps) {
+export default async function StoreDetailPage(props: StorePageProps) {
+  const params = await Promise.resolve(props.params);
+  const searchParams = (await Promise.resolve(props.searchParams)) || {};
   const currentType = searchParams.type || 'all';
 
   const store = await prisma.store.findUnique({

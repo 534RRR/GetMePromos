@@ -9,10 +9,11 @@ import { generateArticleSchema, safeJsonLd, SITE_URL } from '@/lib/seo';
 import { Clock, User, Calendar, Tag, ArrowLeft, ArrowRight, BookOpen } from 'lucide-react';
 
 interface BlogPostPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }> | { slug: string };
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata(props: BlogPostPageProps): Promise<Metadata> {
+  const params = await Promise.resolve(props.params);
   const blog = await prisma.blog.findUnique({
     where: { slug: params.slug },
     include: { category: true },
@@ -36,7 +37,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   };
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage(props: BlogPostPageProps) {
+  const params = await Promise.resolve(props.params);
   const blog = await prisma.blog.findUnique({
     where: { slug: params.slug },
     include: {

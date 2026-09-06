@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { clearSessionCookie } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
-  clearSessionCookie();
+  await clearSessionCookie();
   
   const acceptHeader = req.headers.get('accept') || '';
   if (acceptHeader.includes('application/json')) {
@@ -13,6 +13,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  clearSessionCookie();
+  await clearSessionCookie();
   return NextResponse.redirect(new URL('/admin/login', req.url));
 }

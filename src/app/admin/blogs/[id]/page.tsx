@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save, Trash2, Eye, Code, Tag, Store, Sparkles, Image as ImageIcon, ExternalLink } from 'lucide-react';
 
@@ -22,8 +22,10 @@ interface CouponOption {
   store: { name: string };
 }
 
-export default function AdminEditBlogPage({ params }: { params: { id: string } }) {
+export default function AdminEditBlogPage({ params }: { params?: { id?: string } }) {
   const router = useRouter();
+  const routeParams = useParams();
+  const blogId = (routeParams?.id as string) || params?.id || '';
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [categories, setCategories] = useState<CategoryOption[]>([]);
@@ -48,13 +50,14 @@ export default function AdminEditBlogPage({ params }: { params: { id: string } }
   const [ogImage, setOgImage] = useState('');
 
   useEffect(() => {
+    if (!blogId) return;
     const loadAll = async () => {
       try {
         const [catRes, storeRes, couponRes, blogRes] = await Promise.all([
           fetch('/api/admin/blogs/categories'),
           fetch('/api/admin/stores'),
           fetch('/api/admin/coupons'),
-          fetch(`/api/admin/blogs?id=${params.id}`),
+          fetch(`/api/admin/blogs?id=${blogId}`),
         ]);
 
         const catData = await catRes.json();
@@ -91,7 +94,7 @@ export default function AdminEditBlogPage({ params }: { params: { id: string } }
       }
     };
     loadAll();
-  }, [params.id]);
+  }, [blogId]);
 
   const handleInsertSnippet = (prefix: string, suffix: string = '') => {
     setContent((prev) => prev + `\n${prefix} ` + suffix);
@@ -105,7 +108,7 @@ export default function AdminEditBlogPage({ params }: { params: { id: string } }
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: params.id,
+          id: blogId,
           categoryId,
           title,
           slug,
@@ -138,7 +141,7 @@ export default function AdminEditBlogPage({ params }: { params: { id: string } }
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this article?')) return;
     try {
-      const res = await fetch(`/api/admin/blogs?id=${params.id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/admin/blogs?id=${blogId}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to delete');
       router.push('/admin/blogs');
     } catch (err) {

@@ -5,11 +5,12 @@ import { getAdminSession } from '@/lib/auth';
 import { createErrorResponse } from '@/lib/apiResponse';
 
 interface Params {
-  params: { id: string };
+  params: Promise<{ id: string }> | { id: string };
 }
 
-export async function DELETE(req: NextRequest, { params }: Params) {
+export async function DELETE(req: NextRequest, props: Params) {
   try {
+    const params = await Promise.resolve(props.params);
     const session = await getAdminSession();
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -51,8 +52,9 @@ export async function DELETE(req: NextRequest, { params }: Params) {
   }
 }
 
-export async function PATCH(req: NextRequest, { params }: Params) {
+export async function PATCH(req: NextRequest, props: Params) {
   try {
+    const params = await Promise.resolve(props.params);
     const session = await getAdminSession();
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

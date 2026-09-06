@@ -9,10 +9,11 @@ import CouponCard from '@/components/CouponCard';
 import { Folder, Store, Tag, ArrowRight } from 'lucide-react';
 
 interface CategoryPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }> | { slug: string };
 }
 
-export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+export async function generateMetadata(props: CategoryPageProps): Promise<Metadata> {
+  const params = await Promise.resolve(props.params);
   const category = await prisma.category.findUnique({
     where: { slug: params.slug },
   });
@@ -39,7 +40,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   };
 }
 
-export default async function CategoryDetailPage({ params }: CategoryPageProps) {
+export default async function CategoryDetailPage(props: CategoryPageProps) {
+  const params = await Promise.resolve(props.params);
   const category = await prisma.category.findUnique({
     where: { slug: params.slug },
     include: {

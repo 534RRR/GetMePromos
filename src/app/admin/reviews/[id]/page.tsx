@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save, Plus, Trash2, Check, X, Star, Sparkles, Code, Eye, ExternalLink } from 'lucide-react';
 
-export default function AdminEditReviewPage({ params }: { params: { id: string } }) {
+export default function AdminEditReviewPage({ params }: { params?: { id?: string } }) {
   const router = useRouter();
+  const routeParams = useParams();
+  const reviewId = (routeParams?.id as string) || params?.id || '';
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
@@ -28,9 +30,10 @@ export default function AdminEditReviewPage({ params }: { params: { id: string }
   const [metaDescription, setMetaDescription] = useState('');
 
   useEffect(() => {
+    if (!reviewId) return;
     const fetchReview = async () => {
       try {
-        const res = await fetch(`/api/admin/reviews?id=${params.id}`);
+        const res = await fetch(`/api/admin/reviews?id=${reviewId}`);
         const data = await res.json();
         if (data.review) {
           const r = data.review;

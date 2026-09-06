@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       role: user.role,
     });
 
-    setSessionCookie(token);
+    await setSessionCookie(token);
 
     return NextResponse.json({
       success: true,

@@ -10,10 +10,11 @@ import { generateReviewSchema, safeJsonLd, SITE_URL } from '@/lib/seo';
 import { Star, Check, X, ShieldCheck, ExternalLink, Tag, ArrowRight } from 'lucide-react';
 
 interface ReviewPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }> | { slug: string };
 }
 
-export async function generateMetadata({ params }: ReviewPageProps): Promise<Metadata> {
+export async function generateMetadata(props: ReviewPageProps): Promise<Metadata> {
+  const params = await Promise.resolve(props.params);
   const review = await prisma.review.findUnique({
     where: { slug: params.slug },
     include: { store: true },
@@ -42,7 +43,8 @@ export async function generateMetadata({ params }: ReviewPageProps): Promise<Met
   };
 }
 
-export default async function StoreReviewDetailPage({ params }: ReviewPageProps) {
+export default async function StoreReviewDetailPage(props: ReviewPageProps) {
+  const params = await Promise.resolve(props.params);
   const review = await prisma.review.findUnique({
     where: { slug: params.slug },
     include: {

@@ -7,9 +7,10 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
+    const params = await Promise.resolve(props.params);
     // Prevent automated click flooding and analytics poisoning (60 redirects/min per IP)
     const rateLimit = checkRateLimit(request, 60, 60, 'store-out');
     if (!rateLimit.success) {

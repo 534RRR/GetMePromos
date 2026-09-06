@@ -30,7 +30,7 @@ export async function DELETE(req: NextRequest) {
     });
 
     // Invalidate session cookie immediately
-    clearSessionCookie();
+    await clearSessionCookie();
 
     console.log('[Admin Account Deletion] Account and personal data permanently erased (User: [REDACTED])');
 
