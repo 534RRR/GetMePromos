@@ -17,14 +17,14 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     where: { slug: params.slug },
   });
 
-  if (!category) return { title: 'Category Not Found — GrabYourDealz' };
+  if (!category) return { title: 'Category Not Found — GetMePromos' };
 
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
 
   const title =
     category.seoTitle ||
-    `Best ${category.name} Coupons & Promo Codes (${currentMonth} ${currentYear}) | GrabYourDealz`;
+    `Best ${category.name} Coupons & Promo Codes (${currentMonth} ${currentYear}) | GetMePromos`;
   const description =
     category.metaDescription ||
     `Discover verified ${category.name} discount codes, deals, and daily promotions across top online retailers for ${currentMonth} ${currentYear}.`;

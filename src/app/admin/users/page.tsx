@@ -619,7 +619,7 @@ export default function AdminUsersPage() {
               Delete Admin Account?
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.75rem', lineHeight: '1.5' }}>
-              Are you sure you want to delete this administrator? They will immediately lose access to the GrabYourDealz CMS Dashboard.
+              Are you sure you want to delete this administrator? They will immediately lose access to the GetMePromos CMS Dashboard.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               <button

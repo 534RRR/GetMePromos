@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'GrabYourDealz — Verified Promo Codes, Daily Deals & Discount Vouchers',
+  title: 'GetMePromos — Verified Promo Codes, Daily Deals & Discount Vouchers',
   description:
     'Save real money with 100% verified promo codes, exclusive store coupons, and daily sales from over 500+ top online merchants.',
   alternates: {

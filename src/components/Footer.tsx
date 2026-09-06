@@ -107,7 +107,7 @@ export default function Footer() {
                 </svg>
               </div>
               <span style={{ fontSize: '1.3rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
-                GrabYour<span style={{ color: '#34d399' }}>Dealz</span>
+                GetMe<span style={{ color: '#34d399' }}>Promos</span>
               </span>
             </div>
             <p style={{ fontSize: '0.86rem', lineHeight: '1.6', color: 'var(--slate-400)', maxWidth: '340px' }}>
@@ -149,7 +149,7 @@ export default function Footer() {
               Company &amp; Legal
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-              <Link href="/about-us" className="footer-link">About GrabYourDealz</Link>
+              <Link href="/about-us" className="footer-link">About GetMePromos</Link>
               <Link href="/contact-us" className="footer-link">Contact Support</Link>
               <Link href="/privacy-policy" className="footer-link">Privacy Policy</Link>
               <Link href="/terms-and-conditions" className="footer-link">Terms &amp; Conditions</Link>
@@ -170,7 +170,7 @@ export default function Footer() {
           fontSize: '0.82rem',
           color: 'var(--slate-500)',
         }}>
-          <p>© {new Date().getFullYear()} GrabYourDealz.com. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} GetMePromos.com. All rights reserved.</p>
           <p style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#34d399', display: 'inline-block', boxShadow: '0 0 8px #34d399' }}></span>
             Multi-Region Verified Savings Engine.

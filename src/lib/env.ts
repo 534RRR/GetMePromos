@@ -1,5 +1,5 @@
 /**
- * Environment Variable Validation Utility for GrabYourDealz
+ * Environment Variable Validation Utility for GetMePromos
  */
 
 export function validateEnvironment(): void {

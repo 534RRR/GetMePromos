@@ -1,5 +1,5 @@
-export const SITE_NAME = 'GrabYourDealz';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://grabyourdealz.com';
+export const SITE_NAME = 'GetMePromos';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://getmepromos.com';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
 
 /**
@@ -13,14 +13,14 @@ export function generateOrganizationSchema() {
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     sameAs: [
-      'https://twitter.com/grabyourdealz',
-      'https://facebook.com/grabyourdealz',
-      'https://instagram.com/grabyourdealz',
+      'https://twitter.com/getmepromos',
+      'https://facebook.com/getmepromos',
+      'https://instagram.com/getmepromos',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
-      email: 'support@grabyourdealz.com',
+      email: 'support@getmepromos.com',
     },
   };
 }
@@ -130,7 +130,7 @@ export function generateArticleSchema(blog: {
     dateModified: new Date(blog.updatedAt || Date.now()).toISOString(),
     author: {
       '@type': 'Person',
-      name: blog.authorName || 'GrabYourDealz Editorial',
+      name: blog.authorName || 'GetMePromos Editorial',
     },
     publisher: {
       '@type': 'Organization',

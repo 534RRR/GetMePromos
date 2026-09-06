@@ -9,7 +9,7 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('gyd_theme') as 'light' | 'dark' | null;
+    const savedTheme = localStorage.getItem('gmp_theme') as 'light' | 'dark' | null;
     const initialTheme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     setTheme(initialTheme);
     document.documentElement.setAttribute('data-theme', initialTheme);
@@ -18,7 +18,7 @@ export default function ThemeToggle() {
   const toggleTheme = () => {
     const nextTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(nextTheme);
-    localStorage.setItem('gyd_theme', nextTheme);
+    localStorage.setItem('gmp_theme', nextTheme);
     document.documentElement.setAttribute('data-theme', nextTheme);
   };
 

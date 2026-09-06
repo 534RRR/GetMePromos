@@ -266,7 +266,7 @@ export default function NewStorePage() {
               <input
                 type="url"
                 required
-                placeholder="https://merchant.com/?ref=grabyourdealz"
+                placeholder="https://merchant.com/?ref=getmepromos"
                 value={affiliateUrl}
                 onChange={(e) => setAffiliateUrl(e.target.value)}
                 style={{ width: '100%', padding: '0.7rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}

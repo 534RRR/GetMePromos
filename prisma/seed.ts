@@ -5,7 +5,7 @@ import crypto from 'crypto';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Starting GrabYourDealz database seed...');
+  console.log('🌱 Starting GetMePromos database seed...');
 
   // 1. Clean existing records (in dependency order)
   await prisma.clickLog.deleteMany();
@@ -28,7 +28,7 @@ async function main() {
   await prisma.siteSetting.deleteMany();
 
   // 2. Seed Super Admin User from Environment
-  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@grabyourdealz.com').toLowerCase().trim();
+  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@getmepromos.com').toLowerCase().trim();
   let adminPassword = process.env.ADMIN_PASSWORD;
 
   if (!adminPassword) {
@@ -112,7 +112,7 @@ async function main() {
       shortDescription: 'World leader in athletic footwear, activewear, and sports equipment.',
       longDescription: 'Nike delivers innovative products, experiences, and services to inspire athletes worldwide. Find exclusive Nike promo codes, student discounts, and free shipping vouchers right here.',
       merchantUrl: 'https://www.nike.com',
-      affiliateUrl: 'https://www.nike.com/?ref=grabyourdealz',
+      affiliateUrl: 'https://www.nike.com/?ref=getmepromos',
       ratingScore: 4.8,
       ratingCount: 342,
       isFeatured: true,
@@ -128,7 +128,7 @@ async function main() {
       shortDescription: 'The biggest online retailer with millions of daily discounts and Lightning Deals.',
       longDescription: 'Shop millions of products across electronics, fashion, groceries, and home goods with Amazon promo codes, Prime savings, and daily Lightning Deals.',
       merchantUrl: 'https://www.amazon.com',
-      affiliateUrl: 'https://www.amazon.com/?tag=grabyourdealz-20',
+      affiliateUrl: 'https://www.amazon.com/?tag=getmepromos-20',
       ratingScore: 4.9,
       ratingCount: 1250,
       isFeatured: true,
@@ -144,7 +144,7 @@ async function main() {
       shortDescription: 'Destination for fashion-loving 20-somethings offering 850+ top clothing brands.',
       longDescription: 'ASOS offers trendy apparel, shoes, and beauty products with constant discount codes, seasonal clearances, and premier delivery options.',
       merchantUrl: 'https://www.asos.com',
-      affiliateUrl: 'https://www.asos.com/?ref=grabyourdealz',
+      affiliateUrl: 'https://www.asos.com/?ref=getmepromos',
       ratingScore: 4.6,
       ratingCount: 189,
       isFeatured: true,
@@ -160,7 +160,7 @@ async function main() {
       shortDescription: 'Save money and live better with everyday low prices and Rollback savings.',
       longDescription: 'Walmart offers grocery, tech, toys, apparel, and home essentials with curbside pickup, Rollback discounts, and free shipping coupons.',
       merchantUrl: 'https://www.walmart.com',
-      affiliateUrl: 'https://www.walmart.com/?ref=grabyourdealz',
+      affiliateUrl: 'https://www.walmart.com/?ref=getmepromos',
       ratingScore: 4.4,
       ratingCount: 420,
       isFeatured: true,
@@ -176,7 +176,7 @@ async function main() {
       shortDescription: 'Top retailer for computers, smartphones, appliances, and gaming setups.',
       longDescription: 'Find tech deals of the day, student discount codes, and clearance sales on Apple, Samsung, Sony, and Dell products at Best Buy.',
       merchantUrl: 'https://www.bestbuy.com',
-      affiliateUrl: 'https://www.bestbuy.com/?ref=grabyourdealz',
+      affiliateUrl: 'https://www.bestbuy.com/?ref=getmepromos',
       ratingScore: 4.7,
       ratingCount: 290,
       isFeatured: true,
@@ -192,7 +192,7 @@ async function main() {
       shortDescription: 'Premier beauty shopping destination for makeup, fragrance, and skincare.',
       longDescription: 'Get Beauty Insider points, free deluxe samples, and promo codes for top beauty brands like Fenty, Rare Beauty, Dior, and Olaplex.',
       merchantUrl: 'https://www.sephora.com',
-      affiliateUrl: 'https://www.sephora.com/?ref=grabyourdealz',
+      affiliateUrl: 'https://www.sephora.com/?ref=getmepromos',
       ratingScore: 4.8,
       ratingCount: 512,
       isFeatured: true,
@@ -208,7 +208,7 @@ async function main() {
       shortDescription: 'Book hotels, flights, and holiday home rentals with Genius loyalty discounts.',
       longDescription: 'Save 15% or more on thousands of hotels worldwide with Booking.com Genius discounts, promotional coupons, and seasonal getaways.',
       merchantUrl: 'https://www.booking.com',
-      affiliateUrl: 'https://www.booking.com/?ref=grabyourdealz',
+      affiliateUrl: 'https://www.booking.com/?ref=getmepromos',
       ratingScore: 4.6,
       ratingCount: 680,
       isFeatured: true,
@@ -224,7 +224,7 @@ async function main() {
       shortDescription: 'Top-rated cybersecurity & VPN service protecting your online privacy.',
       longDescription: 'Secure your internet connection and unlock global streaming with up to 70% off 2-year NordVPN subscriptions + 3 extra free months.',
       merchantUrl: 'https://www.nordvpn.com',
-      affiliateUrl: 'https://www.nordvpn.com/?ref=grabyourdealz',
+      affiliateUrl: 'https://www.nordvpn.com/?ref=getmepromos',
       ratingScore: 4.9,
       ratingCount: 310,
       isFeatured: true,
@@ -454,7 +454,7 @@ async function main() {
 
   // 8. Seed Store FAQs
   const faqs = [
-    { storeSlug: 'nike', question: 'How do I use a Nike promo code on GrabYourDealz?', answer: 'Click "Get Code", copy the revealed voucher string, and paste it into the "Do you have a promo code?" box on the Nike checkout payment page.' },
+    { storeSlug: 'nike', question: 'How do I use a Nike promo code on GetMePromos?', answer: 'Click "Get Code", copy the revealed voucher string, and paste it into the "Do you have a promo code?" box on the Nike checkout payment page.' },
     { storeSlug: 'nike', question: 'Does Nike offer a student discount?', answer: 'Yes! Eligible college and university students can unlock a 10% discount verified through SheerID.' },
     { storeSlug: 'nike', question: 'Can I get free shipping on Nike orders?', answer: 'Yes, Nike Members always receive free standard shipping with zero minimum spend threshold.' },
     { storeSlug: 'amazon', question: 'Where can I enter my Amazon promo code?', answer: 'During checkout on Amazon, navigate to the "Payment Method" step and enter your promo code in the "Gift Cards & Promotional Codes" box.' },
@@ -515,7 +515,7 @@ async function main() {
       slug: '10-ways-to-save-more-online-shopping-2026',
       excerpt: 'Discover insider strategies to stack promo codes, avoid hidden checkout fees, and unlock exclusive discounts.',
       featuredImage: 'https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1000&auto=format&fit=crop&q=80',
-      authorName: 'GrabYourDealz Editorial',
+      authorName: 'GetMePromos Editorial',
       readingTime: '6 min read',
       status: 'published',
       content: `
@@ -524,7 +524,7 @@ async function main() {
 Online shopping doesn't have to break your wallet. With a few smart shopping habits, you can routinely save 20% to 50% on every order.
 
 ## 1. Always Check for Verified Promo Codes First
-Before clicking the checkout button, take 30 seconds to check GrabYourDealz for active coupons. A simple code like \`SAVE25\` or \`FREESHIP\` can instantly drop your order total.
+Before clicking the checkout button, take 30 seconds to check GetMePromos for active coupons. A simple code like \`SAVE25\` or \`FREESHIP\` can instantly drop your order total.
 
 ## 2. Leverage First-Order Mobile App Promos
 Many major retailers like ASOS, Amazon, and Nike offer higher discount rates (15% to 20% off) exclusively on their mobile apps.
@@ -571,14 +571,14 @@ Summer is one of the premier shopping periods of the year. From mid-season fashi
 
   // 11. Seed Site Settings
   const settingsData = [
-    { key: 'site_name', value: 'GrabYourDealz', groupName: 'branding' },
+    { key: 'site_name', value: 'GetMePromos', groupName: 'branding' },
     { key: 'site_tagline', value: 'Verified Coupons, Promo Codes & Deals for Savvy Shoppers', groupName: 'branding' },
-    { key: 'contact_email', value: 'support@grabyourdealz.com', groupName: 'contact' },
-    { key: 'social_instagram', value: 'https://instagram.com/grabyourdealz', groupName: 'social' },
-    { key: 'social_facebook', value: 'https://facebook.com/grabyourdealz', groupName: 'social' },
-    { key: 'social_linkedin', value: 'https://linkedin.com/company/grabyourdealz', groupName: 'social' },
-    { key: 'ga4_id', value: 'G-GRABDEALZ2026', groupName: 'analytics' },
-    { key: 'gtm_id', value: 'GTM-GRABDEALZ', groupName: 'analytics' },
+    { key: 'contact_email', value: 'support@getmepromos.com', groupName: 'contact' },
+    { key: 'social_instagram', value: 'https://instagram.com/getmepromos', groupName: 'social' },
+    { key: 'social_facebook', value: 'https://facebook.com/getmepromos', groupName: 'social' },
+    { key: 'social_linkedin', value: 'https://linkedin.com/company/getmepromos', groupName: 'social' },
+    { key: 'ga4_id', value: 'G-GETMEPROMOS2026', groupName: 'analytics' },
+    { key: 'gtm_id', value: 'GTM-GETMEPROMOS', groupName: 'analytics' },
     { key: 'default_country', value: 'US', groupName: 'general' },
   ];
 

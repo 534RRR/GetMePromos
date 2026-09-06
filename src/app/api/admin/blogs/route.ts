@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
         excerpt: excerpt || null,
         content: content.trim(),
         featuredImage: featuredImage || null,
-        authorName: authorName || 'GrabYourDealz Editorial',
+        authorName: authorName || 'GetMePromos Editorial',
         readingTime: readingTime || '5 min read',
         status: status || 'published',
         publishedAt: publishedAt ? new Date(publishedAt) : new Date(),

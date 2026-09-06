@@ -6,17 +6,17 @@ import CodeModal from '@/components/CodeModal';
 import AnalyticsScripts from '@/components/AnalyticsScripts';
 
 export const metadata: Metadata = {
-  title: 'GrabYourDealz — Verified Coupons, Promo Codes & Shopping Deals',
+  title: 'GetMePromos — Verified Coupons, Promo Codes & Shopping Deals',
   description:
-    'Discover 20,000+ verified discount promo codes, daily sales, and exclusive merchant deals across top brands worldwide with GrabYourDealz.',
-  keywords: ['coupons', 'promo codes', 'discounts', 'deals', 'vouchers', 'savings', 'GrabYourDealz'],
-  authors: [{ name: 'GrabYourDealz Editorial' }],
-  metadataBase: new URL('https://grabyourdealz.com'),
+    'Discover 20,000+ verified discount promo codes, daily sales, and exclusive merchant deals across top brands worldwide with GetMePromos.',
+  keywords: ['coupons', 'promo codes', 'discounts', 'deals', 'vouchers', 'savings', 'GetMePromos'],
+  authors: [{ name: 'GetMePromos Editorial' }],
+  metadataBase: new URL('https://getmepromos.com'),
   openGraph: {
-    title: 'GrabYourDealz — Save More on Every Online Order',
+    title: 'GetMePromos — Save More on Every Online Order',
     description: '100% verified coupons and discount codes for Nike, Amazon, ASOS, Walmart, and more.',
     type: 'website',
-    url: 'https://grabyourdealz.com',
+    url: 'https://getmepromos.com',
   },
 };
 
@@ -33,7 +33,7 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var saved = localStorage.getItem('gyd_theme');
+                  var saved = localStorage.getItem('gmp_theme');
                   var pref = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                   document.documentElement.setAttribute('data-theme', pref);
                 } catch(e) {}

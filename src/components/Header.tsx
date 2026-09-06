@@ -24,7 +24,7 @@ export default function Header() {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   useEffect(() => {
-    const savedCountry = localStorage.getItem('gyd_country');
+    const savedCountry = localStorage.getItem('gmp_country');
     if (savedCountry) {
       setSelectedCountry(savedCountry);
     }
@@ -43,7 +43,7 @@ export default function Header() {
   const handleSelectCountry = (code: string) => {
     setSelectedCountry(code);
     const secureFlag = typeof window !== 'undefined' && window.location.protocol === 'https:' ? '; Secure' : '';
-    document.cookie = `gyd_country=${code}; path=/; max-age=31536000; SameSite=Lax${secureFlag}`;
+    document.cookie = `gmp_country=${code}; path=/; max-age=31536000; SameSite=Lax${secureFlag}`;
     setShowCountryMenu(false);
   };
 
@@ -76,7 +76,7 @@ export default function Header() {
             
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
-                GrabYour<span style={{ color: 'var(--primary)' }}>Dealz</span>
+                GetMe<span style={{ color: 'var(--primary)' }}>Promos</span>
               </span>
             </div>
           </Link>

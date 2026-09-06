@@ -78,7 +78,7 @@ export default function ContactUsPage() {
               </div>
               <h3 style={{ fontSize: '1.35rem', fontWeight: 900, marginBottom: '0.4rem', color: 'var(--text-heading)' }}>Message Sent Successfully!</h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>
-                Thank you for reaching out to GrabYourDealz. Our support team typically replies within 24 business hours.
+                Thank you for reaching out to GetMePromos. Our support team typically replies within 24 business hours.
               </p>
               <button onClick={() => setStatus('idle')} className="btn btn-primary">
                 Send Another Message
@@ -210,8 +210,8 @@ export default function ContactUsPage() {
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: '1.6', marginBottom: '0.75rem' }}>
               Direct email for general questions and customer support:
             </p>
-            <a href="mailto:support@grabyourdealz.com" style={{ fontSize: '0.98rem', fontWeight: 800, color: 'var(--primary)', textDecoration: 'none' }}>
-              support@grabyourdealz.com
+            <a href="mailto:support@getmepromos.com" style={{ fontSize: '0.98rem', fontWeight: 800, color: 'var(--primary)', textDecoration: 'none' }}>
+              support@getmepromos.com
             </a>
           </div>
 
@@ -229,7 +229,7 @@ export default function ContactUsPage() {
               <ShieldCheck size={18} color="var(--primary)" /> For Merchant Partners
             </h3>
             <p style={{ color: 'var(--text-main)', fontSize: '0.88rem', lineHeight: '1.6', margin: 0 }}>
-              Want your brand listed on GrabYourDealz or wish to provide exclusive discount codes for our community? Contact <strong style={{ textDecoration: 'underline', color: 'var(--primary)' }}>partners@grabyourdealz.com</strong>.
+              Want your brand listed on GetMePromos or wish to provide exclusive discount codes for our community? Contact <strong style={{ textDecoration: 'underline', color: 'var(--primary)' }}>partners@getmepromos.com</strong>.
             </p>
           </div>
 

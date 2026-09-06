@@ -7,7 +7,7 @@ import StoreCard from '@/components/StoreCard';
 import { Search, Store, Tag, Sparkles, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'All Stores & Brands — Verified Coupon Codes & Discounts | GrabYourDealz',
+  title: 'All Stores & Brands — Verified Coupon Codes & Discounts | GetMePromos',
   description:
     'Browse all partner stores and top online retail brands. Find verified discount promo codes, coupons, and flash deals across 500+ top retailers.',
 };

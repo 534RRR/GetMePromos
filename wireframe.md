@@ -1,7 +1,7 @@
-# GrabYourDealz.com — UI/UX Wireframe & Layout Specification
+# GetMePromos.com — UI/UX Wireframe & Layout Specification
 
 > **Document Version:** 1.0  
-> **Source:** GrabYourDealz Wireframe Sheet (Main Pages)  
+> **Source:** GetMePromos Wireframe Sheet (Main Pages)  
 > **Purpose:** Structural blueprint for all core page layouts, component hierarchies, user interaction zones, and content sections.
 
 ---
@@ -10,12 +10,12 @@
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ [LOGO] GrabYourDealz    Coupons   Deals   Stores   Categories   Blogs   Reviews    [🔍] [🇺🇸 US ▾] [🤍]│
+│ [LOGO] GetMePromos    Coupons   Deals   Stores   Categories   Blogs   Reviews    [🔍] [🇺🇸 US ▾] [🤍]│
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Component Breakdown
-* **Left:** Brand Logo (GrabYourDealz with vector icon).
+* **Left:** Brand Logo (GetMePromos with vector icon).
 * **Center Navigation:** `Coupons`, `Deals`, `Stores`, `Categories`, `Blogs`, `Reviews`.
 * **Right Utility Bar:**
   * **Global Instant Search (`🔍`):** Opens interactive search bar with categorized autocomplete (Stores, Coupons, Blogs).
@@ -35,7 +35,7 @@
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
 │  HERO SECTION                                                                                    │
 │  ┌───────────────────────────────┐  ┌─────────────────────────────────────────────────────────┐  │
-│  │                               │  │  Save More with GrabYourDealz                           │  │
+│  │                               │  │  Save More with GetMePromos                           │  │
 │  │   [Featured Hero Promo/Image] │  │  Verified Coupons & Amazing Deals from Your Stores       │  │
 │  │                               │  │  [ Search for stores, coupons, categories...   ] [Search]│  │
 │  └───────────────────────────────┘  └─────────────────────────────────────────────────────────┘  │
@@ -321,4 +321,4 @@
 
 ---
 
-*This document is stored in `wireframe.md` and provides the exact UI/UX structure for GrabYourDealz.com.*
+*This document is stored in `wireframe.md` and provides the exact UI/UX structure for GetMePromos.com.*

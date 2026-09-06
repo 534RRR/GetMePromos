@@ -18,9 +18,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     include: { category: true },
   });
 
-  if (!blog) return { title: 'Article Not Found — GrabYourDealz' };
+  if (!blog) return { title: 'Article Not Found — GetMePromos' };
 
-  const title = blog.seoTitle || `${blog.title} | GrabYourDealz Shopping Guide`;
+  const title = blog.seoTitle || `${blog.title} | GetMePromos Shopping Guide`;
   const description = blog.metaDescription || blog.excerpt || blog.title;
 
   return {

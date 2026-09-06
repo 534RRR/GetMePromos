@@ -7,7 +7,7 @@ import ReviewCard from '@/components/ReviewCard';
 import { Star } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Store & Brand Reviews — Ratings, Pros & Cons | GrabYourDealz',
+  title: 'Store & Brand Reviews — Ratings, Pros & Cons | GetMePromos',
   description:
     'Unbiased in-depth reviews of top online stores, fashion brands, and tech retailers. Read rating scores, pros and cons, and find tested coupon codes.',
 };

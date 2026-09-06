@@ -7,7 +7,7 @@ import CouponCard from '@/components/CouponCard';
 import { Search, Tag, X } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'All Verified Coupons, Promo Codes & Discounts | GrabYourDealz',
+  title: 'All Verified Coupons, Promo Codes & Discounts | GetMePromos',
   description:
     'Search and filter thousands of tested, working discount coupons, promo codes, and flash sales across top shopping categories and stores.',
 };

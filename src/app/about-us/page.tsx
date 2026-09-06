@@ -5,9 +5,9 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { ShieldCheck, Zap, Award, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'About Us — GrabYourDealz Savings Mission & Editorial Policy',
+  title: 'About Us — GetMePromos Savings Mission & Editorial Policy',
   description:
-    'Learn how GrabYourDealz helps millions of shoppers save money online with tested, verified coupon codes, exclusive sales, and transparent affiliate partnerships.',
+    'Learn how GetMePromos helps millions of shoppers save money online with tested, verified coupon codes, exclusive sales, and transparent affiliate partnerships.',
 };
 
 export default function AboutUsPage() {
@@ -24,7 +24,7 @@ export default function AboutUsPage() {
           We Help Millions of Smart Shoppers <span className="hero-gradient-text">Save on Every Purchase</span>
         </h1>
         <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: '1.65' }}>
-          GrabYourDealz was founded to eliminate expired discount codes and provide online shoppers with 100% verified, tested coupon codes and real deals.
+          GetMePromos was founded to eliminate expired discount codes and provide online shoppers with 100% verified, tested coupon codes and real deals.
         </p>
       </div>
 
@@ -58,7 +58,7 @@ export default function AboutUsPage() {
       {/* Core Values / 3 Pillars */}
       <div style={{ maxWidth: '860px', margin: '0 auto 4rem auto' }}>
         <h2 style={{ fontSize: '2rem', fontWeight: 900, textAlign: 'center', marginBottom: '2rem', color: 'var(--text-heading)', letterSpacing: '-0.02em' }}>
-          How GrabYourDealz Works For You
+          How GetMePromos Works For You
         </h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

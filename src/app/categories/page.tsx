@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Browse Coupons & Deals by Category | GrabYourDealz',
+  title: 'Browse Coupons & Deals by Category | GetMePromos',
   description:
     'Find money-saving promo codes, sales, and verified discounts categorized by Fashion, Electronics, Beauty, Home, Travel, and more.',
 };

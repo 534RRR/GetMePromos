@@ -21,12 +21,12 @@ export default function AdminSettingsPage() {
 
   // Settings State dictionary
   const [settings, setSettings] = useState<Record<string, string>>({
-    siteName: 'GrabYourDealz',
+    siteName: 'GetMePromos',
     siteTagline: 'Verified Coupons, Promo Codes & Shopping Deals',
-    siteUrl: 'https://grabyourdealz.com',
-    supportEmail: 'support@grabyourdealz.com',
+    siteUrl: 'https://getmepromos.com',
+    supportEmail: 'support@getmepromos.com',
     contactPhone: '+1 (800) 555-DEAL',
-    copyrightText: '© 2026 GrabYourDealz.com. All rights reserved.',
+    copyrightText: '© 2026 GetMePromos.com. All rights reserved.',
     defaultCurrency: '$',
     
     // Analytics
@@ -37,16 +37,16 @@ export default function AdminSettingsPage() {
     customFooterScripts: '',
 
     // Affiliate
-    defaultSubId: 'gyd_direct',
-    affiliateDisclosure: 'GrabYourDealz is reader-supported. When you purchase through links on our site, we may earn an affiliate commission at no additional cost to you.',
+    defaultSubId: 'gmp_direct',
+    affiliateDisclosure: 'GetMePromos is reader-supported. When you purchase through links on our site, we may earn an affiliate commission at no additional cost to you.',
     redirectDelayMs: '0',
 
     // Social
-    twitterUrl: 'https://twitter.com/grabyourdealz',
-    facebookUrl: 'https://facebook.com/grabyourdealz',
-    instagramUrl: 'https://instagram.com/grabyourdealz',
-    pinterestUrl: 'https://pinterest.com/grabyourdealz',
-    youtubeUrl: 'https://youtube.com/@grabyourdealz',
+    twitterUrl: 'https://twitter.com/getmepromos',
+    facebookUrl: 'https://facebook.com/getmepromos',
+    instagramUrl: 'https://instagram.com/getmepromos',
+    pinterestUrl: 'https://pinterest.com/getmepromos',
+    youtubeUrl: 'https://youtube.com/@getmepromos',
   });
 
   const groupMapping: Record<string, string> = {
@@ -160,7 +160,7 @@ export default function AdminSettingsPage() {
           fontSize: '0.92rem',
         }}>
           <CheckCircle size={20} />
-          Settings saved and updated across GrabYourDealz successfully!
+          Settings saved and updated across GetMePromos successfully!
         </div>
       )}
 
