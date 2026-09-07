@@ -62,7 +62,7 @@ export default function AdminEditReviewPage({ params }: { params?: { id?: string
       }
     };
     fetchReview();
-  }, [params.id]);
+  }, [reviewId]);
 
   const handleAddPro = () => setPros([...pros, '']);
   const handleRemovePro = (index: number) => setPros(pros.filter((_, i) => i !== index));
@@ -88,7 +88,7 @@ export default function AdminEditReviewPage({ params }: { params?: { id?: string
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: params.id,
+          id: reviewId,
           title,
           slug,
           rating: parseFloat(rating),
@@ -119,7 +119,7 @@ export default function AdminEditReviewPage({ params }: { params?: { id?: string
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this review?')) return;
     try {
-      const res = await fetch(`/api/admin/reviews?id=${params.id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/admin/reviews?id=${reviewId}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to delete');
       router.push('/admin/reviews');
     } catch (err) {
