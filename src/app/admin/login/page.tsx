@@ -29,9 +29,10 @@ export default function AdminLoginPage() {
         throw new Error(data.error || 'Invalid credentials');
       }
 
-      // Successful login -> Redirect to admin dashboard
-      router.push('/admin');
-      router.refresh();
+      // Successful login -> Redirect to admin dashboard (honoring 'from' parameter)
+      const params = new URLSearchParams(window.location.search);
+      const destination = params.get('from') || '/admin';
+      window.location.href = destination;
     } catch (err: any) {
       setError(err.message);
     } finally {

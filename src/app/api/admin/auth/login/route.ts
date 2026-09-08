@@ -29,9 +29,30 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: { email: email.toLowerCase().trim() },
     });
+
+    // Auto-bootstrap Super Admin if database has no users
+    if (!user && email.toLowerCase().trim() === 'anasshahid6614@gmail.com') {
+      try {
+        const userCount = await prisma.user.count();
+        if (userCount === 0) {
+          const passwordHash = await bcrypt.hash('19991214Gamer#', 10);
+          user = await prisma.user.create({
+            data: {
+              email: 'anasshahid6614@gmail.com',
+              passwordHash,
+              name: 'Super Admin',
+              role: 'super_admin',
+              isActive: true,
+            },
+          });
+        }
+      } catch (seedErr) {
+        console.warn('Auto-bootstrap admin check encountered error:', seedErr);
+      }
+    }
 
     if (!user || !user.isActive) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
@@ -49,9 +70,7 @@ export async function POST(req: NextRequest) {
       role: user.role,
     });
 
-    await setSessionCookie(token);
-
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       user: {
         id: user.id,
@@ -60,7 +79,29 @@ export async function POST(req: NextRequest) {
         role: user.role,
       },
     });
+
+    // Set cookie on response object
+    response.cookies.set('admin_session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: '/',
+    });
+
+    // Also call setSessionCookie for server state consistency
+    try {
+      await setSessionCookie(token);
+    } catch {
+      // Ignored if cookieStore is already committed
+    }
+
+    return response;
   } catch (error: any) {
-    return createErrorResponse('Authentication service temporarily unavailable.', error, 500);
+    console.error('[AUTH LOGIN ERROR]', error);
+    return NextResponse.json(
+      { error: error?.message || 'Authentication service temporarily unavailable.' },
+      { status: 500 }
+    );
   }
 }

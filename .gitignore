@@ -5,6 +5,7 @@
 
 # Database
 *.db
+!prisma/dev.db
 *.db-journal
 
 # Environment files
