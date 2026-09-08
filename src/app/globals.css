@@ -632,14 +632,88 @@ img {
   .desktop-nav { display: none !important; }
   .mobile-toggle-btn { display: inline-flex !important; }
   .hero-split-grid { grid-template-columns: 1fr !important; }
+
+  .footer-main { padding-top: 3rem; padding-bottom: 2rem; }
+}
+
+@media (max-width: 768px) {
+  :root { --header-height: 64px; }
+
+  .container { padding-left: 1rem; padding-right: 1rem; }
+
+  .hero-title { font-size: clamp(2rem, 7vw, 2.8rem); }
+
+  .card { padding: 1.1rem; border-radius: var(--radius-md); }
+  .coupon-card { border-radius: var(--radius-md); }
+
+  /* Footer stacks into single column on tablets */
+  .footer-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .footer-bottom-flex { flex-direction: column !important; gap: 1rem !important; text-align: center !important; }
+
+  /* Store page two-column layout stacks */
+  .store-page-grid { grid-template-columns: 1fr !important; }
+  .store-sidebar { order: -1; }
+
+  /* Blog content max-width */
+  .blog-content { padding: 0 !important; }
+
+  /* Admin sidebar becomes off-canvas */
+  .admin-layout-sidebar {
+    position: fixed !important;
+    left: -280px;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 260px !important;
+  }
+  .admin-layout-sidebar.open { left: 0 !important; }
+  .admin-layout-main { margin-left: 0 !important; padding: 1.25rem !important; }
+  .admin-mobile-toggle { display: flex !important; }
+
+  .btn-lg { padding: 0.75rem 1.4rem; font-size: 0.92rem; }
 }
 
 @media (max-width: 640px) {
   .grid-cols-4, .grid-cols-3, .grid-cols-2 { grid-template-columns: 1fr; }
-  .container { padding-left: 1rem; padding-right: 1rem; }
+  .container { padding-left: 0.85rem; padding-right: 0.85rem; }
   .search-text { display: none !important; }
   .admin-text { display: none !important; }
   .header-search-btn, .header-admin-btn { padding: 0.45rem 0.55rem !important; }
+
+  .hero-title { font-size: clamp(1.65rem, 8vw, 2.2rem); }
+
+  .card { padding: 0.9rem; }
+  .coupon-card { border-radius: var(--radius-sm); }
+  .glass-card { border-radius: var(--radius-md); }
+
+  .eyebrow-pill { font-size: 0.68rem; padding: 0.3rem 0.7rem; }
+  .badge { font-size: 0.65rem; padding: 0.22rem 0.5rem; }
+
+  .code-pill { font-size: 0.82rem; padding: 0.45rem 0.7rem; letter-spacing: 0.08em; }
+
+  /* Footer compacts further */
+  .footer-main { padding-top: 2.5rem; padding-bottom: 1.5rem; }
+
+  .btn { padding: 0.6rem 1.1rem; font-size: 0.85rem; }
+  .btn-lg { padding: 0.65rem 1.2rem; font-size: 0.88rem; }
+  .btn-sm { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
+
+  /* Prevent horizontal overflow on mobile */
+  body { overflow-x: hidden; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 1.5rem; }
+  .container { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .gap-8 { gap: 1.25rem; }
+  .gap-6 { gap: 1rem; }
+  .gap-5 { gap: 0.85rem; }
+
+  /* Stack coupon card actions vertically */
+  .coupon-actions-row { flex-direction: column !important; gap: 0.5rem !important; }
+  .coupon-actions-row > * { width: 100% !important; }
 }
 
 /* ==========================================================================

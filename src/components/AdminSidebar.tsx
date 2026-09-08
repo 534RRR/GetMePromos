@@ -75,6 +75,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
 
   return (
     <aside
+      className="admin-layout-sidebar"
       style={{
         width: '260px',
         background: 'var(--slate-950)',

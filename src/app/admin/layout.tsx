@@ -20,7 +20,7 @@ export default async function AdminLayout({
       <AdminSidebar session={session} />
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, padding: '2.5rem', overflowY: 'auto', minWidth: 0 }}>
+      <main className="admin-layout-main" style={{ flex: 1, padding: '2.5rem', overflowY: 'auto', minWidth: 0 }}>
         {children}
       </main>
     </div>

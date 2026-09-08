@@ -28,8 +28,16 @@ export async function middleware(request: NextRequest) {
         const allowedOrigins = [
           request.nextUrl.origin,
           process.env.NEXT_PUBLIC_SITE_URL,
+          process.env.NEXT_PUBLIC_APP_URL,
           'http://localhost:3000',
         ].filter(Boolean);
+
+        // Also allow the origin derived from the Host header (covers reverse-proxied deployments)
+        const hostHeader = request.headers.get('host') || request.headers.get('x-forwarded-host');
+        if (hostHeader) {
+          const protocol = request.headers.get('x-forwarded-proto') || 'https';
+          allowedOrigins.push(`${protocol}://${hostHeader}`);
+        }
 
         const isAllowed = allowedOrigins.some((allowed) => {
           try {

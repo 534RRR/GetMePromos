@@ -34,7 +34,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var saved = localStorage.getItem('gmp_theme');
-                  var pref = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  var pref = saved || 'dark';
                   document.documentElement.setAttribute('data-theme', pref);
                 } catch(e) {}
               })();

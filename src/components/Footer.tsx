@@ -80,7 +80,7 @@ export default function Footer() {
         </div>
 
         {/* Multi-Column Directory Grid */}
-        <div style={{
+        <div className="footer-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
           gap: '2.5rem',
@@ -159,7 +159,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright Bar */}
-        <div style={{
+        <div className="footer-bottom-flex" style={{
           paddingTop: '2rem',
           borderTop: '1px solid rgba(255, 255, 255, 0.08)',
           display: 'flex',

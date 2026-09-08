@@ -274,7 +274,7 @@ export default async function StoreDetailPage(props: StorePageProps) {
       </div>
 
       {/* 2. MAIN CONTENT GRID */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: '2.5rem', alignItems: 'start' }}>
+      <div className="store-page-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: '2.5rem', alignItems: 'start' }}>
         
         {/* LEFT COLUMN: ACTIVE OFFERS & EXPIRED ARCHIVE */}
         <div>

@@ -7,16 +7,17 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Starting GetMePromos database seed...');
 
-  // Check if database is already initialized
-  try {
-    const existingStores = await prisma.store.count();
-    if (existingStores > 0) {
-      console.log('✅ Database already seeded with stores. Skipping initial seed.');
-      return;
-    }
-  } catch (e) {
-    // Tables might not exist yet, continue with push/seed
-  }
+  // Force re-seed on next deploy to update admin credentials
+  // (This check can be re-enabled after first successful deploy)
+  // try {
+  //   const existingStores = await prisma.store.count();
+  //   if (existingStores > 0) {
+  //     console.log('✅ Database already seeded with stores. Skipping initial seed.');
+  //     return;
+  //   }
+  // } catch (e) {
+  //   // Tables might not exist yet, continue with push/seed
+  // }
 
   // 1. Clean existing records (in dependency order)
   await prisma.clickLog.deleteMany().catch(() => {});
@@ -39,8 +40,8 @@ async function main() {
   await prisma.siteSetting.deleteMany().catch(() => {});
 
   // 2. Seed Super Admin User from Environment
-  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@getmepromos.com').toLowerCase().trim();
-  const adminPassword = process.env.ADMIN_PASSWORD || 'AdminRefPromos2026!#';
+  const adminEmail = (process.env.ADMIN_EMAIL || 'anasshahid6614@gmail.com').toLowerCase().trim();
+  const adminPassword = process.env.ADMIN_PASSWORD || '19991214Gamer#';
 
   const passwordHash = await bcrypt.hash(adminPassword, 10);
   const admin = await prisma.user.create({
