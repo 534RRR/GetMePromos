@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy & Affiliate Disclosure | GetMePromos',
+  title: 'Privacy Policy & Affiliate Disclosure | RefPromos',
   description:
-    'Read the GetMePromos privacy policy, cookie guidelines, data protection standards, and transparent affiliate disclosure.',
+    'Read the RefPromos privacy policy, cookie guidelines, data protection standards, and transparent affiliate disclosure.',
 };
 
 export default function PrivacyPolicyPage() {
@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
             1. Introduction &amp; Scope
           </h2>
           <p>
-            Welcome to GetMePromos (referred to as &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;). We are committed to safeguarding your privacy and ensuring transparent information practices when you use our website (<code>getmepromos.com</code>) and services. This Privacy Policy explains what information we collect, how it is used, and your rights regarding your data.
+            Welcome to RefPromos (referred to as &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;). We are committed to safeguarding your privacy and ensuring transparent information practices when you use our website (<code>refpromos.com</code>) and services. This Privacy Policy explains what information we collect, how it is used, and your rights regarding your data.
           </p>
         </section>
 
@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
             2. Affiliate Disclosure (FTC Compliance)
           </h2>
           <p style={{ marginBottom: '0.85rem' }}>
-            GetMePromos is a free online deals and coupon resource supported by affiliate partnerships. When you click on coupon codes, deals, or store links on our website and make a subsequent purchase at the merchant&apos;s site, we may receive an affiliate commission from the retailer at <strong style={{ color: 'var(--primary)' }}>no extra cost to you</strong>.
+            RefPromos is a free online deals and coupon resource supported by affiliate partnerships. When you click on coupon codes, deals, or store links on our website and make a subsequent purchase at the merchant&apos;s site, we may receive an affiliate commission from the retailer at <strong style={{ color: 'var(--primary)' }}>no extra cost to you</strong>.
           </p>
           <p>
             Our editorial integrity is paramount: our coupon verification processes, store ratings, and review opinions remain independent of affiliate commissions.
@@ -97,7 +97,7 @@ export default function PrivacyPolicyPage() {
             <li><strong style={{ color: 'var(--text-heading)' }}>Right to Opt-Out:</strong> Opt out of marketing digests or telemetry tracking at any time without penalty.</li>
           </ul>
           <p>
-            To initiate an automated data deletion request, you can submit an erasure request to our privacy endpoint at <code>/api/privacy/delete-data</code> with your registered email, or email our Data Protection Desk directly at <a href="mailto:privacy@getmepromos.com" style={{ color: 'var(--primary)', fontWeight: 700 }}>privacy@getmepromos.com</a>. Requests are processed within 48 hours.
+            To initiate an automated data deletion request, you can submit an erasure request to our privacy endpoint at <code>/api/privacy/delete-data</code> with your registered email, or email our Data Protection Desk directly at <a href="mailto:privacy@refpromos.com" style={{ color: 'var(--primary)', fontWeight: 700 }}>privacy@refpromos.com</a>. Requests are processed within 48 hours.
           </p>
         </section>
 
@@ -122,7 +122,7 @@ export default function PrivacyPolicyPage() {
           <p>
             For questions, data access inquiries, or deletion requests regarding your personal information, contact our Data Protection Officer at:
             <br />
-            <strong style={{ color: 'var(--text-heading)' }}>Email:</strong> <a href="mailto:privacy@getmepromos.com" style={{ color: 'var(--primary)', fontWeight: 700 }}>privacy@getmepromos.com</a>
+            <strong style={{ color: 'var(--text-heading)' }}>Email:</strong> <a href="mailto:privacy@refpromos.com" style={{ color: 'var(--primary)', fontWeight: 700 }}>privacy@refpromos.com</a>
           </p>
         </section>
       </div>

@@ -111,7 +111,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
           <div style={{ color: '#ffffff', fontWeight: 900, fontSize: '1.02rem', letterSpacing: '-0.02em' }}>
             CMS Engine
           </div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--slate-500)' }}>GetMePromos Control</div>
+          <div style={{ fontSize: '0.72rem', color: 'var(--slate-500)' }}>RefPromos Control</div>
         </div>
       </div>
 

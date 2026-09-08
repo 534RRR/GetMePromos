@@ -51,7 +51,7 @@ export default async function AdminDashboardPage() {
             CMS Dashboard Overview
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            Real-time analytics and content management for GetMePromos.com
+            Real-time analytics and content management for RefPromos.com
           </p>
         </div>
 

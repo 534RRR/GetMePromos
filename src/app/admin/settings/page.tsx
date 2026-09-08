@@ -21,12 +21,12 @@ export default function AdminSettingsPage() {
 
   // Settings State dictionary
   const [settings, setSettings] = useState<Record<string, string>>({
-    siteName: 'GetMePromos',
+    siteName: 'RefPromos',
     siteTagline: 'Verified Coupons, Promo Codes & Shopping Deals',
-    siteUrl: 'https://getmepromos.com',
-    supportEmail: 'support@getmepromos.com',
+    siteUrl: 'https://refpromos.com',
+    supportEmail: 'support@refpromos.com',
     contactPhone: '+1 (800) 555-DEAL',
-    copyrightText: '© 2026 GetMePromos.com. All rights reserved.',
+    copyrightText: '© 2026 RefPromos.com. All rights reserved.',
     defaultCurrency: '$',
     
     // Analytics
@@ -38,15 +38,15 @@ export default function AdminSettingsPage() {
 
     // Affiliate
     defaultSubId: 'gmp_direct',
-    affiliateDisclosure: 'GetMePromos is reader-supported. When you purchase through links on our site, we may earn an affiliate commission at no additional cost to you.',
+    affiliateDisclosure: 'RefPromos is reader-supported. When you purchase through links on our site, we may earn an affiliate commission at no additional cost to you.',
     redirectDelayMs: '0',
 
     // Social
-    twitterUrl: 'https://twitter.com/getmepromos',
-    facebookUrl: 'https://facebook.com/getmepromos',
-    instagramUrl: 'https://instagram.com/getmepromos',
-    pinterestUrl: 'https://pinterest.com/getmepromos',
-    youtubeUrl: 'https://youtube.com/@getmepromos',
+    twitterUrl: 'https://twitter.com/refpromos',
+    facebookUrl: 'https://facebook.com/refpromos',
+    instagramUrl: 'https://instagram.com/refpromos',
+    pinterestUrl: 'https://pinterest.com/refpromos',
+    youtubeUrl: 'https://youtube.com/@refpromos',
   });
 
   const groupMapping: Record<string, string> = {
@@ -160,7 +160,7 @@ export default function AdminSettingsPage() {
           fontSize: '0.92rem',
         }}>
           <CheckCircle size={20} />
-          Settings saved and updated across GetMePromos successfully!
+          Settings saved and updated across RefPromos successfully!
         </div>
       )}
 

@@ -20,12 +20,12 @@ export async function generateMetadata(props: ReviewPageProps): Promise<Metadata
     include: { store: true },
   });
 
-  if (!review) return { title: 'Review Not Found — GetMePromos' };
+  if (!review) return { title: 'Review Not Found — RefPromos' };
 
   const currentYear = new Date().getFullYear();
   const title =
     review.seoTitle ||
-    `${review.store.name} Review (${currentYear}) — Ratings, Pros & Cons | GetMePromos`;
+    `${review.store.name} Review (${currentYear}) — Ratings, Pros & Cons | RefPromos`;
   const description =
     review.metaDescription ||
     review.summary ||

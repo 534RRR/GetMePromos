@@ -1,15 +1,15 @@
-# GetMePromos.com — Core Architecture & Technical Specification
+# RefPromos.com — Core Architecture & Technical Specification
 
 > **Document Version:** 1.0  
 > **Status:** Approved Architecture Reference  
-> **Domain:** `getmepromos.com`  
+> **Domain:** `refpromos.com`  
 > **Platform Type:** Multi-Region Coupon, Deals, Store Directory, Reviews & Affiliate Content Platform  
 
 ---
 
 ## 1. Executive Summary & Product Vision
 
-**GetMePromos.com** is a high-performance, multi-region affiliate deals and coupon discovery platform designed to connect online shoppers with active verified discount codes, exclusive promotional deals, brand reviews, and shopping guides. 
+**RefPromos.com** is a high-performance, multi-region affiliate deals and coupon discovery platform designed to connect online shoppers with active verified discount codes, exclusive promotional deals, brand reviews, and shopping guides. 
 
 The primary business and user journey is:
 ```
@@ -373,4 +373,4 @@ The Admin CMS (`/admin`) provides full self-service content governance:
 
 ---
 
-*This architecture file serves as the definitive engineering blueprint for GetMePromos.com.*
+*This architecture file serves as the definitive engineering blueprint for RefPromos.com.*

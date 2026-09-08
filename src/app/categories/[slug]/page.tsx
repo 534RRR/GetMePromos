@@ -18,14 +18,14 @@ export async function generateMetadata(props: CategoryPageProps): Promise<Metada
     where: { slug: params.slug },
   });
 
-  if (!category) return { title: 'Category Not Found — GetMePromos' };
+  if (!category) return { title: 'Category Not Found — RefPromos' };
 
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
 
   const title =
     category.seoTitle ||
-    `Best ${category.name} Coupons & Promo Codes (${currentMonth} ${currentYear}) | GetMePromos`;
+    `Best ${category.name} Coupons & Promo Codes (${currentMonth} ${currentYear}) | RefPromos`;
   const description =
     category.metaDescription ||
     `Discover verified ${category.name} discount codes, deals, and daily promotions across top online retailers for ${currentMonth} ${currentYear}.`;

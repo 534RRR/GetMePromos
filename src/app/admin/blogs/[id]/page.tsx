@@ -40,7 +40,7 @@ export default function AdminEditBlogPage({ params }: { params?: { id?: string }
   const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
-  const [authorName, setAuthorName] = useState('GetMePromos Editorial');
+  const [authorName, setAuthorName] = useState('RefPromos Editorial');
   const [readingTime, setReadingTime] = useState('5 min read');
   const [status, setStatus] = useState('published');
   const [selectedStores, setSelectedStores] = useState<string[]>([]);

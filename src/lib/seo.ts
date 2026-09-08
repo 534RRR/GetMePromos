@@ -1,5 +1,5 @@
-export const SITE_NAME = 'GetMePromos';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://getmepromos.com';
+export const SITE_NAME = 'RefPromos';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://refpromos.com';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
 
 /**
@@ -13,14 +13,14 @@ export function generateOrganizationSchema() {
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     sameAs: [
-      'https://twitter.com/getmepromos',
-      'https://facebook.com/getmepromos',
-      'https://instagram.com/getmepromos',
+      'https://twitter.com/refpromos',
+      'https://facebook.com/refpromos',
+      'https://instagram.com/refpromos',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
-      email: 'support@getmepromos.com',
+      email: 'support@refpromos.com',
     },
   };
 }
@@ -130,7 +130,7 @@ export function generateArticleSchema(blog: {
     dateModified: new Date(blog.updatedAt || Date.now()).toISOString(),
     author: {
       '@type': 'Person',
-      name: blog.authorName || 'GetMePromos Editorial',
+      name: blog.authorName || 'RefPromos Editorial',
     },
     publisher: {
       '@type': 'Organization',

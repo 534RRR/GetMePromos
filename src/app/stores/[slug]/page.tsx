@@ -38,7 +38,7 @@ export async function generateMetadata(props: {
   });
 
   if (!store) {
-    return { title: 'Store Not Found — GetMePromos' };
+    return { title: 'Store Not Found — RefPromos' };
   }
 
   const currentYear = new Date().getFullYear();
@@ -158,7 +158,7 @@ export default async function StoreDetailPage(props: StorePageProps) {
   const defaultFaqs = [
     {
       question: `How many active coupons are available for ${store.name}?`,
-      answer: `Currently, there are ${activeCoupons.length} verified discount codes and promotional deals available for ${store.name} on GetMePromos.`,
+      answer: `Currently, there are ${activeCoupons.length} verified discount codes and promotional deals available for ${store.name} on RefPromos.`,
     },
     {
       question: `How do I redeem a ${store.name} promo code?`,
@@ -469,7 +469,7 @@ export default async function StoreDetailPage(props: StorePageProps) {
               <Info size={17} color="var(--primary)" /> About {store.name}
             </h3>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.25rem' }}>
-              {store.shortDescription || store.longDescription || `${store.name} is a top merchant partner on GetMePromos.`}
+              {store.shortDescription || store.longDescription || `${store.name} is a top merchant partner on RefPromos.`}
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', borderTop: '1px solid var(--border)', paddingTop: '0.95rem', fontSize: '0.86rem' }}>

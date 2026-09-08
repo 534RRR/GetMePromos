@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export const metadata: Metadata = {
-  title: 'Terms and Conditions | GetMePromos',
+  title: 'Terms and Conditions | RefPromos',
   description:
-    'Review the terms of service and user agreements for GetMePromos.com.',
+    'Review the terms of service and user agreements for RefPromos.com.',
 };
 
 export default function TermsAndConditionsPage() {
@@ -45,7 +45,7 @@ export default function TermsAndConditionsPage() {
             1. Acceptance of Terms
           </h2>
           <p>
-            By accessing or browsing GetMePromos (the &ldquo;Website&rdquo;), you agree to comply with and be bound by these Terms and Conditions. If you disagree with any portion of these terms, please discontinue use of our services immediately.
+            By accessing or browsing RefPromos (the &ldquo;Website&rdquo;), you agree to comply with and be bound by these Terms and Conditions. If you disagree with any portion of these terms, please discontinue use of our services immediately.
           </p>
         </section>
 
@@ -54,12 +54,12 @@ export default function TermsAndConditionsPage() {
             2. Nature of Deals &amp; Coupon Codes
           </h2>
           <p style={{ marginBottom: '0.85rem' }}>
-            GetMePromos publishes promotional coupons, discount codes, and sales aggregated from merchants and brand partners. While we take rigorous measures to test and verify every offer before publication:
+            RefPromos publishes promotional coupons, discount codes, and sales aggregated from merchants and brand partners. While we take rigorous measures to test and verify every offer before publication:
           </p>
           <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
             <li>Merchant coupon validity, discount percentage, pricing, and expiration dates are subject to change at the sole discretion of the retailer without prior notice.</li>
             <li>We do not guarantee that all third-party discounts will be honored by the merchant at all times.</li>
-            <li>All transactions occur directly on the respective merchant&apos;s website. GetMePromos does not process payments or handle order fulfillment.</li>
+            <li>All transactions occur directly on the respective merchant&apos;s website. RefPromos does not process payments or handle order fulfillment.</li>
           </ul>
         </section>
 
@@ -68,7 +68,7 @@ export default function TermsAndConditionsPage() {
             3. Intellectual Property Rights
           </h2>
           <p>
-            All original content, design layouts, logos, and software code on GetMePromos are protected by international copyright and trademark laws. Third-party brand names, logos, and trademarks (e.g. Nike, Amazon, Sephora) belong to their respective owners and are used solely for identification and referral purposes.
+            All original content, design layouts, logos, and software code on RefPromos are protected by international copyright and trademark laws. Third-party brand names, logos, and trademarks (e.g. Nike, Amazon, Sephora) belong to their respective owners and are used solely for identification and referral purposes.
           </p>
         </section>
 
@@ -77,7 +77,7 @@ export default function TermsAndConditionsPage() {
             4. Limitation of Liability
           </h2>
           <p>
-            To the fullest extent permitted by applicable law, GetMePromos and its affiliates shall not be liable for any indirect, incidental, or consequential damages resulting from the use or inability to use any promotional offer listed on the site.
+            To the fullest extent permitted by applicable law, RefPromos and its affiliates shall not be liable for any indirect, incidental, or consequential damages resulting from the use or inability to use any promotional offer listed on the site.
           </p>
         </section>
 
@@ -88,7 +88,7 @@ export default function TermsAndConditionsPage() {
           <p>
             For legal inquiries or notices regarding these terms, please email:
             <br />
-            <strong style={{ color: 'var(--text-heading)' }}>Email:</strong> <a href="mailto:legal@getmepromos.com" style={{ color: 'var(--primary)', fontWeight: 700 }}>legal@getmepromos.com</a>
+            <strong style={{ color: 'var(--text-heading)' }}>Email:</strong> <a href="mailto:legal@refpromos.com" style={{ color: 'var(--primary)', fontWeight: 700 }}>legal@refpromos.com</a>
           </p>
         </section>
       </div>

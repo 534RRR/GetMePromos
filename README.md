@@ -1,4 +1,4 @@
-# GetMePromos.com — Multi-Region Coupon & Deals Platform
+# RefPromos.com — Multi-Region Coupon & Deals Platform
 
 A high-performance, multi-region coupon directory, merchant review engine, promo code marketplace, and affiliate shopping platform built with Next.js 14, TypeScript, and Prisma ORM.
 
@@ -45,7 +45,7 @@ Ensure `.env` contains:
 | `IP_SALT` | Server-only | Salt string for one-way SHA-256 IP address hashing in click logs | `openssl rand -hex 32` |
 | `ADMIN_EMAIL` | Server-only | Super Admin email initialized during `db:seed` | `"admin@yourdomain.com"` |
 | `ADMIN_PASSWORD` | Server-only | Super Admin password initialized during `db:seed` | A strong password |
-| `NEXT_PUBLIC_SITE_URL` | Client & Server | Public canonical domain URL of the website | `"https://getmepromos.com"` |
+| `NEXT_PUBLIC_SITE_URL` | Client & Server | Public canonical domain URL of the website | `"https://refpromos.com"` |
 | `NEXT_PUBLIC_APP_URL` | Client & Server | Public application URL | `"http://localhost:3000"` |
 
 > [!IMPORTANT]

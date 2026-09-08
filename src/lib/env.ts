@@ -1,5 +1,5 @@
 /**
- * Environment Variable Validation Utility for GetMePromos
+ * Environment Variable Validation Utility for RefPromos
  */
 
 export function validateEnvironment(): void {

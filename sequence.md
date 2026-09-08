@@ -1,8 +1,8 @@
-# GetMePromos.com — Project Execution Sequence & Roadmap
+# RefPromos.com — Project Execution Sequence & Roadmap
 
 > **Document Version:** 1.0  
 > **Status:** Approved Project Execution Sequence  
-> **Goal:** High-velocity, zero-rework implementation roadmap for GetMePromos.com  
+> **Goal:** High-velocity, zero-rework implementation roadmap for RefPromos.com  
 
 ---
 
@@ -136,7 +136,7 @@ graph TD
   * Dynamic Search Hero with store autocomplete.
   * Featured Brands Carousel & High-Performing Coupons.
   * Popular Stores Grid & Category Quick-Browser.
-  * Top Shopping Guides & "Why GetMePromos" trust section.
+  * Top Shopping Guides & "Why RefPromos" trust section.
 * **Task 4.2 — Stores Directory (`/stores`):**
   * Multi-region filtering, category filter, A-Z alphabetical directory, search filter.
 * **Task 4.3 — Dynamic Store Page (`/stores/[slug]`):**

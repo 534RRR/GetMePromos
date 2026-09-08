@@ -6,17 +6,17 @@ import CodeModal from '@/components/CodeModal';
 import AnalyticsScripts from '@/components/AnalyticsScripts';
 
 export const metadata: Metadata = {
-  title: 'GetMePromos — Verified Coupons, Promo Codes & Shopping Deals',
+  title: 'RefPromos — Verified Coupons, Promo Codes & Shopping Deals',
   description:
-    'Discover 20,000+ verified discount promo codes, daily sales, and exclusive merchant deals across top brands worldwide with GetMePromos.',
-  keywords: ['coupons', 'promo codes', 'discounts', 'deals', 'vouchers', 'savings', 'GetMePromos'],
-  authors: [{ name: 'GetMePromos Editorial' }],
-  metadataBase: new URL('https://getmepromos.com'),
+    'Discover 20,000+ verified discount promo codes, daily sales, and exclusive merchant deals across top brands worldwide with RefPromos.',
+  keywords: ['coupons', 'promo codes', 'discounts', 'deals', 'vouchers', 'savings', 'RefPromos'],
+  authors: [{ name: 'RefPromos Editorial' }],
+  metadataBase: new URL('https://refpromos.com'),
   openGraph: {
-    title: 'GetMePromos — Save More on Every Online Order',
+    title: 'RefPromos — Save More on Every Online Order',
     description: '100% verified coupons and discount codes for Nike, Amazon, ASOS, Walmart, and more.',
     type: 'website',
-    url: 'https://getmepromos.com',
+    url: 'https://refpromos.com',
   },
 };
 

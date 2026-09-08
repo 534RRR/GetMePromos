@@ -64,7 +64,7 @@ export default function AdminNewReviewPage() {
     setTitle(defaultTitle);
     setSlug(`${st.slug}-review`);
     setVerdict(`Overall, ${st.name} is a highly trusted brand with excellent product variety and frequent discount opportunities. Pairing active promo codes with seasonal sales delivers maximum value.`);
-    setDetailedContent(`## Overview of ${st.name}\n\n${st.name} is one of the premier shopping destinations offering high-quality products and competitive online pricing.\n\n### How to Get the Best Discounts\n1. Check GetMePromos before checkout for verified promo codes.\n2. Join their newsletter for first-order welcome coupons.\n3. Take advantage of seasonal sales events.`);
+    setDetailedContent(`## Overview of ${st.name}\n\n${st.name} is one of the premier shopping destinations offering high-quality products and competitive online pricing.\n\n### How to Get the Best Discounts\n1. Check RefPromos before checkout for verified promo codes.\n2. Join their newsletter for first-order welcome coupons.\n3. Take advantage of seasonal sales events.`);
   };
 
   const handleAddPro = () => setPros([...pros, '']);

@@ -19,9 +19,9 @@ export async function generateMetadata(props: BlogPostPageProps): Promise<Metada
     include: { category: true },
   });
 
-  if (!blog) return { title: 'Article Not Found — GetMePromos' };
+  if (!blog) return { title: 'Article Not Found — RefPromos' };
 
-  const title = blog.seoTitle || `${blog.title} | GetMePromos Shopping Guide`;
+  const title = blog.seoTitle || `${blog.title} | RefPromos Shopping Guide`;
   const description = blog.metaDescription || blog.excerpt || blog.title;
 
   return {

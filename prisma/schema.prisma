@@ -1,4 +1,4 @@
-// Prisma Schema for GetMePromos.com
+// Prisma Schema for RefPromos.com
 // Multi-Region Coupon, Deals, Directory, Reviews & Affiliate Content Platform
 
 generator client {
@@ -228,7 +228,7 @@ model Blog {
   excerpt         String?
   content         String       // Markdown / HTML content
   featuredImage   String?
-  authorName      String       @default("GetMePromos Editorial")
+  authorName      String       @default("RefPromos Editorial")
   readingTime     String       @default("5 min read")
   status          String       @default("published") // "draft", "published", "scheduled"
   publishedAt     DateTime     @default(now())

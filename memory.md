@@ -1,14 +1,14 @@
-# GetMePromos.com — Project Memory & Session State
+# RefPromos.com — Project Memory & Session State
 
 > **Last Updated:** August 26, 2026  
-> **Repository:** `https://github.com/534RRR/GetMePromos.git` (Branch: `main`)  
+> **Repository:** `https://github.com/534RRR/RefPromos.git` (Branch: `main`)  
 > **Overall Status:** 100% Complete & Production-Ready across all 6 Phases (All 12 Milestones from `Assets/Milestones.txt` verified)  
 
 ---
 
 ## 1. Platform Overview & Quick Reference
 
-* **Domain:** `getmepromos.com`
+* **Domain:** `refpromos.com`
 * **Platform Type:** Multi-Region Coupon, Promo Code Directory, Product Deals, Merchant Reviews & Affiliate Content Engine.
 * **Core Technology Stack:**
   - **Framework:** Next.js 14 (App Router, Server Components & Dynamic API Routes)
@@ -110,7 +110,7 @@ Refer to `.env.example` for all required variables and configuration instruction
 DATABASE_URL="file:./dev.db" # or postgresql://...
 JWT_SECRET="<generate-via-openssl-rand-base64-48>"
 IP_SALT="<generate-via-openssl-rand-hex-32>"
-ADMIN_EMAIL="admin@getmepromos.com"
+ADMIN_EMAIL="admin@refpromos.com"
 ADMIN_PASSWORD="<choose-a-strong-password>"
-NEXT_PUBLIC_SITE_URL="https://getmepromos.com"
+NEXT_PUBLIC_SITE_URL="https://refpromos.com"
 ```
