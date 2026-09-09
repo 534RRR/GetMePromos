@@ -75,7 +75,7 @@ export default function Header() {
             </div>
             
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
+              <span className="header-logo-text" style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
                 Ref<span style={{ color: 'var(--primary)' }}>Promos</span>
               </span>
             </div>

@@ -71,7 +71,7 @@ export default function CodeModal() {
       justifyContent: 'center',
       padding: '1.5rem',
     }}>
-      <div style={{
+      <div className="code-modal-content" style={{
         background: 'var(--bg-card)',
         borderRadius: 'var(--radius-2xl)',
         maxWidth: '520px',
@@ -131,7 +131,7 @@ export default function CodeModal() {
           <span className="badge badge-verified" style={{ marginBottom: '0.65rem' }}>
             <ShieldCheck size={13} /> Verified Offer
           </span>
-          <h3 style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--primary)', marginTop: '0.4rem', letterSpacing: '-0.03em' }}>
+          <h3 className="code-modal-discount" style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--primary)', marginTop: '0.4rem', letterSpacing: '-0.03em' }}>
             {modal.discountValue}
           </h3>
           <p style={{ color: 'var(--text-heading)', fontSize: '0.94rem', marginTop: '0.4rem', lineHeight: '1.45', fontWeight: 600 }}>
@@ -141,7 +141,7 @@ export default function CodeModal() {
 
         {/* Promo Code Box */}
         {modal.couponCode ? (
-          <div style={{
+          <div className="code-modal-code-box" style={{
             background: 'var(--primary-subtle)',
             border: '1.5px dashed var(--primary)',
             borderRadius: 'var(--radius-xl)',
@@ -152,8 +152,8 @@ export default function CodeModal() {
             <p style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               Copy this promo code &amp; apply at checkout:
             </p>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.85rem', marginTop: '0.85rem' }}>
-              <span style={{
+            <div className="code-modal-code-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.85rem', marginTop: '0.85rem' }}>
+              <span className="code-modal-code" style={{
                 fontFamily: 'Space Grotesk, monospace',
                 fontSize: '1.75rem',
                 fontWeight: 900,
@@ -200,7 +200,7 @@ export default function CodeModal() {
         </a>
 
         {/* Feedback Section */}
-        <div style={{
+        <div className="code-modal-feedback" style={{
           paddingTop: '1.1rem',
           borderTop: '1px solid var(--border)',
           display: 'flex',

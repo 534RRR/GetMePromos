@@ -633,6 +633,26 @@ img {
   .mobile-toggle-btn { display: inline-flex !important; }
   .hero-split-grid { grid-template-columns: 1fr !important; }
 
+  /* Hero right column — scale down the 3D tag */
+  .hero-right-col { min-height: 340px !important; }
+  .hero-tag-image { width: 280px !important; height: 280px !important; }
+  .hero-glow-aura { width: 300px !important; height: 300px !important; }
+
+  /* Trust stats bar — 2 columns on tablet */
+  .trust-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+  /* Section headings — scale */
+  .section-heading { font-size: 1.8rem !important; }
+
+  /* Coupons page sidebar layout — stack on tablet */
+  .coupons-layout { grid-template-columns: 1fr !important; }
+  .coupons-sidebar { order: -1; }
+  .coupons-sidebar > aside {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
   .footer-main { padding-top: 3rem; padding-bottom: 2rem; }
 }
 
@@ -645,6 +665,53 @@ img {
 
   .card { padding: 1.1rem; border-radius: var(--radius-md); }
   .coupon-card { border-radius: var(--radius-md); }
+
+  /* Hero right column — hide on mobile */
+  .hero-right-col { display: none !important; }
+
+  /* Trust stats — single stat per row but 2 cols */
+  .trust-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1rem !important; }
+  .trust-stats-bar { padding: 1.25rem 1rem !important; border-radius: var(--radius-xl) !important; }
+
+  /* Section headings */
+  .section-heading { font-size: 1.55rem !important; }
+
+  /* Hero search form */
+  .hero-search-form { max-width: 100% !important; }
+
+  /* Newsletter form stacking */
+  .newsletter-form {
+    flex-direction: column !important;
+    border-radius: var(--radius-xl) !important;
+    padding: 0.5rem !important;
+  }
+  .newsletter-form input { border-radius: var(--radius-lg) !important; }
+  .newsletter-form button { width: 100% !important; border-radius: var(--radius-lg) !important; }
+
+  /* Newsletter box padding */
+  .newsletter-box { padding: 2.5rem 1.25rem !important; border-radius: var(--radius-xl) !important; }
+  .newsletter-title { font-size: 1.55rem !important; }
+
+  /* About page metrics */
+  .about-metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+  /* About pillar cards */
+  .about-pillar-card { padding: 1.5rem !important; }
+  .about-pillar-card h3 { font-size: 1.1rem !important; }
+
+  /* CTA box */
+  .cta-box { padding: 2.5rem 1.25rem !important; }
+  .cta-box h2 { font-size: 1.65rem !important; }
+
+  /* Code modal */
+  .code-modal-content { padding: 2rem 1.5rem !important; }
+  .code-modal-discount { font-size: 1.5rem !important; }
+  .code-modal-code { font-size: 1.35rem !important; }
+
+  /* Coupons sidebar — single column stack */
+  .coupons-sidebar > aside {
+    grid-template-columns: 1fr !important;
+  }
 
   /* Footer stacks into single column on tablets */
   .footer-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
@@ -672,6 +739,26 @@ img {
   .admin-mobile-toggle { display: flex !important; }
 
   .btn-lg { padding: 0.75rem 1.4rem; font-size: 0.92rem; }
+
+  /* Page heading titles */
+  .page-title { font-size: 1.85rem !important; }
+
+  /* Brand logo strip */
+  .brand-logo-strip { gap: 1.5rem !important; }
+  .brand-logo-item { font-size: 0.95rem !important; }
+
+  /* Store filter bar */
+  .store-filter-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  /* Alphabet bar */
+  .alphabet-bar { gap: 0.2rem !important; padding: 0.5rem 0.65rem !important; }
+  .alphabet-bar a { min-width: 28px !important; height: 28px !important; font-size: 0.75rem !important; }
+
+  /* Categories grid */
+  .categories-main-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important; }
 }
 
 @media (max-width: 640px) {
@@ -692,6 +779,14 @@ img {
 
   .code-pill { font-size: 0.82rem; padding: 0.45rem 0.7rem; letter-spacing: 0.08em; }
 
+  /* Section headings */
+  .section-heading { font-size: 1.35rem !important; }
+
+  /* Trust stats — single column */
+  .trust-stats-grid { grid-template-columns: 1fr !important; }
+  .trust-stats-bar { padding: 1rem !important; }
+  .trust-stat-value { font-size: 1.15rem !important; }
+
   /* Footer compacts further */
   .footer-main { padding-top: 2.5rem; padding-bottom: 1.5rem; }
 
@@ -699,9 +794,79 @@ img {
   .btn-lg { padding: 0.65rem 1.2rem; font-size: 0.88rem; }
   .btn-sm { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
 
+  /* Page titles */
+  .page-title { font-size: 1.55rem !important; }
+
+  /* About-us metrics — single column */
+  .about-metrics-grid { grid-template-columns: 1fr !important; }
+  .about-metric-value { font-size: 1.8rem !important; }
+
+  /* Coupons top filter bar */
+  .coupons-filter-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+    padding: 1rem !important;
+    border-radius: var(--radius-xl) !important;
+  }
+  .coupons-filter-bar form { min-width: 100% !important; }
+
+  /* Coupons coupon grid */
+  .coupons-grid { grid-template-columns: 1fr !important; }
+
+  /* Store filter bar */
+  .store-filter-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 1rem !important;
+    border-radius: var(--radius-xl) !important;
+  }
+  .store-filter-bar form { min-width: 100% !important; }
+
+  /* Alphabet bar — scroll horizontally on very small screens */
+  .alphabet-bar {
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap !important;
+  }
+  .alphabet-bar::-webkit-scrollbar { display: none; }
+
+  /* Code modal */
+  .code-modal-content { padding: 1.75rem 1.25rem !important; }
+  .code-modal-code-box { padding: 1rem !important; }
+  .code-modal-code { font-size: 1.15rem !important; }
+  .code-modal-code-row { flex-direction: column !important; gap: 0.65rem !important; }
+  .code-modal-code-row button { width: 100% !important; }
+
+  /* Newsletter */
+  .newsletter-box { padding: 2rem 1rem !important; }
+  .newsletter-title { font-size: 1.35rem !important; }
+
   /* Prevent horizontal overflow on mobile */
   body { overflow-x: hidden; }
+  html { overflow-x: hidden; }
   table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Hero section padding */
+  .hero-section { padding: 2rem 0 1.5rem 0 !important; }
+
+  /* Section padding */
+  .section-block { padding: 2.5rem 0 !important; }
+
+  /* Brand logo strip */
+  .brand-logo-strip { gap: 1rem !important; }
+  .brand-logo-item { font-size: 0.88rem !important; }
+
+  /* Store directory items grid */
+  .store-dir-grid { grid-template-columns: 1fr !important; }
+
+  /* Store grouped letter section */
+  .store-letter-group { padding: 1.25rem !important; }
+
+  /* Categories grid */
+  .categories-main-grid { grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 480px) {
@@ -711,9 +876,35 @@ img {
   .gap-6 { gap: 1rem; }
   .gap-5 { gap: 0.85rem; }
 
+  /* Section headings */
+  .section-heading { font-size: 1.2rem !important; }
+
+  /* Page titles */
+  .page-title { font-size: 1.35rem !important; }
+
+  /* Newsletter */
+  .newsletter-title { font-size: 1.2rem !important; }
+  .newsletter-subtitle { font-size: 0.86rem !important; }
+
+  /* CTA box */
+  .cta-box { padding: 2rem 1rem !important; }
+  .cta-box h2 { font-size: 1.35rem !important; }
+
+  /* About pillars */
+  .about-pillar-card { flex-direction: column !important; padding: 1.25rem !important; }
+
+  /* Code modal feedback row */
+  .code-modal-feedback { flex-direction: column !important; align-items: flex-start !important; gap: 0.65rem !important; }
+
   /* Stack coupon card actions vertically */
   .coupon-actions-row { flex-direction: column !important; gap: 0.5rem !important; }
   .coupon-actions-row > * { width: 100% !important; }
+
+  /* Header logo text */
+  .header-logo-text { font-size: 1.15rem !important; }
+
+  /* Trust stat icon */
+  .trust-stat-icon { width: 38px !important; height: 38px !important; }
 }
 
 /* ==========================================================================

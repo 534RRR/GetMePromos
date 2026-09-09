@@ -120,7 +120,7 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
         <span className="eyebrow-pill" style={{ marginBottom: '0.85rem' }}>
           <Tag size={13} /> Deals Hub
         </span>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
+        <h1 className="page-title" style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
           Verified Promo Codes &amp; Coupons
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '640px' }}>
@@ -130,6 +130,7 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
 
       {/* Top Filter Bar */}
       <div
+        className="coupons-filter-bar"
         style={{
           background: 'var(--bg-card)',
           border: '1px solid var(--border)',
@@ -226,9 +227,10 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
       )}
 
       {/* 2-COLUMN LAYOUT (SIDEBAR ON LEFT, COUPONS GRID ON RIGHT) */}
-      <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '2.5rem', alignItems: 'start' }}>
+      <div className="coupons-layout" style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '2.5rem', alignItems: 'start' }}>
         
         {/* SIDEBAR FILTERS */}
+        <div className="coupons-sidebar">
         <aside style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
           
           {/* Categories Filter */}
@@ -295,6 +297,7 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
           </div>
 
         </aside>
+        </div>
 
         {/* MAIN COUPON LIST */}
         <main>
@@ -317,7 +320,7 @@ export default async function CouponsHubPage({ searchParams }: CouponsPageProps)
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))' }}>
+            <div className="coupons-grid grid grid-cols-2 gap-5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))' }}>
               {coupons.map((coupon) => (
                 <CouponCard key={coupon.id} coupon={coupon as any} />
               ))}

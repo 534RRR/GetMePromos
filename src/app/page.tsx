@@ -111,6 +111,7 @@ export default async function HomePage() {
           1. EXACT HERO SECTION (2-Column Split Hero with 3D Deal Tag)
           ========================================================================= */}
       <section
+        className="hero-section"
         style={{
           position: 'relative',
           padding: '3.5rem 0 3rem 0',
@@ -174,6 +175,7 @@ export default async function HomePage() {
               <form
                 action="/coupons"
                 method="GET"
+                className="hero-search-form"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -246,6 +248,7 @@ export default async function HomePage() {
 
             {/* RIGHT COLUMN: 3D Glowing Emerald Deal Tag Graphic & Floating Badges */}
             <div
+              className="hero-right-col"
               style={{
                 position: 'relative',
                 display: 'flex',
@@ -256,6 +259,7 @@ export default async function HomePage() {
             >
               {/* Radial glow aura */}
               <div
+                className="hero-glow-aura"
                 style={{
                   position: 'absolute',
                   width: '380px',
@@ -269,6 +273,7 @@ export default async function HomePage() {
 
               {/* 3D Floating Tag Render */}
               <div
+                className="hero-tag-image"
                 style={{
                   position: 'relative',
                   width: '360px',
@@ -370,6 +375,7 @@ export default async function HomePage() {
 
           {/* 4-COLUMN TRUST STATS BAR */}
           <div
+            className="trust-stats-bar"
             style={{
               background: 'var(--bg-card)',
               border: '1px solid var(--border)',
@@ -380,12 +386,13 @@ export default async function HomePage() {
             }}
           >
             <div
-              className="grid grid-cols-4 gap-6"
+              className="grid grid-cols-4 gap-6 trust-stats-grid"
               style={{ alignItems: 'center' }}
             >
               {/* Stat 1 */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div
+                  className="trust-stat-icon"
                   style={{
                     width: '46px',
                     height: '46px',
@@ -402,7 +409,7 @@ export default async function HomePage() {
                   <Store size={22} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: 1.1 }}>
+                  <div className="trust-stat-value" style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: 1.1 }}>
                     500+
                   </div>
                   <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
@@ -430,7 +437,7 @@ export default async function HomePage() {
                   <Tag size={22} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: 1.1 }}>
+                  <div className="trust-stat-value" style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: 1.1 }}>
                     50,000+
                   </div>
                   <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
@@ -458,7 +465,7 @@ export default async function HomePage() {
                   <Users size={22} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: 1.1 }}>
+                  <div className="trust-stat-value" style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: 1.1 }}>
                     1M+
                   </div>
                   <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
@@ -486,7 +493,7 @@ export default async function HomePage() {
                   <Star size={22} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: 1.1 }}>
+                  <div className="trust-stat-value" style={{ fontSize: '1.45rem', fontWeight: 900, color: 'var(--text-heading)', lineHeight: 1.1 }}>
                     4.8 / 5
                   </div>
                   <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
@@ -505,6 +512,7 @@ export default async function HomePage() {
             </div>
             
             <div
+              className="brand-logo-strip"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -551,14 +559,14 @@ export default async function HomePage() {
       {/* =========================================================================
           2. FEATURED OFFERS SECTION
           ========================================================================= */}
-      <section style={{ padding: '3.5rem 0' }}>
+      <section className="section-block" style={{ padding: '3.5rem 0' }}>
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
               <span className="eyebrow-pill" style={{ marginBottom: '0.65rem' }}>
                 <Sparkles size={12} /> Today&apos;s Highlights
               </span>
-              <h2 style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
+              <h2 className="section-heading" style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
                 Featured Deals &amp; Exclusive Promo Codes
               </h2>
             </div>
@@ -588,7 +596,7 @@ export default async function HomePage() {
               <span className="eyebrow-pill" style={{ marginBottom: '0.65rem' }}>
                 <Store size={12} /> Partner Retailers
               </span>
-              <h2 style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
+              <h2 className="section-heading" style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
                 Top Stores with Verified Coupons
               </h2>
             </div>
@@ -621,7 +629,7 @@ export default async function HomePage() {
               <span className="eyebrow-pill" style={{ marginBottom: '0.65rem' }}>
                 <TrendingUp size={12} /> Browse Departments
               </span>
-              <h2 style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
+              <h2 className="section-heading" style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
                 Popular Shopping Categories
               </h2>
             </div>
@@ -679,12 +687,12 @@ export default async function HomePage() {
       {latestBlogs.length > 0 && (
         <section style={{ padding: '3.5rem 0' }}>
           <div className="container">
-            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+            <div className="section-header" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
               <div>
                 <span className="eyebrow-pill" style={{ marginBottom: '0.65rem' }}>
                   <ShieldCheck size={12} /> Editorial Insights
                 </span>
-                <h2 style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
+                <h2 className="section-heading" style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.03em', color: 'var(--text-heading)' }}>
                   Smart Shopping Guides &amp; Hacks
                 </h2>
               </div>

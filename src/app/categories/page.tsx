@@ -57,7 +57,7 @@ export default async function CategoriesPage() {
         <span className="eyebrow-pill" style={{ marginBottom: '0.85rem' }}>
           <Folder size={13} /> Categories Hub
         </span>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
+        <h1 className="page-title" style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
           All Shopping Categories
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '640px' }}>
@@ -66,7 +66,7 @@ export default async function CategoriesPage() {
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-4 gap-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
+      <div className="categories-main-grid grid grid-cols-4 gap-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
         {categories.map((cat) => (
           <Link
             key={cat.id}

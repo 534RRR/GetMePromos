@@ -20,7 +20,7 @@ export default function AboutUsPage() {
         <span className="eyebrow-pill" style={{ marginBottom: '1.25rem' }}>
           Our Mission
         </span>
-        <h1 style={{ fontSize: '2.8rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', lineHeight: '1.15', marginBottom: '1.25rem' }}>
+        <h1 className="page-title" style={{ fontSize: '2.8rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', lineHeight: '1.15', marginBottom: '1.25rem' }}>
           We Help Millions of Smart Shoppers <span className="hero-gradient-text">Save on Every Purchase</span>
         </h1>
         <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: '1.65' }}>
@@ -29,27 +29,27 @@ export default function AboutUsPage() {
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-4 gap-5" style={{ marginBottom: '4rem' }}>
+      <div className="about-metrics-grid grid grid-cols-4 gap-5" style={{ marginBottom: '4rem' }}>
         <div className="card" style={{ textAlign: 'center', padding: '2rem 1.25rem' }}>
-          <div style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '0.25rem', lineHeight: 1.1 }}>500+</div>
+          <div className="about-metric-value" style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '0.25rem', lineHeight: 1.1 }}>500+</div>
           <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-heading)' }}>Retail Partners</div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>Top global brands worldwide</p>
         </div>
 
         <div className="card" style={{ textAlign: 'center', padding: '2rem 1.25rem' }}>
-          <div style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.25rem', lineHeight: 1.1 }}>20,000+</div>
+          <div className="about-metric-value" style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.25rem', lineHeight: 1.1 }}>20,000+</div>
           <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-heading)' }}>Verified Codes</div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>Tested &amp; updated daily</p>
         </div>
 
         <div className="card" style={{ textAlign: 'center', padding: '2rem 1.25rem' }}>
-          <div style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '0.25rem', lineHeight: 1.1 }}>$1.2M+</div>
+          <div className="about-metric-value" style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '0.25rem', lineHeight: 1.1 }}>$1.2M+</div>
           <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-heading)' }}>Shopper Savings</div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>In verified discounts</p>
         </div>
 
         <div className="card" style={{ textAlign: 'center', padding: '2rem 1.25rem' }}>
-          <div style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.25rem', lineHeight: 1.1 }}>8</div>
+          <div className="about-metric-value" style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--text-heading)', marginBottom: '0.25rem', lineHeight: 1.1 }}>8</div>
           <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--text-heading)' }}>Global Regions</div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>US, UK, AU, CA, DE, FR, IT, NL</p>
         </div>
@@ -62,7 +62,7 @@ export default function AboutUsPage() {
         </h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', border: '1px solid var(--border)', borderRadius: 'var(--radius-2xl)', padding: '2rem' }} className="card">
+          <div className="about-pillar-card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', border: '1px solid var(--border)', borderRadius: 'var(--radius-2xl)', padding: '2rem' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-lg)', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid var(--primary-border)' }}>
               <ShieldCheck size={26} />
             </div>
@@ -74,7 +74,7 @@ export default function AboutUsPage() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', border: '1px solid var(--border)', borderRadius: 'var(--radius-2xl)', padding: '2rem' }} className="card">
+          <div className="about-pillar-card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', border: '1px solid var(--border)', borderRadius: 'var(--radius-2xl)', padding: '2rem' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-lg)', background: 'var(--bg-subtle)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid var(--border)' }}>
               <Zap size={26} />
             </div>
@@ -86,7 +86,7 @@ export default function AboutUsPage() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', border: '1px solid var(--border)', borderRadius: 'var(--radius-2xl)', padding: '2rem' }} className="card">
+          <div className="about-pillar-card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', border: '1px solid var(--border)', borderRadius: 'var(--radius-2xl)', padding: '2rem' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-lg)', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid var(--primary-border)' }}>
               <Award size={26} />
             </div>
@@ -101,7 +101,7 @@ export default function AboutUsPage() {
       </div>
 
       {/* CTA Box */}
-      <div style={{
+      <div className="cta-box" style={{
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
         borderRadius: 'var(--radius-2xl)',
         padding: '3.5rem 2rem',

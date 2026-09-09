@@ -27,6 +27,7 @@ export default function NewsletterBox({
 
   return (
     <div
+      className="newsletter-box"
       style={{
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
         borderRadius: 'var(--radius-2xl)',
@@ -69,10 +70,10 @@ export default function NewsletterBox({
           <Mail size={24} />
         </div>
 
-        <h2 style={{ fontSize: '2.1rem', fontWeight: 900, marginBottom: '0.85rem', lineHeight: '1.2', letterSpacing: '-0.03em', color: '#ffffff' }}>
+        <h2 className="newsletter-title" style={{ fontSize: '2.1rem', fontWeight: 900, marginBottom: '0.85rem', lineHeight: '1.2', letterSpacing: '-0.03em', color: '#ffffff' }}>
           {title}
         </h2>
-        <p style={{ color: 'var(--slate-300)', fontSize: '0.96rem', lineHeight: '1.6', marginBottom: '2.25rem' }}>
+        <p className="newsletter-subtitle" style={{ color: 'var(--slate-300)', fontSize: '0.96rem', lineHeight: '1.6', marginBottom: '2.25rem' }}>
           {subtitle}
         </p>
 
@@ -94,7 +95,7 @@ export default function NewsletterBox({
             <span>🎉 Thank you for subscribing! Your first weekly deal roundup is on its way.</span>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{
+          <form onSubmit={handleSubmit} className="newsletter-form" style={{
             display: 'flex',
             maxWidth: '480px',
             margin: '0 auto',

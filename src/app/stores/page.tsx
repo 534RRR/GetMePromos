@@ -105,7 +105,7 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
         <span className="eyebrow-pill" style={{ marginBottom: '0.85rem' }}>
           <Store size={13} /> Retailers Directory
         </span>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
+        <h1 className="page-title" style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-heading)', letterSpacing: '-0.03em', marginBottom: '0.5rem' }}>
           All Partner Stores &amp; Brands
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '640px' }}>
@@ -114,7 +114,7 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
       </div>
 
       {/* Search & Category Filter Bar */}
-      <div style={{
+      <div className="store-filter-bar" style={{
         background: 'var(--bg-card)',
         border: '1px solid var(--border)',
         borderRadius: 'var(--radius-2xl)',
@@ -191,7 +191,7 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
       )}
 
       {/* Alphabetical A-Z Filter Bar */}
-      <div style={{
+      <div className="alphabet-bar" style={{
         background: 'var(--bg-card)',
         border: '1px solid var(--border)',
         borderRadius: 'var(--radius-xl)',
@@ -260,6 +260,7 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
             <div
               key={letter}
               id={`letter-${letter}`}
+              className="store-letter-group"
               style={{
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
@@ -285,7 +286,7 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
                 {letter}
               </div>
 
-              <div style={{
+              <div className="store-dir-grid" style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
                 gap: '1rem',
