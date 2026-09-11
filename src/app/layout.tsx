@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CodeModal from '@/components/CodeModal';
 import AnalyticsScripts from '@/components/AnalyticsScripts';
+import InitialPreloader from '@/components/InitialPreloader';
 
 export const metadata: Metadata = {
   title: 'RefPromos — Verified Coupons, Promo Codes & Shopping Deals',
@@ -43,6 +44,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <InitialPreloader />
         <AnalyticsScripts />
         <Header />
         <main style={{ flex: 1 }}>{children}</main>
