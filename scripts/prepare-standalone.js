@@ -16,9 +16,16 @@ function copyFolderSync(from, to) {
 
 const rootDir = path.resolve(__dirname, '..');
 const standaloneDir = path.join(rootDir, '.next', 'standalone');
+const staticSrc = path.join(rootDir, '.next', 'static');
+const staticDest = path.join(standaloneDir, '.next', 'static');
 
 if (!fs.existsSync(standaloneDir)) {
   console.error('Error: .next/standalone folder not found. Run "npm run build" first.');
+  process.exit(1);
+}
+
+if (!fs.existsSync(staticSrc)) {
+  console.error('Error: .next/static folder not found. The production build is incomplete.');
   process.exit(1);
 }
 
@@ -33,11 +40,13 @@ if (fs.existsSync(publicSrc)) {
 }
 
 // 2. Copy .next/static folder
-const staticSrc = path.join(rootDir, '.next', 'static');
-const staticDest = path.join(standaloneDir, '.next', 'static');
-if (fs.existsSync(staticSrc)) {
-  console.log('-> Copying .next/static/ to standalone/.next/static/ ...');
-  copyFolderSync(staticSrc, staticDest);
+console.log('-> Copying .next/static/ to standalone/.next/static/ ...');
+copyFolderSync(staticSrc, staticDest);
+
+const staticFiles = fs.readdirSync(staticDest, { recursive: true });
+if (!staticFiles.some((file) => file.endsWith('.css')) || !staticFiles.some((file) => file.endsWith('.js'))) {
+  console.error('Error: standalone bundle is missing CSS or JavaScript assets.');
+  process.exit(1);
 }
 
 // 3. Copy prisma folder (schema and local sqlite database if present)
