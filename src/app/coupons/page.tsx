@@ -5,11 +5,15 @@ import prisma from '@/lib/prisma';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CouponCard from '@/components/CouponCard';
 import { Search, Tag, X } from 'lucide-react';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'All Verified Coupons, Promo Codes & Discounts | RefPromos',
   description:
     'Search and filter thousands of tested, working discount coupons, promo codes, and flash sales across top shopping categories and stores.',
+  alternates: {
+    canonical: getCanonicalUrl('/coupons'),
+  },
 };
 
 interface CouponsPageProps {

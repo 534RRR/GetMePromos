@@ -1,6 +1,10 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Clock, ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedBlogTitle, getLocalizedCategoryName } from '@/lib/translations';
 
 interface BlogCardProps {
   blog: {
@@ -20,9 +24,15 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ blog }: BlogCardProps) {
+  const { t, currentLang, formatRegionLink } = useLanguage();
+
+  const readingTimeText = blog.readingTime
+    ? blog.readingTime.replace(/min read/i, t('min_read'))
+    : `5 ${t('min_read')}`;
+
   return (
     <Link
-      href={`/blogs/${blog.slug}`}
+      href={formatRegionLink(`/blogs/${blog.slug}`)}
       className="card"
       style={{
         display: 'flex',
@@ -50,7 +60,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
       <div style={{ padding: '1.6rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
         {blog.category && (
           <span className="badge badge-amber" style={{ alignSelf: 'flex-start', marginBottom: '0.85rem' }}>
-            {blog.category.name}
+            {getLocalizedCategoryName(blog.category.name, currentLang)}
           </span>
         )}
 
@@ -62,7 +72,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
           marginBottom: '0.6rem',
           letterSpacing: '-0.02em',
         }}>
-          {blog.title}
+          {getLocalizedBlogTitle(blog.title, currentLang)}
         </h3>
 
         {blog.excerpt && (
@@ -90,14 +100,15 @@ export default function BlogCard({ blog }: BlogCardProps) {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <Clock size={14} color="var(--primary)" />
-            <span>{blog.readingTime}</span>
+            <span>{readingTimeText}</span>
           </div>
 
           <span style={{ color: 'var(--primary)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            Read Guide <ArrowRight size={14} />
+            {t('read_guide')} <ArrowRight size={14} />
           </span>
         </div>
       </div>
     </Link>
   );
 }
+

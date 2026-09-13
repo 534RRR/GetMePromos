@@ -7,6 +7,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import StoreCard from '@/components/StoreCard';
 import CouponCard from '@/components/CouponCard';
 import { Folder, Store, Tag, ArrowRight } from 'lucide-react';
+import { getCanonicalUrl } from '@/lib/seo';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }> | { slug: string };
@@ -30,12 +31,18 @@ export async function generateMetadata(props: CategoryPageProps): Promise<Metada
     category.metaDescription ||
     `Discover verified ${category.name} discount codes, deals, and daily promotions across top online retailers for ${currentMonth} ${currentYear}.`;
 
+  const canonical = getCanonicalUrl(`/categories/${category.slug}`);
+
   return {
     title,
     description,
+    alternates: {
+      canonical,
+    },
     openGraph: {
       title,
       description,
+      url: canonical,
     },
   };
 }
@@ -137,8 +144,8 @@ export default async function CategoryDetailPage(props: CategoryPageProps) {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-            gap: '1.35rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(195px, 1fr))',
+            gap: '1.5rem',
           }}>
             {stores.slice(0, 6).map((store) => (
               <StoreCard key={store.id} store={store as any} />

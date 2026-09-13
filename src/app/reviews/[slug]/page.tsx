@@ -31,13 +31,18 @@ export async function generateMetadata(props: ReviewPageProps): Promise<Metadata
     review.summary ||
     `Honest review of ${review.store.name}. We analyze discounts, shipping speed, product quality, return policy, and customer reviews.`;
 
+  const canonical = `${SITE_URL}/reviews/${review.slug}`;
+
   return {
     title,
     description,
+    alternates: {
+      canonical,
+    },
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/reviews/${review.slug}`,
+      url: canonical,
       images: [review.store.logoUrl],
     },
   };

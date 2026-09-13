@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, X, Folder, BookOpen, Loader2 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface SearchResult {
   stores: Array<{
@@ -82,11 +83,14 @@ export default function GlobalSearchModal({ isOpen, onClose }: GlobalSearchModal
     return () => clearTimeout(timeout);
   }, [query]);
 
+  const { formatRegionLink } = useLanguage();
+
   if (!isOpen) return null;
 
   const handleSelect = (url: string) => {
     onClose();
-    router.push(url);
+    const finalUrl = formatRegionLink(url);
+    router.push(finalUrl);
   };
 
   const hasAnyResults = results && (

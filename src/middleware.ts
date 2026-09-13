@@ -12,6 +12,29 @@ function getJwtSecretKey(): Uint8Array {
 
 const COOKIE_NAME = 'admin_session';
 
+const REGION_SLUG_MAP: Record<string, { code: string; lang: string }> = {
+  us: { code: 'US', lang: 'en' },
+  uk: { code: 'UK', lang: 'en' },
+  au: { code: 'AU', lang: 'en' },
+  ca: { code: 'CA', lang: 'en' },
+  de: { code: 'DE', lang: 'de' },
+  fr: { code: 'FR', lang: 'fr' },
+  it: { code: 'IT', lang: 'it' },
+  nl: { code: 'NL', lang: 'nl' },
+};
+
+const CODE_TO_SLUG: Record<string, string> = {
+  US: 'us',
+  UK: 'uk',
+  GB: 'uk',
+  AU: 'au',
+  CA: 'ca',
+  DE: 'de',
+  FR: 'fr',
+  IT: 'it',
+  NL: 'nl',
+};
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -28,7 +51,6 @@ export async function middleware(request: NextRequest) {
           'http://localhost:3000',
         ].filter(Boolean);
 
-        // Also allow the origin derived from the Host header (covers reverse-proxied deployments)
         const hostHeader = request.headers.get('host') || request.headers.get('x-forwarded-host');
         if (hostHeader) {
           const protocol = request.headers.get('x-forwarded-proto') || 'https';
@@ -76,14 +98,12 @@ export async function middleware(request: NextRequest) {
     }
 
     if (isPublicAuthRoute) {
-      // If already logged in and visiting login UI, redirect away to dashboard
       if (isValid && pathname === '/admin/login') {
         return NextResponse.redirect(new URL('/admin', request.url));
       }
       return NextResponse.next();
     }
 
-    // For all other admin routes, require valid token
     if (!isValid) {
       if (pathname.startsWith('/api/')) {
         return new NextResponse(
@@ -96,7 +116,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
 
-    // Only Super Admin can access user management (/admin/users or /api/admin/users)
     const isUserManagement = pathname.startsWith('/admin/users') || pathname.startsWith('/api/admin/users');
     if (isUserManagement && role !== 'super_admin') {
       if (pathname.startsWith('/api/')) {
@@ -107,11 +126,77 @@ export async function middleware(request: NextRequest) {
       }
       return NextResponse.redirect(new URL('/admin', request.url));
     }
+
+    return NextResponse.next();
   }
 
+  // Skip API, admin, and outbound tracking routes from region prefixing
+  if (pathname.startsWith('/api') || pathname.startsWith('/admin') || pathname.startsWith('/out')) {
+    return NextResponse.next();
+  }
+
+  // 3. Multi-Region Slug Routing & Rewriting
+  const segments = pathname.split('/').filter(Boolean);
+  const firstSegment = segments[0]?.toLowerCase();
+
+  // Case A: Root path '/' or no region prefix -> serve as-is (no auto-redirect on first visit)
+  // The URL slug only changes when the user explicitly selects a region from the dropdown.
+  if (pathname === '/' || segments.length === 0) {
+    return NextResponse.next();
+  }
+
+  // Case B: First segment is a valid region slug (e.g. /us, /uk, /au, /ca, /de, /fr, /it, /nl)
+  if (firstSegment && REGION_SLUG_MAP[firstSegment]) {
+    const regionInfo = REGION_SLUG_MAP[firstSegment];
+    const remainingSegments = segments.slice(1);
+    const internalPath = remainingSegments.length > 0 ? `/${remainingSegments.join('/')}` : '/';
+
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = internalPath;
+
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-country', regionInfo.code);
+    requestHeaders.set('x-region-slug', firstSegment);
+    requestHeaders.set('x-locale', regionInfo.lang);
+
+    const response = NextResponse.rewrite(rewriteUrl, {
+      request: {
+        headers: requestHeaders,
+      },
+    });
+
+    response.headers.set('x-country', regionInfo.code);
+    response.headers.set('x-region-slug', firstSegment);
+    response.headers.set('x-locale', regionInfo.lang);
+
+    // Sync cookie if not already matching
+    const currentCookie = request.cookies.get('gmp_country')?.value?.toUpperCase();
+    if (currentCookie !== regionInfo.code) {
+      response.cookies.set('gmp_country', regionInfo.code, {
+        path: '/',
+        maxAge: 31536000,
+        sameSite: 'lax',
+      });
+    }
+
+    return response;
+  }
+
+  // Case C: Path doesn't start with a region slug (e.g. /coupons, /stores/nike)
+  // Serve as-is — region slug in URL is opt-in only (user must select region from dropdown)
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/:path*'],
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - robots.txt, sitemap.xml
+     * - static image or font assets with extensions
+     */
+    '/((?!_next/static|_next/image|favicon\\.ico|robots\\.txt|sitemap\\.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)',
+  ],
 };

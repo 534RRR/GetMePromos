@@ -1,11 +1,15 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Terms and Conditions | RefPromos',
   description:
     'Review the terms of service and user agreements for RefPromos.com.',
+  alternates: {
+    canonical: getCanonicalUrl('/terms-and-conditions'),
+  },
 };
 
 export default function TermsAndConditionsPage() {

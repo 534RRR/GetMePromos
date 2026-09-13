@@ -1,6 +1,15 @@
 export const SITE_NAME = 'RefPromos';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://refpromos.com';
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')
+    ? process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '')
+    : 'https://refpromos.com';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
+
+export function getCanonicalUrl(path: string = ''): string {
+  if (!path || path === '/') return SITE_URL;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${SITE_URL}${cleanPath}`;
+}
 
 /**
  * Generates Schema.org Organization structured data

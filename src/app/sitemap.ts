@@ -1,8 +1,14 @@
 import { MetadataRoute } from 'next';
 import prisma from '@/lib/prisma';
 import { SITE_URL } from '@/lib/seo';
+import { REGION_SLUGS } from '@/lib/regions';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl =
+    SITE_URL && !SITE_URL.includes('localhost')
+      ? SITE_URL
+      : 'https://refpromos.com';
+
   const [stores, categories, blogs, reviews] = await Promise.all([
     prisma.store.findMany({
       where: { status: 'active' },
@@ -23,94 +29,103 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPages: MetadataRoute.Sitemap = [
     {
-      url: SITE_URL,
+      url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1.0,
     },
     {
-      url: `${SITE_URL}/coupons`,
+      url: `${baseUrl}/coupons`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/stores`,
+      url: `${baseUrl}/stores`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/categories`,
+      url: `${baseUrl}/categories`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/blogs`,
+      url: `${baseUrl}/blogs`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/reviews`,
+      url: `${baseUrl}/reviews`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/about-us`,
+      url: `${baseUrl}/about-us`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
-      url: `${SITE_URL}/contact-us`,
+      url: `${baseUrl}/contact-us`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
-      url: `${SITE_URL}/privacy-policy`,
+      url: `${baseUrl}/privacy-policy`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
-      url: `${SITE_URL}/terms-and-conditions`,
+      url: `${baseUrl}/terms-and-conditions`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
   ];
 
+  // Region entry pages (e.g. /us, /uk, /au, /ca, /de, /fr, /it, /nl)
+  const regionPages: MetadataRoute.Sitemap = REGION_SLUGS.map((slug) => ({
+    url: `${baseUrl}/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  }));
+
   const storeUrls: MetadataRoute.Sitemap = stores.map((s) => ({
-    url: `${SITE_URL}/stores/${s.slug}`,
+    url: `${baseUrl}/stores/${s.slug}`,
     lastModified: s.updatedAt,
     changeFrequency: 'daily',
     priority: 0.9,
   }));
 
   const categoryUrls: MetadataRoute.Sitemap = categories.map((c) => ({
-    url: `${SITE_URL}/categories/${c.slug}`,
+    url: `${baseUrl}/categories/${c.slug}`,
     lastModified: c.updatedAt,
     changeFrequency: 'weekly',
     priority: 0.7,
   }));
 
   const blogUrls: MetadataRoute.Sitemap = blogs.map((b) => ({
-    url: `${SITE_URL}/blogs/${b.slug}`,
+    url: `${baseUrl}/blogs/${b.slug}`,
     lastModified: b.updatedAt,
     changeFrequency: 'weekly',
     priority: 0.7,
   }));
 
   const reviewUrls: MetadataRoute.Sitemap = reviews.map((r) => ({
-    url: `${SITE_URL}/reviews/${r.slug}`,
+    url: `${baseUrl}/reviews/${r.slug}`,
     lastModified: r.updatedAt,
     changeFrequency: 'monthly',
     priority: 0.7,
   }));
 
-  return [...staticPages, ...storeUrls, ...categoryUrls, ...blogUrls, ...reviewUrls];
+  return [...staticPages, ...regionPages, ...storeUrls, ...categoryUrls, ...blogUrls, ...reviewUrls];
 }
+

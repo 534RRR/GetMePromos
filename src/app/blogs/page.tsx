@@ -6,11 +6,15 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import BlogCard from '@/components/BlogCard';
 import NewsletterBox from '@/components/NewsletterBox';
 import { BookOpen, Clock, Sparkles, ArrowRight, User } from 'lucide-react';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Shopping Guides, Saving Hacks & Money Tips | RefPromos',
   description:
     'Expert shopping guides, seasonal sale roundups, promo code stacking strategies, and money-saving hacks to help you stretch your budget.',
+  alternates: {
+    canonical: getCanonicalUrl('/blogs'),
+  },
 };
 
 interface BlogsPageProps {

@@ -5,11 +5,15 @@ import prisma from '@/lib/prisma';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import StoreCard from '@/components/StoreCard';
 import { Search, Store, Tag, Sparkles, ArrowRight } from 'lucide-react';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'All Stores & Brands — Verified Coupon Codes & Discounts | RefPromos',
   description:
     'Browse all partner stores and top online retail brands. Find verified discount promo codes, coupons, and flash deals across 500+ top retailers.',
+  alternates: {
+    canonical: getCanonicalUrl('/stores'),
+  },
 };
 
 const ALPHABET = ['ALL', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), '#'];
@@ -180,8 +184,8 @@ export default async function StoresDirectoryPage({ searchParams }: StoresPagePr
           </div>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-            gap: '1.35rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(195px, 1fr))',
+            gap: '1.5rem',
           }}>
             {featuredStores.map((store) => (
               <StoreCard key={store.id} store={store as any} />

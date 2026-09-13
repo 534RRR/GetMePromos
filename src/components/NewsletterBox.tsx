@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Mail, CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface NewsletterBoxProps {
   title?: string;
@@ -9,11 +10,15 @@ interface NewsletterBoxProps {
 }
 
 export default function NewsletterBox({
-  title = 'Get Verified Deals Delivered Weekly',
-  subtitle = 'Join 50,000+ smart shoppers and receive our curated weekly digest of tested promo codes and price drops.',
+  title,
+  subtitle,
 }: NewsletterBoxProps) {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+
+  const displayTitle = title || t('newsletter_title');
+  const displaySubtitle = subtitle || t('newsletter_desc');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,10 +76,10 @@ export default function NewsletterBox({
         </div>
 
         <h2 className="newsletter-title" style={{ fontSize: '2.1rem', fontWeight: 900, marginBottom: '0.85rem', lineHeight: '1.2', letterSpacing: '-0.03em', color: '#ffffff' }}>
-          {title}
+          {displayTitle}
         </h2>
         <p className="newsletter-subtitle" style={{ color: 'var(--slate-300)', fontSize: '0.96rem', lineHeight: '1.6', marginBottom: '2.25rem' }}>
-          {subtitle}
+          {displaySubtitle}
         </p>
 
         {status === 'success' ? (
@@ -109,7 +114,7 @@ export default function NewsletterBox({
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address..."
+              placeholder={t('newsletter_placeholder')}
               required
               style={{
                 flex: 1,
@@ -128,7 +133,7 @@ export default function NewsletterBox({
               className="btn btn-primary"
               style={{ padding: '0.75rem 1.5rem', whiteSpace: 'nowrap' }}
             >
-              {status === 'loading' ? 'Subscribing...' : <>Subscribe Free <ArrowRight size={16} /></>}
+              {status === 'loading' ? 'Subscribing...' : <>{t('newsletter_btn')} <ArrowRight size={16} /></>}
             </button>
           </form>
         )}

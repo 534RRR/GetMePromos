@@ -3,11 +3,15 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { ShieldCheck, Zap, Award, ArrowRight } from 'lucide-react';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'About Us — RefPromos Savings Mission & Editorial Policy',
   description:
     'Learn how RefPromos helps millions of shoppers save money online with tested, verified coupon codes, exclusive sales, and transparent affiliate partnerships.',
+  alternates: {
+    canonical: getCanonicalUrl('/about-us'),
+  },
 };
 
 export default function AboutUsPage() {

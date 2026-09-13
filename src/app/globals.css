@@ -235,6 +235,33 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
+/* Remove green border & outline from hero search input and apply subtle focus to container */
+.hero-search-input,
+.hero-search-input:hover,
+.hero-search-input:focus,
+.hero-search-input:active,
+.hero-search-input:focus-visible,
+form.hero-search-form input,
+form.hero-search-form input:hover,
+form.hero-search-form input:focus,
+form.hero-search-form input:active,
+form.hero-search-form input:focus-visible {
+  outline: none !important;
+  border: none !important;
+  border-width: 0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.hero-search-form:focus-within {
+  border-color: rgba(5, 150, 105, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15) !important;
+}
+
+
 select option {
   background-color: var(--bg-surface);
   color: var(--text-heading);

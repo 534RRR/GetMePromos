@@ -2,6 +2,11 @@ import { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl =
+    SITE_URL && !SITE_URL.includes('localhost')
+      ? SITE_URL
+      : 'https://refpromos.com';
+
   return {
     rules: [
       {
@@ -10,6 +15,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin/', '/api/', '/out/'],
       },
     ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }
+

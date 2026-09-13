@@ -24,13 +24,18 @@ export async function generateMetadata(props: BlogPostPageProps): Promise<Metada
   const title = blog.seoTitle || `${blog.title} | RefPromos Shopping Guide`;
   const description = blog.metaDescription || blog.excerpt || blog.title;
 
+  const canonical = `${SITE_URL}/blogs/${blog.slug}`;
+
   return {
     title,
     description,
+    alternates: {
+      canonical,
+    },
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/blogs/${blog.slug}`,
+      url: canonical,
       images: blog.featuredImage ? [blog.featuredImage] : [],
       type: 'article',
     },

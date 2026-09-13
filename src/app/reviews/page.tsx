@@ -5,11 +5,15 @@ import prisma from '@/lib/prisma';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ReviewCard from '@/components/ReviewCard';
 import { Star } from 'lucide-react';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Store & Brand Reviews — Ratings, Pros & Cons | RefPromos',
   description:
     'Unbiased in-depth reviews of top online stores, fashion brands, and tech retailers. Read rating scores, pros and cons, and find tested coupon codes.',
+  alternates: {
+    canonical: getCanonicalUrl('/reviews'),
+  },
 };
 
 export default async function ReviewsHubPage() {

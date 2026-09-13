@@ -2,7 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Tag, ArrowRight, Sparkles } from 'lucide-react';
+import { ShieldCheck, Tag } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedDealTitle, getLocalizedDiscountValue } from '@/lib/translations';
 
 interface CouponCardProps {
   coupon: {
@@ -29,15 +31,16 @@ interface CouponCardProps {
 }
 
 export default function CouponCard({ coupon }: CouponCardProps) {
+  const { t, currentLang, formatRegionLink } = useLanguage();
   const handleCtaClick = () => {
     if (typeof window !== 'undefined' && window.openCouponModal) {
       window.openCouponModal({
         couponId: coupon.id,
         storeName: coupon.store.name,
         storeLogo: coupon.store.logoUrl,
-        title: coupon.title,
+        title: getLocalizedDealTitle(coupon.title, currentLang),
         couponCode: coupon.couponCode,
-        discountValue: coupon.discountValue,
+        discountValue: getLocalizedDiscountValue(coupon.discountValue, currentLang),
         affiliateUrl: `/out/coupon/${coupon.id}`,
       });
     }
@@ -51,7 +54,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
         {/* Merchant & Badge Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
           <Link
-            href={`/stores/${coupon.store.slug}`}
+            href={formatRegionLink(`/stores/${coupon.store.slug}`)}
             style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
           >
             <div style={{
@@ -79,7 +82,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           </Link>
 
           <span className={`badge ${isCode ? 'badge-code' : 'badge-deal'}`}>
-            <Tag size={11} /> {isCode ? 'Promo Code' : 'Direct Deal'}
+            <Tag size={11} /> {isCode ? t('promo_code_badge') : t('direct_deal_badge')}
           </span>
         </div>
 
@@ -92,7 +95,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             color: 'var(--primary)',
             lineHeight: 1.1,
           }}>
-            {coupon.discountValue}
+            {getLocalizedDiscountValue(coupon.discountValue, currentLang)}
           </span>
         </div>
 
@@ -105,17 +108,17 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           marginBottom: '1rem',
           minHeight: '2.7rem',
         }}>
-          {coupon.title}
+          {getLocalizedDealTitle(coupon.title, currentLang)}
         </p>
 
         {/* Verification Status */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
           {coupon.isVerified && (
             <span className="badge badge-verified">
-              <ShieldCheck size={12} /> Verified Today
+              <ShieldCheck size={12} /> {t('badge_verified')}
             </span>
           )}
-          <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>{coupon.successRate}% Success</span>
+          <span style={{ fontWeight: 600, color: 'var(--text-muted)' }}>{coupon.successRate}% {t('success_rate', 'Success')}</span>
         </div>
       </div>
 
@@ -134,7 +137,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           </div>
         ) : (
           <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-            Automatic at checkout
+            {t('automatic_at_checkout')}
           </span>
         )}
 
@@ -143,9 +146,10 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           className={`btn ${isCode ? 'btn-primary' : 'btn-secondary'} btn-sm`}
           style={{ padding: '0.55rem 1.05rem', fontSize: '0.86rem' }}
         >
-          {coupon.ctaText || (isCode ? 'Get Code' : 'Get Deal')}
+          {isCode ? t('btn_get_code') : t('claim_offer')}
         </button>
       </div>
     </div>
   );
 }
+

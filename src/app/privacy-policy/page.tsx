@@ -1,11 +1,15 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { getCanonicalUrl } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy & Affiliate Disclosure | RefPromos',
   description:
     'Read the RefPromos privacy policy, cookie guidelines, data protection standards, and transparent affiliate disclosure.',
+  alternates: {
+    canonical: getCanonicalUrl('/privacy-policy'),
+  },
 };
 
 export default function PrivacyPolicyPage() {
